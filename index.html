@@ -586,6 +586,8 @@
         // ==============================================
         // PLUGIN BAWAAN CHART.JS & DATABASE
         // ==============================================
+        
+        // Plugin 1: Membuat Sumbu/Tiang Candlestick
         const candlestickWickPlugin = {
             id: 'candlestickWick',
             beforeDatasetsDraw(chart) {
@@ -614,6 +616,76 @@
             }
         };
         Chart.register(candlestickWickPlugin);
+
+        // Plugin 2: [DIPERBAIKI 100%] Garis & Badge Harga Real-Time (Mirip TradingView)
+        const livePriceLinePlugin = {
+            id: 'livePriceLine',
+            afterDatasetsDraw(chart) {
+                // Pastikan nilai live price disuntikkan ke chart instance terlebih dahulu
+                if (chart.currentLivePrice === undefined) return;
+                
+                const ctx = chart.ctx;
+                const yAxis = chart.scales.y;
+                if (!yAxis) return;
+                
+                // Hitung posisi vertikal (Y) dari garis harga
+                const yPixel = yAxis.getPixelForValue(chart.currentLivePrice);
+                
+                // Cegah penggambaran jika pengguna melakukan zoom dan harga berada di luar canvas yang terlihat
+                if (yPixel < chart.chartArea.top || yPixel > chart.chartArea.bottom) return;
+
+                ctx.save();
+                // Gunakan warna hijau atau merah berdasarkan tren harian terkini, default: biru
+                const color = chart.currentPriceColor || '#3B82F6'; 
+                
+                // 1. Gambar Garis Harga Horizontal Putus-Putus melintasi grafik
+                ctx.beginPath();
+                ctx.setLineDash([4, 4]); // Pola putus-putus
+                ctx.moveTo(chart.chartArea.left, yPixel);
+                ctx.lineTo(chart.chartArea.right, yPixel);
+                ctx.lineWidth = 1.5;
+                ctx.strokeStyle = color;
+                ctx.stroke();
+
+                // 2. Gambar Badge Label Harga
+                const text = chart.currentLivePriceStr || chart.currentLivePrice.toString();
+                // Penyesuaian font agar lebih compact
+                ctx.font = 'bold 10px monospace';
+                const textWidth = ctx.measureText(text).width;
+                const padX = 6;
+                const rectWidth = textWidth + (padX * 2);
+                const rectHeight = 20;
+                
+                // [PERBAIKAN FINAL]: Kita pindahkan anchor (titik awal gambar) badge.
+                // Sekarang badge digambar tepat DIMULAI dari batas paling kanan area chart (chartArea.right).
+                // Artinya badge ini akan sepenuhnya berada di LUAR grid grafik, dan menimpa teks Sumbu-Y.
+                const rectX = chart.chartArea.right; 
+                const rectY = yPixel - (rectHeight / 2);
+
+                // Bayangan estetika ringan pada badge harga
+                ctx.shadowColor = 'rgba(0,0,0,0.6)';
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetY = 2;
+                
+                // Background Box/Badge
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                // Bikin lengkungan (rounded) HANYA di sisi ujung kanan. Sisi kiri dibiarkan rata (flat) menempel pada grafik
+                ctx.roundRect(rectX, rectY, rectWidth, rectHeight, [0, 4, 4, 0]); 
+                ctx.fill();
+
+                // Teks Harga (Matikan efek shadow untuk teks)
+                ctx.shadowColor = 'transparent';
+                ctx.fillStyle = '#ffffff'; // Warna teks putih
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                // Penyesuaian visual (+1px ke bawah) agar sentris secara optikal
+                ctx.fillText(text, rectX + (rectWidth / 2), yPixel + 1); 
+                
+                ctx.restore();
+            }
+        };
+        Chart.register(livePriceLinePlugin);
 
         const cryptoDatabase = {
             SOL: {
@@ -765,7 +837,9 @@
                 
                 const dataLen = mainChartInstance.data.labels.length;
                 mainChartInstance.options.scales.x.min = Math.max(0, dataLen - 60);
-                mainChartInstance.options.scales.x.max = dataLen - 1;
+                
+                // Menambah ruang kosong di ujung grafik lilin
+                mainChartInstance.options.scales.x.max = dataLen + 4;
                 
                 mainChartInstance.resetZoom();
                 mainChartInstance.update('none');
@@ -781,7 +855,9 @@
                 
                 const dataLen = gridChartInstances[boxId].data.labels.length;
                 gridChartInstances[boxId].options.scales.x.min = Math.max(0, dataLen - 45);
-                gridChartInstances[boxId].options.scales.x.max = dataLen - 1;
+                
+                // Menambah ruang kosong di ujung grafik lilin
+                gridChartInstances[boxId].options.scales.x.max = dataLen + 4;
 
                 gridChartInstances[boxId].resetZoom();
                 gridChartInstances[boxId].update('none');
@@ -1403,6 +1479,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            // [PERBAIKAN] Tambahan ekstra ruangan di sebelah luar (kanan) agar badge bisa digambar murni di luar Sumbu-Y
+                            right: 45 
+                        }
+                    },
                     interaction: {
                         mode: 'index',
                         intersect: false,
@@ -1439,6 +1521,7 @@
                                         return `Volume: ${context.raw.toLocaleString()}`;
                                     } else if (context.dataset.isCandle) {
                                         const d = ohlcData[context.dataIndex];
+                                        if (!d) return null; // SAFETY CHECK
                                         return [
                                             `O: ${formatPrice(d.o, coin.symbol)} | H: ${formatPrice(d.h, coin.symbol)}`,
                                             `L: ${formatPrice(d.l, coin.symbol)} | C: ${formatPrice(d.c, coin.symbol)}`
@@ -1479,7 +1562,9 @@
                         x: {
                             // Memberi batasan min/max default agar chart terlihat lebih lega, sisa data disembunyikan di kiri (bisa dipan)
                             min: Math.max(0, labels.length - initialVisible),
-                            max: labels.length - 1,
+                            
+                            max: labels.length + 4, 
+                            
                             grid: { 
                                 display: true,
                                 color: 'rgba(255, 255, 255, 0.03)', 
@@ -1496,13 +1581,25 @@
                 }
             });
 
+            // MENYUNTIKKAN DATA HARGA REAL-TIME AGAR DIGUNAKAN PLUGIN GARIS HARGA 
+            mainChartInstance.currentLivePrice = coin.price;
+            mainChartInstance.currentLivePriceStr = formatPrice(coin.price, coin.symbol);
+            mainChartInstance.currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
+
             // Aktifkan Drag Sumbu pada Main Chart
             setupCustomAxisDrag(document.getElementById('mainChart'), mainChartInstance);
         }
 
-        // FUNGSI BARU: Update lilin terakhir secara dinamis ala TradingView
+        // FUNGSI: Update lilin terakhir dan Garis Harga secara dinamis ala TradingView
         function updateChartLastCandle(chartInstance, coin) {
             if (!chartInstance) return;
+            
+            // 1. UPDATE DATA UNTUK GARIS HARGA REAL-TIME (PLUGIN KUSTOM)
+            chartInstance.currentLivePrice = coin.price;
+            chartInstance.currentLivePriceStr = formatPrice(coin.price, coin.symbol);
+            chartInstance.currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
+
+            // 2. UPDATE CANDLESTICK (LILIN TERAKHIR)
             const datasets = chartInstance.data.datasets;
             const candleDataset = datasets.find(d => d.isCandle);
             
@@ -1516,10 +1613,11 @@
                 // Merubah warnanya secara real-time menjadi Hijau/Merah jika harga Close melewati Open
                 candleDataset.backgroundColor[idx] = d.c >= d.o ? '#0ECB81' : '#F6465D';
                 candleDataset.borderColor[idx] = d.c >= d.o ? '#0ECB81' : '#F6465D';
-                
-                // Update tanpa animasi dan tanpa mereset tarikan sumbu/zoom dari pengguna!
-                chartInstance.update('none');
             }
+            
+            // Update tanpa animasi dan tanpa mereset tarikan sumbu/zoom dari pengguna!
+            // Ini akan memanggil ulang fungsi render grafis termasuk plugin Garis Harga Real-Time
+            chartInstance.update('none');
         }
 
         async function updateMultiGrid() {
@@ -1614,6 +1712,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            // [PERBAIKAN] Tambahan ruang yang sama juga diletakkan di chart grid
+                            right: 45 
+                        }
+                    },
                     plugins: {
                         legend: { display: false },
                         zoom: {
@@ -1643,6 +1747,7 @@
                             callbacks: {
                                 label: function(context) {
                                     const d = ohlcData[context.dataIndex];
+                                    if (!d) return null; // SAFETY CHECK
                                     return [
                                         `O: ${formatPrice(d.o, coin.symbol)} | H: ${formatPrice(d.h, coin.symbol)}`,
                                         `L: ${formatPrice(d.l, coin.symbol)} | C: ${formatPrice(d.c, coin.symbol)}`
@@ -1665,7 +1770,7 @@
                         },
                         x: {
                             min: Math.max(0, labels.length - initialVisible),
-                            max: labels.length - 1,
+                            max: labels.length + 4, 
                             grid: { 
                                 display: true,
                                 color: 'rgba(255, 255, 255, 0.03)',
@@ -1680,6 +1785,11 @@
                     }
                 }
             });
+
+            // MENYUNTIKKAN DATA HARGA REAL-TIME AGAR DIGUNAKAN PLUGIN GARIS HARGA 
+            gridChartInstances[boxId].currentLivePrice = coin.price;
+            gridChartInstances[boxId].currentLivePriceStr = formatPrice(coin.price, coin.symbol);
+            gridChartInstances[boxId].currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
 
             // Aktifkan Drag Sumbu pada Grid Chart
             setupCustomAxisDrag(canvas, gridChartInstances[boxId]);
