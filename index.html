@@ -147,7 +147,7 @@
         </div>
     </div>
 
-    <!-- Main Content: TAMPILAN SINGLE ANALISIS DETAIL (TIDAK DIUBAH) -->
+    <!-- Main Content: TAMPILAN SINGLE ANALISIS DETAIL -->
     <main id="single-view-container" class="flex-grow max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-5">
         
         <!-- Sidebar: Pilihan Kripto & Parameter -->
@@ -290,6 +290,97 @@
                 <p class="text-[10px] text-gray-500 mt-3 text-right">💡 Tip Pro: <b>Scroll Mouse</b> untuk Zoom. <b>Tarik & Seret Angka Harga/Tanggal</b> di pinggir untuk melebarkan/mengecilkan sumbu dengan presisi.</p>
             </div>
 
+            <!-- FITUR BARU: ADVANCED INDICATOR WIDGET (Seperti di Referensi Gambar) -->
+            <div id="advanced-indicator-widget" class="bg-[#131722] border border-[#1E2530] rounded-2xl p-5 shadow-xl shadow-black/40 flex flex-col gap-4 relative overflow-hidden">
+                <!-- Header Widget -->
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span id="adv-coin-symbol" class="text-2xl font-black text-white tracking-wide">SOL</span>
+                            <span class="text-[10px] text-gray-400 font-bold bg-darkBg border border-darkBorder px-2 py-0.5 rounded tracking-wider">/USDT</span>
+                        </div>
+                        <p id="adv-coin-name" class="text-xs text-gray-400 mt-0.5">Solana (TokoCrypto & Binance)</p>
+                    </div>
+                    <div class="text-right">
+                        <span id="adv-coin-price" class="text-2xl font-black text-white font-mono tracking-wider">$83.20</span>
+                        <p id="adv-coin-change" class="text-sm font-bold text-cryptoGreen mt-0.5">+1.08% (24j)</p>
+                    </div>
+                </div>
+
+                <!-- 2 Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                    <!-- Card Kiri: Konsensus & RSI -->
+                    <div class="bg-[#0B0E14] border border-[#1E2530] rounded-xl p-4 flex flex-col justify-between relative shadow-inner">
+                        <p class="text-[9px] font-extrabold text-gray-500 tracking-widest mb-3 uppercase">KONSENSUS BINANCE + RSI</p>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div id="adv-konsensus-icon-bg" class="w-10 h-10 rounded-full border border-cryptoGreen bg-cryptoGreen/10 flex items-center justify-center shrink-0 transition-colors duration-500">
+                                <svg id="adv-konsensus-icon" class="w-5 h-5 text-cryptoGreen transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <span id="adv-konsensus-text" class="text-base md:text-lg font-black text-cryptoGreen block transition-colors duration-500">KONSOLIDASI (NETRAL)</span>
+                                <span id="adv-rsi-val" class="text-xs text-gray-400">RSI 14D: 42.4</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#131722] border border-[#1E2530] p-3 rounded-lg">
+                            <p class="text-[10px] text-gray-500 mb-1 font-medium">Target Penembusan 1D:</p>
+                            <span id="adv-target-break" class="text-lg font-bold text-white font-mono">$83.68</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Kanan: Speedometer Gauge -->
+                    <div class="bg-[#0B0E14] border border-[#1E2530] rounded-xl p-4 flex flex-col items-center justify-center relative min-h-[160px] shadow-inner">
+                        <div class="relative w-full max-w-[220px] h-[110px] mt-4">
+                            <!-- SVG Gauge -->
+                            <svg viewBox="0 0 200 100" class="w-full h-full overflow-visible">
+                                <!-- Background Track -->
+                                <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#2B3139" stroke-width="6" stroke-linecap="round"/>
+                                
+                                <!-- Active Dynamic Track -->
+                                <path id="gauge-active-track" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#F6465D" stroke-width="6" stroke-linecap="round" stroke-dasharray="251.32" stroke-dashoffset="251.32" class="transition-all duration-700 ease-out"/>
+                                
+                                <!-- Center Point Reference -->
+                                <circle cx="100" cy="100" r="2" fill="#4A5568" />
+                                
+                                <!-- Needle -->
+                                <g id="gauge-needle" class="transition-transform duration-700 ease-out" style="transform-origin: 100px 100px; transform: rotate(-70deg);">
+                                    <path d="M 98 100 L 100 20 L 102 100 Z" fill="#E2E8F0" />
+                                    <circle cx="100" cy="100" r="4" fill="#E2E8F0" />
+                                </g>
+                            </svg>
+                            <!-- Labels Around Gauge -->
+                            <span id="label-strong-sell" class="absolute bottom-0 left-0 text-[9px] font-bold text-center w-14 leading-tight text-cryptoRed transition-colors">Penjualan<br>Kuat</span>
+                            <span id="label-sell" class="absolute top-[20px] left-2 text-[9px] font-bold text-gray-500 transition-colors">Penjualan</span>
+                            <span id="label-neutral" class="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-bold text-gray-500 transition-colors">Netral</span>
+                            <span id="label-buy" class="absolute top-[20px] right-2 text-[9px] font-bold text-gray-500 transition-colors">Pembelian</span>
+                            <span id="label-strong-buy" class="absolute bottom-0 right-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors">Pembelian<br>Kuat</span>
+                            
+                            <!-- TradingView Widget Mini Icon Simulation -->
+                            <div class="absolute bottom-0 right-0 translate-x-2 translate-y-2 opacity-50 bg-[#1E222D] rounded-full p-1 border border-gray-700">
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M4 4h7v16H4V4zm9 0h7v16h-7V4z" opacity="0.3"/>
+                                    <path d="M13 13h7v7h-7v-7zm-9-9h7v7H4V4z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Skenario -->
+                <div class="mt-2">
+                    <h4 class="text-[10px] font-bold text-accentBlue uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        SKENARIO TEKNO-FUNDAMENTAL
+                    </h4>
+                    <div class="bg-[#0B0E14] border border-[#1E2530] p-3.5 rounded-xl text-xs text-gray-300 leading-relaxed shadow-inner">
+                        <p id="adv-skenario-text">
+                            Sinyal campuran: Harga dan Momentum (RSI) belum searah. Pasar sedang ragu (Sideways). Pantau penembusan ke atas <span class="font-bold text-white">$83.6833</span> atau ke bawah <span class="font-bold text-white">$82.4533</span>. Ikuti saran dominan dari widget TradingView.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Analisis Teknikal & Pengambilan Keputusan -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 
@@ -388,8 +479,7 @@
 
     <!-- Main Content: TAMPILAN MULTI-CHART 4 COIN GRID DENGAN CANDLESTICK (TIDAK DIUBAH) -->
     <main id="multi-view-container" class="hidden flex-grow max-w-7xl w-full mx-auto p-4 flex flex-col gap-6">
-        
-        <!-- Pilihan 4 Koin yang Ingin Ditampilkan -->
+        <!-- Struktur sama, disembunyikan dalam code snippet untuk menyingkat tempat -->
         <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-xl flex flex-wrap gap-4 items-center justify-between">
             <div>
                 <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
@@ -398,14 +488,8 @@
                 </h3>
                 <p class="text-[11px] text-gray-400 mt-1">Scroll untuk zoom, seret chart untuk pan, atau tarik angka tanggal & harga di pinggir.</p>
             </div>
-            
-            <!-- Tab selector koin yang aktif masuk grid -->
-            <div class="flex flex-wrap gap-2" id="grid-coins-selectors">
-                <!-- Javascript akan mempopulasikan ini -->
-            </div>
+            <div class="flex flex-wrap gap-2" id="grid-coins-selectors"></div>
         </div>
-
-        <!-- 4 Grid Chart Candlestick Tab -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 flex-grow">
             <!-- Box Chart 1 -->
             <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-lg flex flex-col relative h-[300px]" id="grid-box-1">
@@ -416,11 +500,8 @@
                         <span class="font-mono text-xs font-bold" id="grid-price-1">--</span>
                     </div>
                 </div>
-                <div class="relative flex-grow">
-                    <canvas id="gridChart-1"></canvas>
-                </div>
+                <div class="relative flex-grow"><canvas id="gridChart-1"></canvas></div>
             </div>
-
             <!-- Box Chart 2 -->
             <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-lg flex flex-col relative h-[300px]" id="grid-box-2">
                 <div class="flex justify-between items-center mb-3">
@@ -430,11 +511,8 @@
                         <span class="font-mono text-xs font-bold" id="grid-price-2">--</span>
                     </div>
                 </div>
-                <div class="relative flex-grow">
-                    <canvas id="gridChart-2"></canvas>
-                </div>
+                <div class="relative flex-grow"><canvas id="gridChart-2"></canvas></div>
             </div>
-
             <!-- Box Chart 3 -->
             <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-lg flex flex-col relative h-[300px]" id="grid-box-3">
                 <div class="flex justify-between items-center mb-3">
@@ -444,11 +522,8 @@
                         <span class="font-mono text-xs font-bold" id="grid-price-3">--</span>
                     </div>
                 </div>
-                <div class="relative flex-grow">
-                    <canvas id="gridChart-3"></canvas>
-                </div>
+                <div class="relative flex-grow"><canvas id="gridChart-3"></canvas></div>
             </div>
-
             <!-- Box Chart 4 -->
             <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-lg flex flex-col relative h-[300px]" id="grid-box-4">
                 <div class="flex justify-between items-center mb-3">
@@ -458,9 +533,7 @@
                         <span class="font-mono text-xs font-bold" id="grid-price-4">--</span>
                     </div>
                 </div>
-                <div class="relative flex-grow">
-                    <canvas id="gridChart-4"></canvas>
-                </div>
+                <div class="relative flex-grow"><canvas id="gridChart-4"></canvas></div>
             </div>
         </div>
     </main>
@@ -476,10 +549,7 @@
                 <span class="text-[9px] bg-accentBlue/20 text-accentBlue px-2 py-0.5 rounded ml-auto">Diperbarui Hari Ini</span>
             </div>
             
-            <!-- Container List Berita -->
-            <div id="news-list-container" class="space-y-4 overflow-y-auto pr-2 max-h-[70vh]">
-                <!-- Berita akan dimuat lewat JavaScript -->
-            </div>
+            <div id="news-list-container" class="space-y-4 overflow-y-auto pr-2 max-h-[70vh]"></div>
         </section>
 
         <!-- Kolom Kanan: Dashboard Sinyal Buy/Sell Lengkap -->
@@ -489,11 +559,7 @@
                 <h2 class="text-lg font-bold text-white">Dashboard Sinyal & Rekomendasi (1D)</h2>
                 <span class="text-[9px] bg-darkBg border border-darkBorder text-gray-400 px-2 py-0.5 rounded ml-auto">Data Real-time</span>
             </div>
-
-            <!-- Grid Sinyal Koin -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="signals-grid-container">
-                <!-- Sinyal akan dimuat lewat JavaScript -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="signals-grid-container"></div>
         </section>
 
     </main>
@@ -511,18 +577,14 @@
 
     <!-- JavaScript Logika Data & Interaksi -->
     <script>
-        // ==============================================
         // MEREGISTRASI PLUGIN ZOOM & HAMMERJS SECARA MANUAL
-        // ==============================================
         if (typeof ChartZoom !== 'undefined') {
             Chart.register(ChartZoom);
         } else if (window['chartjs-plugin-zoom']) {
             Chart.register(window['chartjs-plugin-zoom']);
         }
 
-        // ==============================================
         // SISTEM DRAG SUMBU X & Y KUSTOM (ALA TRADINGVIEW)
-        // ==============================================
         let isDraggingY = false;
         let isDraggingX = false;
         let dragStartY = 0;
@@ -544,7 +606,7 @@
                 const dx = e.clientX - dragStartX;
                 const range = draggedChart._dragInitialMaxX - draggedChart._dragInitialMinX;
                 const factor = Math.exp(-dx * 0.005);
-                const newRange = Math.max(5, range * factor); // Batas min 5 lilin agar tidak terlalu gepeng
+                const newRange = Math.max(5, range * factor);
                 
                 const currentMax = draggedChart._dragInitialMaxX;
                 draggedChart.options.scales.x.max = currentMax;
@@ -614,11 +676,7 @@
             canvas.hasAxisDragSetup = true;
         }
 
-        // ==============================================
         // PLUGIN BAWAAN CHART.JS
-        // ==============================================
-        
-        // Plugin 1: Membuat Sumbu/Tiang Candlestick
         const candlestickWickPlugin = {
             id: 'candlestickWick',
             beforeDatasetsDraw(chart) {
@@ -648,7 +706,6 @@
         };
         Chart.register(candlestickWickPlugin);
 
-        // Plugin 2: Garis & Badge Harga Real-Time
         const livePriceLinePlugin = {
             id: 'livePriceLine',
             afterDatasetsDraw(chart) {
@@ -659,7 +716,6 @@
                 if (!yAxis) return;
                 
                 const yPixel = yAxis.getPixelForValue(chart.currentLivePrice);
-                
                 if (yPixel < chart.chartArea.top || yPixel > chart.chartArea.bottom) return;
 
                 ctx.save();
@@ -704,127 +760,24 @@
         Chart.register(livePriceLinePlugin);
 
         const cryptoDatabase = {
-            SOL: {
-                name: "Solana",
-                category: "High-Performance L1 Network",
-                symbol: "SOL",
-                binanceSymbol: "SOLUSDT",
-                price: 145.25,
-                change24h: 0.0,
-                volume24h: "--",
-                rsi: 50,
-                macd: "Analyzing",
-                signal: "HOLD",
-                trendStatus: "",
-                sma20: null,
-                prices: [],
-                ohlc: [],
-                volumes: []
-            },
-            BNB: {
-                name: "BNB",
-                category: "Exchange & Smart Chain Utility",
-                symbol: "BNB",
-                binanceSymbol: "BNBUSDT",
-                price: 580.10,
-                change24h: 0.0,
-                volume24h: "--",
-                rsi: 50,
-                macd: "Analyzing",
-                signal: "HOLD",
-                trendStatus: "",
-                sma20: null,
-                prices: [],
-                ohlc: [],
-                volumes: []
-            },
-            DOGE: {
-                name: "Dogecoin",
-                category: "Meme Coin Utility",
-                symbol: "DOGE",
-                binanceSymbol: "DOGEUSDT",
-                price: 0.1425,
-                change24h: 0.0,
-                volume24h: "--",
-                rsi: 50,
-                macd: "Analyzing",
-                signal: "HOLD",
-                trendStatus: "",
-                sma20: null,
-                prices: [],
-                ohlc: [],
-                volumes: []
-            },
-            TRX: {
-                name: "TRON",
-                category: "Decentralized Web Ecosystem",
-                symbol: "TRX",
-                binanceSymbol: "TRXUSDT",
-                price: 0.1182,
-                change24h: 0.0,
-                volume24h: "--",
-                rsi: 50,
-                macd: "Analyzing",
-                signal: "HOLD",
-                trendStatus: "",
-                sma20: null,
-                prices: [],
-                ohlc: [],
-                volumes: []
-            }
+            SOL: { name: "Solana", category: "High-Performance L1 Network", symbol: "SOL", binanceSymbol: "SOLUSDT", price: 145.25, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] },
+            BNB: { name: "BNB", category: "Exchange & Smart Chain Utility", symbol: "BNB", binanceSymbol: "BNBUSDT", price: 580.10, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] },
+            DOGE: { name: "Dogecoin", category: "Meme Coin Utility", symbol: "DOGE", binanceSymbol: "DOGEUSDT", price: 0.1425, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] },
+            TRX: { name: "TRON", category: "Decentralized Web Ecosystem", symbol: "TRX", binanceSymbol: "TRXUSDT", price: 0.1182, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] }
         };
 
         const cryptoSVGLogos = {
-            SOL: `
-                <svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(20,241,149,0.4)]" viewBox="0 0 393 315" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M59.3 53.4H393L333.7 113.3H0L59.3 53.4Z" fill="url(#solGradient1)"/>
-                    <path d="M333.7 201.7H0L59.3 141.8H393L333.7 201.7Z" fill="url(#solGradient2)"/>
-                    <path d="M59.3 290H393L333.7 349.9H0L59.3 290Z" fill="url(#solGradient3)"/>
-                    <defs>
-                        <linearGradient id="solGradient1" x1="0" y1="53.4" x2="393" y2="113.3" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#00FFA3"/>
-                            <stop offset="1" stop-color="#DC1FFF"/>
-                        </linearGradient>
-                        <linearGradient id="solGradient2" x1="0" y1="141.8" x2="393" y2="201.7" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#00FFA3"/>
-                            <stop offset="1" stop-color="#DC1FFF"/>
-                        </linearGradient>
-                        <linearGradient id="solGradient3" x1="0" y1="290" x2="393" y2="349.9" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#00FFA3"/>
-                            <stop offset="1" stop-color="#DC1FFF"/>
-                        </linearGradient>
-                    </defs>
-                </svg>`,
-            DOGE: `
-                <svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(240,185,11,0.5)]" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="60" cy="60" r="50" fill="#F0B90B" fill-opacity="0.1" stroke="#F0B90B" stroke-width="4"/>
-                    <path d="M40 38V82H57C69.5 82 78 74 78 60C78 46 69.5 38 57 38H40ZM48 45H57C65 45 71 50 71 60C71 70 65 75 57 75H48V45Z" fill="#F0B90B"/>
-                    <rect x="33" y="56" width="22" height="7" fill="#F0B90B"/>
-                </svg>`,
-            TRX: `
-                <svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(246,70,93,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 5L90 73L10 73L50 5Z" fill="#F6465D" fill-opacity="0.1" stroke="#F6465D" stroke-width="4" stroke-linejoin="round"/>
-                    <path d="M50 25L75 68H25L50 25Z" fill="#F6465D" stroke="#F6465D" stroke-width="2" stroke-linejoin="round"/>
-                </svg>`,
-            BNB: `
-                <svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(240,185,11,0.5)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L8.5 5.5L12 9L15.5 5.5L12 2Z" fill="#F0B90B"/>
-                    <path d="M5.5 8.5L2 12L5.5 15.5L9 12L5.5 8.5Z" fill="#F0B90B"/>
-                    <path d="M18.5 8.5L15 12L18.5 15.5L22 12L18.5 8.5Z" fill="#F0B90B"/>
-                    <path d="M12 22L15.5 18.5L12 15L8.5 18.5L12 22Z" fill="#F0B90B"/>
-                    <path d="M12 10.2L10.2 12L12 13.8L13.8 12L12 10.2Z" fill="#F0B90B"/>
-                </svg>`
+            SOL: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(20,241,149,0.4)]" viewBox="0 0 393 315" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M59.3 53.4H393L333.7 113.3H0L59.3 53.4Z" fill="url(#solGradient1)"/><path d="M333.7 201.7H0L59.3 141.8H393L333.7 201.7Z" fill="url(#solGradient2)"/><path d="M59.3 290H393L333.7 349.9H0L59.3 290Z" fill="url(#solGradient3)"/><defs><linearGradient id="solGradient1" x1="0" y1="53.4" x2="393" y2="113.3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient><linearGradient id="solGradient2" x1="0" y1="141.8" x2="393" y2="201.7" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient><linearGradient id="solGradient3" x1="0" y1="290" x2="393" y2="349.9" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient></defs></svg>`,
+            DOGE: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(240,185,11,0.5)]" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="50" fill="#F0B90B" fill-opacity="0.1" stroke="#F0B90B" stroke-width="4"/><path d="M40 38V82H57C69.5 82 78 74 78 60C78 46 69.5 38 57 38H40ZM48 45H57C65 45 71 50 71 60C71 70 65 75 57 75H48V45Z" fill="#F0B90B"/><rect x="33" y="56" width="22" height="7" fill="#F0B90B"/></svg>`,
+            TRX: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(246,70,93,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 5L90 73L10 73L50 5Z" fill="#F6465D" fill-opacity="0.1" stroke="#F6465D" stroke-width="4" stroke-linejoin="round"/><path d="M50 25L75 68H25L50 25Z" fill="#F6465D" stroke="#F6465D" stroke-width="2" stroke-linejoin="round"/></svg>`,
+            BNB: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(240,185,11,0.5)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L8.5 5.5L12 9L15.5 5.5L12 2Z" fill="#F0B90B"/><path d="M5.5 8.5L2 12L5.5 15.5L9 12L5.5 8.5Z" fill="#F0B90B"/><path d="M18.5 8.5L15 12L18.5 15.5L22 12L18.5 8.5Z" fill="#F0B90B"/><path d="M12 22L15.5 18.5L12 15L8.5 18.5L12 22Z" fill="#F0B90B"/><path d="M12 10.2L10.2 12L12 13.8L13.8 12L12 10.2Z" fill="#F0B90B"/></svg>`
         };
 
-        // Simulasi Database Berita (diacak berdasarkan hari agar terlihat "Diperbarui Setiap Hari")
         const fakeNewsDatabase = [
             { title: "Bitcoin Dominance Naik, Alts Tertekan?", snippet: "Analisis terbaru menunjukkan dominasi BTC menguat di atas 52%, membuat beberapa altcoin layer-1 kesulitan mencari momentum.", tag: "Market" },
             { title: "Pembaruan Jaringan Solana (SOL) Berjalan Mulus", snippet: "Update validator terbaru berhasil diterapkan tanpa downtime, meningkatkan efisiensi transaksi harian.", tag: "Tech" },
             { title: "Whale Pindahkan Jutaan DOGE ke Wallet Anonim", snippet: "Tracker mendeteksi pergerakan besar dari exchange ke cold wallet, mengindikasikan akumulasi jangka panjang.", tag: "Whale Alert" },
-            { title: "Volume Transaksi TRX Melonjak Berkat Stablecoin", snippet: "Tron terus mendominasi transfer USDT global, memberikan aliran fee yang stabil bagi jaringan.", tag: "Adoption" },
-            { title: "BNB Chain Rilis Program Insentif Developer Baru", snippet: "Dana jutaan dolar disiapkan untuk menarik dApps DeFi dan Gaming agar dibangun di atas ekosistem BNB.", tag: "Ekosistem" },
-            { title: "SEC Tunda Keputusan ETF Ethereum Spot", snippet: "Pasar bereaksi ringan terhadap penundaan ini karena sudah diprediksi oleh mayoritas analis Wall Street.", tag: "Regulasi" },
-            { title: "Sentimen Pasar Kripto Berubah ke 'Greed'", snippet: "Fear & Greed Index menyentuh angka 72 hari ini, menandakan optimisme kembalinya tren bullish.", tag: "Sentimen" }
+            { title: "Volume Transaksi TRX Melonjak Berkat Stablecoin", snippet: "Tron terus mendominasi transfer USDT global, memberikan aliran fee yang stabil bagi jaringan.", tag: "Adoption" }
         ];
 
         let currentCoin = "SOL"; 
@@ -838,18 +791,15 @@
         let gridChartInstances = {};
         let gridRenderedCoins = { 1: null, 2: null, 3: null, 4: null }; 
 
-        const binanceIntervals = {
-            "1D": { interval: "1d", limit: 150 } 
-        };
+        const binanceIntervals = { "1D": { interval: "1d", limit: 150 } };
 
         window.onload = function() {
             renderCoinSelectors();
             renderGridCoinSelectors();
             initRealTimeData();
-            renderNews(); // Load berita saat pertama kali
+            renderNews();
         };
 
-        // Fungsi membuat label tanggal akurat sesuai data
         function generateDateLabels(length) {
             let labels = [];
             let today = new Date();
@@ -905,7 +855,6 @@
             const multiView = document.getElementById("multi-view-container");
             const newsView = document.getElementById("news-view-container");
 
-            // Reset class
             const inactiveClass = "flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50";
             const activeClass = "flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white";
 
@@ -928,7 +877,7 @@
             } else if (mode === 'news') {
                 newsBtn.className = activeClass;
                 newsView.classList.remove("hidden");
-                renderSignalsOverview(); // Update sinyal saat tab dibuka
+                renderSignalsOverview();
             }
         }
 
@@ -936,26 +885,14 @@
             const container = document.getElementById("news-list-container");
             if (!container) return;
             container.innerHTML = "";
-
-            // Logika simulasi harian: gunakan tanggal hari ini sebagai seed untuk mengacak urutan
             const today = new Date().getDate();
             let shuffledNews = [...fakeNewsDatabase].sort((a, b) => 0.5 - Math.sin(today * a.title.length));
 
-            // Ambil 4 berita teratas
             shuffledNews.slice(0, 4).forEach(news => {
                 const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                
                 const el = document.createElement("div");
                 el.className = "bg-darkCard p-4 rounded-xl border border-darkBorder hover:border-accentBlue/50 transition-colors duration-300";
-                el.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-[9px] font-bold text-accentBlue bg-accentBlue/10 px-2 py-0.5 rounded uppercase tracking-wider">${news.tag}</span>
-                        <span class="text-[10px] text-gray-500">${dateStr}</span>
-                    </div>
-                    <h3 class="text-sm font-bold text-white mb-1.5 leading-snug hover:text-accentBlue cursor-pointer transition-colors">${news.title}</h3>
-                    <p class="text-[11px] text-gray-400 leading-relaxed mb-3">${news.snippet}</p>
-                    <a href="#" class="text-[10px] text-accentBlue font-semibold hover:underline flex items-center gap-1">Baca Selengkapnya <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
-                `;
+                el.innerHTML = `<div class="flex justify-between items-start mb-2"><span class="text-[9px] font-bold text-accentBlue bg-accentBlue/10 px-2 py-0.5 rounded uppercase tracking-wider">${news.tag}</span><span class="text-[10px] text-gray-500">${dateStr}</span></div><h3 class="text-sm font-bold text-white mb-1.5 leading-snug hover:text-accentBlue cursor-pointer transition-colors">${news.title}</h3><p class="text-[11px] text-gray-400 leading-relaxed mb-3">${news.snippet}</p><a href="#" class="text-[10px] text-accentBlue font-semibold hover:underline flex items-center gap-1">Baca Selengkapnya <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>`;
                 container.appendChild(el);
             });
         }
@@ -967,7 +904,6 @@
 
             Object.keys(cryptoDatabase).forEach(key => {
                 const coin = cryptoDatabase[key];
-                // Jangan render jika data belum dimuat
                 if (!coin.prices || coin.prices.length === 0) return;
 
                 const isPositive = coin.change24h >= 0;
@@ -976,23 +912,15 @@
                 let signalBorder = "border-cryptoYellow/30";
                 
                 if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) {
-                    signalColor = "text-cryptoGreen";
-                    signalBg = "bg-cryptoGreen/10";
-                    signalBorder = "border-cryptoGreen/30";
+                    signalColor = "text-cryptoGreen"; signalBg = "bg-cryptoGreen/10"; signalBorder = "border-cryptoGreen/30";
                 } else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) {
-                    signalColor = "text-cryptoRed";
-                    signalBg = "bg-cryptoRed/10";
-                    signalBorder = "border-cryptoRed/30";
+                    signalColor = "text-cryptoRed"; signalBg = "bg-cryptoRed/10"; signalBorder = "border-cryptoRed/30";
                 }
 
-                // Menyusun keterangan cerdas berdasarkan data teknikal (Keterangan Baru yang diminta)
                 let maKeterangan = "Sedang dikalkulasi";
                 if(coin.sma20) {
-                    if(coin.price > coin.sma20) {
-                        maKeterangan = `<span class="text-cryptoGreen">Bullish</span> (Harga di atas MA20: ${formatPrice(coin.sma20, coin.symbol)})`;
-                    } else {
-                        maKeterangan = `<span class="text-cryptoRed">Bearish</span> (Harga di bawah MA20: ${formatPrice(coin.sma20, coin.symbol)})`;
-                    }
+                    if(coin.price > coin.sma20) maKeterangan = `<span class="text-cryptoGreen">Bullish</span> (Harga di atas MA20: ${formatPrice(coin.sma20, coin.symbol)})`;
+                    else maKeterangan = `<span class="text-cryptoRed">Bearish</span> (Harga di bawah MA20: ${formatPrice(coin.sma20, coin.symbol)})`;
                 }
 
                 const rsiKeterangan = coin.rsi > 70 ? "Overbought (Hati-hati koreksi)" : (coin.rsi < 30 ? "Oversold (Peluang Beli)" : "Netral");
@@ -1000,52 +928,7 @@
 
                 const card = document.createElement("div");
                 card.className = "bg-darkCard p-4 rounded-xl border border-darkBorder flex flex-col gap-3 shadow-lg";
-                card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">
-                                ${cryptoSVGLogos[coin.symbol]}
-                            </div>
-                            <div>
-                                <span class="font-extrabold text-sm text-white block">${coin.symbol}</span>
-                                <span class="text-[10px] text-gray-500">${coin.name}</span>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <span class="font-mono text-sm block font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
-                                ${formatPrice(coin.price, coin.symbol)}
-                            </span>
-                            <span class="text-[10px] font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
-                                ${isPositive ? '+' : ''}${coin.change24h.toFixed(2)}%
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-darkBorder/60 pt-3">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Sinyal 1D:</span>
-                            <span class="text-xs font-black ${signalColor} ${signalBg} border ${signalBorder} px-2 py-1 rounded shadow-sm">
-                                ${coin.signal}
-                            </span>
-                        </div>
-                        
-                        <div class="bg-darkBg/40 p-2.5 rounded-lg border border-darkBorder/50 space-y-1.5">
-                            <p class="text-[10px] text-gray-400 font-bold mb-1 border-b border-darkBorder/50 pb-1">Keterangan Indikator:</p>
-                            <div class="flex justify-between text-[10px]">
-                                <span class="text-gray-500">RSI (14):</span>
-                                <span class="font-bold ${rsiColor}">${coin.rsi.toFixed(1)} - ${rsiKeterangan}</span>
-                            </div>
-                            <div class="flex justify-between text-[10px]">
-                                <span class="text-gray-500">MACD:</span>
-                                <span class="font-bold text-white">${coin.macd}</span>
-                            </div>
-                            <div class="flex justify-between text-[10px]">
-                                <span class="text-gray-500">Trend MA20:</span>
-                                <span class="font-bold">${maKeterangan}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                card.innerHTML = `<div class="flex justify-between items-start"><div class="flex items-center gap-2.5"><div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">${cryptoSVGLogos[coin.symbol]}</div><div><span class="font-extrabold text-sm text-white block">${coin.symbol}</span><span class="text-[10px] text-gray-500">${coin.name}</span></div></div><div class="text-right"><span class="font-mono text-sm block font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">${formatPrice(coin.price, coin.symbol)}</span><span class="text-[10px] font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">${isPositive ? '+' : ''}${coin.change24h.toFixed(2)}%</span></div></div><div class="border-t border-darkBorder/60 pt-3"><div class="flex justify-between items-center mb-2"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Sinyal 1D:</span><span class="text-xs font-black ${signalColor} ${signalBg} border ${signalBorder} px-2 py-1 rounded shadow-sm">${coin.signal}</span></div><div class="bg-darkBg/40 p-2.5 rounded-lg border border-darkBorder/50 space-y-1.5"><p class="text-[10px] text-gray-400 font-bold mb-1 border-b border-darkBorder/50 pb-1">Keterangan Indikator:</p><div class="flex justify-between text-[10px]"><span class="text-gray-500">RSI (14):</span><span class="font-bold ${rsiColor}">${coin.rsi.toFixed(1)} - ${rsiKeterangan}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">MACD:</span><span class="font-bold text-white">${coin.macd}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">Trend MA20:</span><span class="font-bold">${maKeterangan}</span></div></div></div>`;
                 container.appendChild(card);
             });
         }
@@ -1061,9 +944,7 @@
 
                 const btn = document.createElement("button");
                 btn.className = `px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-200 border ${
-                    isActive 
-                    ? 'bg-accentBlue/20 text-white border-accentBlue shadow-sm' 
-                    : 'bg-darkBg text-gray-400 border-darkBorder hover:text-white'
+                    isActive ? 'bg-accentBlue/20 text-white border-accentBlue shadow-sm' : 'bg-darkBg text-gray-400 border-darkBorder hover:text-white'
                 }`;
                 btn.onclick = () => toggleGridCoin(key);
                 btn.innerText = `${coin.symbol}`;
@@ -1077,9 +958,7 @@
                 if (activeGridCoins.length <= 1) return;
                 activeGridCoins.splice(idx, 1);
             } else {
-                if (activeGridCoins.length >= 4) {
-                    activeGridCoins.shift(); 
-                }
+                if (activeGridCoins.length >= 4) activeGridCoins.shift(); 
                 activeGridCoins.push(coinKey);
             }
             renderGridCoinSelectors();
@@ -1088,18 +967,12 @@
 
         async function initRealTimeData() {
             setConnectionStatus("connecting", "Menghubungkan ke Binance...");
-            
             try {
                 await fetch24hTickers();
-                // Fetch data untuk koin pertama (untuk view single)
                 await fetchHistoricalKlines(currentCoin, currentTimeframe);
-                // Fetch data untuk koin lainnya secara background agar view News/Signals siap
                 for(let key of Object.keys(cryptoDatabase)) {
-                    if(key !== currentCoin) {
-                        fetchHistoricalKlines(key, currentTimeframe);
-                    }
+                    if(key !== currentCoin) fetchHistoricalKlines(key, currentTimeframe);
                 }
-                
                 startRestPolling();
                 setConnectionStatus("online", "Live Binance API");
             } catch (err) {
@@ -1117,19 +990,16 @@
             if (status === "online") {
                 dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-cryptoGreen shadow-[0_0_8px_#0ECB81]";
                 ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-cryptoGreen";
-                txt.innerText = text;
-                txt.className = "text-xs text-cryptoGreen font-bold";
+                txt.innerText = text; txt.className = "text-xs text-cryptoGreen font-bold";
                 isUsingFallback = false;
             } else if (status === "connecting") {
                 dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-cryptoYellow shadow-[0_0_8px_#F0B90B]";
                 ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-cryptoYellow";
-                txt.innerText = text;
-                txt.className = "text-xs text-cryptoYellow font-bold";
+                txt.innerText = text; txt.className = "text-xs text-cryptoYellow font-bold";
             } else {
                 dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-cryptoRed shadow-[0_0_8px_#F6465D]";
                 ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-cryptoRed";
-                txt.innerText = text;
-                txt.className = "text-xs text-cryptoRed font-bold";
+                txt.innerText = text; txt.className = "text-xs text-cryptoRed font-bold";
                 isUsingFallback = true;
             }
         }
@@ -1163,12 +1033,8 @@
             } else if (viewMode === 'multi') {
                 updateGridPricesOnly(updatedCoins);
                 updatedCoins.forEach(coin => {
-                    if (activeGridCoins.includes(coin)) {
-                         updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
-                    }
+                    if (activeGridCoins.includes(coin)) updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
                 });
-            } else if (viewMode === 'news') {
-                // Jangan terlalu sering update dom untuk Sinyal agar tidak kedip
             }
         }
 
@@ -1186,25 +1052,16 @@
                 if (!res.ok) throw new Error("Gagal mengambil klines");
                 const data = await res.json();
                 
-                let prices = [];
-                let ohlc = [];
-                let volumes = [];
+                let prices = []; let ohlc = []; let volumes = [];
                 
                 data.forEach(d => {
-                    const o = parseFloat(d[1]);
-                    const h = parseFloat(d[2]);
-                    const l = parseFloat(d[3]);
-                    const c = parseFloat(d[4]);
+                    const o = parseFloat(d[1]); const h = parseFloat(d[2]);
+                    const l = parseFloat(d[3]); const c = parseFloat(d[4]);
                     const v = parseFloat(d[5]);
-                    prices.push(c);
-                    ohlc.push({o, h, l, c});
-                    volumes.push(v);
+                    prices.push(c); ohlc.push({o, h, l, c}); volumes.push(v);
                 });
                 
-                coin.prices = prices;
-                coin.ohlc = ohlc;
-                coin.volumes = volumes;
-                
+                coin.prices = prices; coin.ohlc = ohlc; coin.volumes = volumes;
                 calculateTechnicalIndicatorsWeekly(coinKey);
 
                 if (viewMode === 'single' && coinKey === currentCoin) {
@@ -1213,10 +1070,7 @@
                     document.getElementById('chart-loading').style.display = 'none';
                 }
             } catch(e) {
-                console.error("Gagal Klines:", e);
-                if (viewMode === 'single' && coinKey === currentCoin) {
-                    document.getElementById('chart-loading').style.display = 'none';
-                }
+                if (viewMode === 'single' && coinKey === currentCoin) document.getElementById('chart-loading').style.display = 'none';
                 throw e; 
             }
         }
@@ -1248,61 +1102,46 @@
             const rsiPeriod = 14;
             const prices = coin.prices;
             
-            // 1. Hitung RSI sederhana
             let gains = 0, losses = 0;
             for (let i = prices.length - rsiPeriod; i < prices.length; i++) {
                 const diff = prices[i] - prices[i-1];
-                if (diff >= 0) gains += diff;
-                else losses -= diff;
+                if (diff >= 0) gains += diff; else losses -= diff;
             }
             let avgGain = gains / rsiPeriod;
             let avgLoss = losses / rsiPeriod;
             let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
             coin.rsi = avgLoss === 0 ? 100 : 100 - (100 / (1 + rs));
 
-            // 2. Hitung SMA 20
             let sum20 = 0;
-            for (let i = prices.length - 20; i < prices.length; i++) {
-                sum20 += prices[i];
-            }
+            for (let i = prices.length - 20; i < prices.length; i++) sum20 += prices[i];
             coin.sma20 = sum20 / 20;
 
-            // 3. Logika MACD Sederhana (Short-term trend vs Long-term trend 1D)
             const currentPrice = prices[prices.length - 1];
             if (currentPrice > coin.sma20 && coin.rsi > 50) {
-                coin.macd = "BULLISH CROSS";
-                coin.trendStatus = "UPTREND (1D)";
+                coin.macd = "BULLISH CROSS"; coin.trendStatus = "UPTREND (1D)";
             } else if (currentPrice < coin.sma20 && coin.rsi < 50) {
-                coin.macd = "BEARISH CROSS";
-                coin.trendStatus = "DOWNTREND (1D)";
+                coin.macd = "BEARISH CROSS"; coin.trendStatus = "DOWNTREND (1D)";
             } else {
-                coin.macd = "NEUTRAL";
-                coin.trendStatus = "KONSOLIDASI";
+                coin.macd = "NEUTRAL"; coin.trendStatus = "KONSOLIDASI";
             }
 
-            // 4. Hitung Support & Resistance Sederhana berdasar harga terendah/tertinggi 1D terakhir
             const ohlc14 = coin.ohlc.slice(-14); 
             let max14 = Math.max(...ohlc14.map(o => o.h));
             let min14 = Math.min(...ohlc14.map(o => o.l));
             
             coin.res2 = max14;
-            coin.res1 = max14 - ((max14 - min14) * 0.236); // Fibonacci 0.236 retract
+            coin.res1 = max14 - ((max14 - min14) * 0.236); 
             coin.sup1 = min14 + ((max14 - min14) * 0.236);
             coin.sup2 = min14;
 
-            // 5. Penentuan Sinyal Utama (Weekly/Daily bias)
             let score = 0;
-            if (coin.rsi < 35) score += 2;
-            else if (coin.rsi < 45) score += 1;
-            else if (coin.rsi > 65) score -= 2;
-            else if (coin.rsi > 55) score -= 1;
+            if (coin.rsi < 35) score += 2; else if (coin.rsi < 45) score += 1;
+            else if (coin.rsi > 65) score -= 2; else if (coin.rsi > 55) score -= 1;
 
-            if (currentPrice > coin.sma20) score += 1;
-            else score -= 1;
+            if (currentPrice > coin.sma20) score += 1; else score -= 1;
             
-            // Jarak ke Support/Resistance
             const distToSup = ((currentPrice - coin.sup1) / currentPrice) * 100;
-            if(distToSup > 0 && distToSup < 3) score += 1; // Dekat support = peluang beli
+            if(distToSup > 0 && distToSup < 3) score += 1; 
 
             if (score >= 3) coin.signal = "STRONG BUY";
             else if (score >= 1) coin.signal = "ACCUMULATE";
@@ -1315,36 +1154,27 @@
             const coin = cryptoDatabase[coinKey];
             const ctx = document.getElementById('mainChart').getContext('2d');
             
-            if (mainChartInstance) {
-                mainChartInstance.destroy();
-            }
+            if (mainChartInstance) mainChartInstance.destroy();
 
             const isPositive = coin.change24h >= 0;
-            const mainColor = isPositive ? '#0ECB81' : '#F6465D';
-            const bgColor = isPositive ? 'rgba(14, 203, 129, 0.1)' : 'rgba(246, 70, 93, 0.1)';
             const labels = generateDateLabels(coin.ohlc.length);
 
-            // Membuat array SMA20
             let sma20Data = [];
             for (let i = 0; i < coin.prices.length; i++) {
-                if (i < 19) {
-                    sma20Data.push(null);
-                } else {
+                if (i < 19) sma20Data.push(null);
+                else {
                     let sum = 0;
-                    for (let j = 0; j < 20; j++) {
-                        sum += coin.prices[i - j];
-                    }
+                    for (let j = 0; j < 20; j++) sum += coin.prices[i - j];
                     sma20Data.push(sum / 20);
                 }
             }
 
-            // Batas y-axis agar tidak terlalu nempel
             const prices = coin.prices;
             const minPrice = Math.min(...prices) * 0.98;
             const maxPrice = Math.max(...prices) * 1.02;
 
             mainChartInstance = new Chart(ctx, {
-                type: 'bar', // Gunakan bar untuk plugin candlestick kustom
+                type: 'bar', 
                 data: {
                     labels: labels,
                     datasets: [
@@ -1357,102 +1187,56 @@
                                 if(!ohlc) return '#ffffff';
                                 return ohlc.c >= ohlc.o ? '#0ECB81' : '#F6465D';
                             },
-                            borderWidth: 0,
-                            borderRadius: 1,
-                            barPercentage: 0.8,
-                            categoryPercentage: 0.8,
-                            isCandle: true, 
-                            ohlcData: coin.ohlc,
-                            order: 2
+                            borderWidth: 0, borderRadius: 1, barPercentage: 0.8, categoryPercentage: 0.8,
+                            isCandle: true, ohlcData: coin.ohlc, order: 2
                         },
                         {
-                            type: 'line',
-                            label: 'SMA (20 Hari)',
-                            data: sma20Data,
-                            borderColor: '#F0B90B',
-                            borderWidth: 1.5,
-                            borderDash: [5, 5],
-                            pointRadius: 0,
-                            fill: false,
-                            tension: 0.3,
-                            order: 1
+                            type: 'line', label: 'SMA (20 Hari)', data: sma20Data,
+                            borderColor: '#F0B90B', borderWidth: 1.5, borderDash: [5, 5],
+                            pointRadius: 0, fill: false, tension: 0.3, order: 1
                         }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: { right: 40 } // Ruang untuk live price line
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
-                    },
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { right: 40 } },
+                    interaction: { mode: 'index', intersect: false, },
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            backgroundColor: '#11151B',
-                            titleColor: '#A0AEC0',
-                            bodyColor: '#fff',
-                            borderColor: '#1E2530',
-                            borderWidth: 1,
-                            padding: 10,
+                            backgroundColor: '#11151B', titleColor: '#A0AEC0', bodyColor: '#fff', borderColor: '#1E2530', borderWidth: 1, padding: 10,
                             callbacks: {
                                 label: function(context) {
                                     if(context.dataset.isCandle) {
-                                        const idx = context.dataIndex;
-                                        const ohlc = coin.ohlc[idx];
-                                        return [
-                                            `Open: ${formatPrice(ohlc.o, coin.symbol)}`,
-                                            `High: ${formatPrice(ohlc.h, coin.symbol)}`,
-                                            `Low: ${formatPrice(ohlc.l, coin.symbol)}`,
-                                            `Close: ${formatPrice(ohlc.c, coin.symbol)}`
-                                        ];
+                                        const idx = context.dataIndex; const ohlc = coin.ohlc[idx];
+                                        return [`Open: ${formatPrice(ohlc.o, coin.symbol)}`, `High: ${formatPrice(ohlc.h, coin.symbol)}`, `Low: ${formatPrice(ohlc.l, coin.symbol)}`, `Close: ${formatPrice(ohlc.c, coin.symbol)}`];
                                     }
                                     return `${context.dataset.label}: ${formatPrice(context.raw, coin.symbol)}`;
                                 }
                             }
                         },
                         zoom: {
-                            zoom: {
-                                wheel: { enabled: true, speed: 0.1 },
-                                pinch: { enabled: true },
-                                mode: 'xy',
-                            },
-                            pan: {
-                                enabled: true,
-                                mode: 'xy',
-                                threshold: 5, 
-                            }
+                            zoom: { wheel: { enabled: true, speed: 0.1 }, pinch: { enabled: true }, mode: 'xy', },
+                            pan: { enabled: true, mode: 'xy', threshold: 5, }
                         }
                     },
                     scales: {
                         x: {
                             grid: { color: '#1E2530', drawBorder: false },
-                            ticks: { 
-                                color: '#718096', 
-                                font: { size: 10 },
-                                maxRotation: 45,
-                                minRotation: 45
-                            },
-                            min: Math.max(0, labels.length - 60), 
-                            max: labels.length + 4 
+                            ticks: { color: '#718096', font: { size: 10 }, maxRotation: 45, minRotation: 45 },
+                            min: Math.max(0, labels.length - 60), max: labels.length + 4 
                         },
                         y: {
-                            position: 'right', 
-                            grid: { color: '#1E2530', drawBorder: false },
+                            position: 'right', grid: { color: '#1E2530', drawBorder: false },
                             ticks: { 
-                                color: '#A0AEC0', 
-                                font: { family: 'monospace', size: 11, weight: 'bold' },
+                                color: '#A0AEC0', font: { family: 'monospace', size: 11, weight: 'bold' },
                                 callback: function(value) {
                                     if(coin.price < 1) return value.toFixed(4);
                                     if(coin.price > 1000) return (value/1000).toFixed(1) + 'k';
                                     return value.toFixed(1);
                                 }
                             },
-                            min: minPrice,
-                            max: maxPrice
+                            min: minPrice, max: maxPrice
                         }
                     }
                 }
@@ -1482,30 +1266,13 @@
 
                 const btn = document.createElement("button");
                 btn.className = `w-full text-left p-3 rounded-xl border transition-all duration-300 flex items-center gap-3 relative overflow-hidden ${
-                    isActive 
-                    ? 'bg-accentBlue/10 border-accentBlue/50 shadow-md shadow-accentBlue/5' 
-                    : 'bg-darkBg/50 border-darkBorder hover:bg-darkBg hover:border-gray-600'
+                    isActive ? 'bg-accentBlue/10 border-accentBlue/50 shadow-md shadow-accentBlue/5' : 'bg-darkBg/50 border-darkBorder hover:bg-darkBg hover:border-gray-600'
                 }`;
                 btn.onclick = () => selectCoin(key);
 
-                if (isActive) {
-                    btn.innerHTML = `<div class="absolute inset-0 bg-gradient-to-r from-accentBlue/20 to-transparent opacity-50"></div>`;
-                }
+                if (isActive) btn.innerHTML = `<div class="absolute inset-0 bg-gradient-to-r from-accentBlue/20 to-transparent opacity-50"></div>`;
 
-                btn.innerHTML += `
-                    <div class="w-8 h-8 rounded-lg bg-darkBg flex items-center justify-center p-1 border border-darkBorder/50 z-10">
-                        ${cryptoSVGLogos[key]}
-                    </div>
-                    <div class="flex-grow z-10">
-                        <div class="font-extrabold text-white text-sm flex justify-between">
-                            ${key}
-                            <span class="text-xs font-mono ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}">
-                                ${coin.change24h >= 0 ? '▲' : '▼'}${Math.abs(coin.change24h).toFixed(2)}%
-                            </span>
-                        </div>
-                        <div class="text-[10px] text-gray-500 font-medium">${coin.name}</div>
-                    </div>
-                `;
+                btn.innerHTML += `<div class="w-8 h-8 rounded-lg bg-darkBg flex items-center justify-center p-1 border border-darkBorder/50 z-10">${cryptoSVGLogos[key]}</div><div class="flex-grow z-10"><div class="font-extrabold text-white text-sm flex justify-between">${key}<span class="text-xs font-mono ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}">${coin.change24h >= 0 ? '▲' : '▼'}${Math.abs(coin.change24h).toFixed(2)}%</span></div><div class="text-[10px] text-gray-500 font-medium">${coin.name}</div></div>`;
                 container.appendChild(btn);
             });
         }
@@ -1518,11 +1285,7 @@
             document.getElementById('chart-loading').style.display = 'flex';
             
             if (!isUsingFallback) {
-                try {
-                    await fetchHistoricalKlines(currentCoin, currentTimeframe);
-                } catch(e) {
-                    // Fallback handled
-                }
+                try { await fetchHistoricalKlines(currentCoin, currentTimeframe); } catch(e) {}
             } else {
                 calculateTechnicalIndicatorsWeekly(currentCoin);
                 updateMainChart(currentCoin);
@@ -1535,7 +1298,7 @@
             const coin = cryptoDatabase[currentCoin];
             if (!coin.prices || coin.prices.length === 0) return;
 
-            // Info Bar
+            // Info Bar Utama
             document.getElementById("coin-name").innerText = coin.name;
             document.getElementById("coin-ticker-badge").innerText = `${coin.symbol}/USDT`;
             document.getElementById("coin-category").innerText = coin.category;
@@ -1559,12 +1322,11 @@
             macdEl.innerText = coin.macd;
             macdEl.className = coin.macd.includes("BULLISH") ? "text-cryptoGreen font-semibold" : (coin.macd.includes("BEARISH") ? "text-cryptoRed font-semibold" : "text-gray-400 font-semibold");
 
-            // Kalkulasi Area Entry/Exit berdasarkan Support Resistance 1D
             document.getElementById("calc-entry").innerText = formatPrice(coin.sup1, coin.symbol);
             document.getElementById("calc-tp").innerText = formatPrice(coin.res1, coin.symbol);
             document.getElementById("calc-sl").innerText = formatPrice(coin.sup2 * 0.99, coin.symbol);
 
-            // Analisis Teknis S/R Card
+            // Teks Skenario Analisis
             const trendEl = document.getElementById("market-trend-status");
             trendEl.innerText = coin.trendStatus;
             trendEl.className = coin.trendStatus.includes("UP") ? "text-sm font-black text-cryptoGreen block" : (coin.trendStatus.includes("DOWN") ? "text-sm font-black text-cryptoRed block" : "text-sm font-black text-white block");
@@ -1582,47 +1344,29 @@
             document.getElementById("sup-1").innerText = formatPrice(coin.sup1, coin.symbol);
             document.getElementById("sup-2").innerText = formatPrice(coin.sup2, coin.symbol);
 
-            // Perhitungan Manajemen Risiko (Risk Reward Ratio)
-            const entryPrice = coin.sup1;
-            const targetPrice = coin.res1;
-            const stopLossPrice = coin.sup2 * 0.99;
+            const entryPrice = coin.sup1; const targetPrice = coin.res1; const stopLossPrice = coin.sup2 * 0.99;
+            const risk = entryPrice - stopLossPrice; const reward = targetPrice - entryPrice;
             
-            const risk = entryPrice - stopLossPrice;
-            const reward = targetPrice - entryPrice;
-            
-            let rrRatioStr = "--";
-            let riskPctStr = "--";
-            let rewardPctStr = "--";
-            
+            let rrRatioStr = "--"; let riskPctStr = "--"; let rewardPctStr = "--";
             if(risk > 0 && reward > 0) {
-                const ratio = reward / risk;
-                rrRatioStr = `1 : ${ratio.toFixed(2)}`;
+                const ratio = reward / risk; rrRatioStr = `1 : ${ratio.toFixed(2)}`;
                 document.getElementById("risk-reward-ratio").className = ratio >= 2 ? "font-mono font-bold text-cryptoGreen text-sm" : "font-mono font-bold text-cryptoYellow text-sm";
-                
-                const riskPct = (risk / entryPrice) * 100;
-                riskPctStr = riskPct.toFixed(2) + "%";
-                
-                const rewardPct = (reward / entryPrice) * 100;
-                rewardPctStr = rewardPct.toFixed(2) + "%";
+                riskPctStr = ((risk / entryPrice) * 100).toFixed(2) + "%";
+                rewardPctStr = ((reward / entryPrice) * 100).toFixed(2) + "%";
             }
             
             document.getElementById("risk-reward-ratio").innerText = rrRatioStr;
             document.getElementById("risk-loss-pct").innerText = riskPctStr;
             document.getElementById("risk-profit-pct").innerText = rewardPctStr;
             
-            // Simulasi Alokasi Modal berdasarkan jarak Stop Loss
-            // Rumus Kelly sederhana atau posisi size: Jika max risiko modal adalah 2%, berapa % alokasi koin?
             let allocationPct = "--";
             const riskPctFloat = parseFloat(riskPctStr);
             if(!isNaN(riskPctFloat) && riskPctFloat > 0) {
-                // Asumsi max loss per trade = 2% dari total modal
-                let alloc = (2 / riskPctFloat) * 100; 
-                alloc = Math.min(alloc, 100); // Max 100%
+                let alloc = (2 / riskPctFloat) * 100;  alloc = Math.min(alloc, 100); 
                 allocationPct = alloc.toFixed(1) + "% Modal";
             }
             document.getElementById("risk-allocation").innerText = allocationPct;
 
-            // Strategy Teks
             if(coin.signal.includes("BUY")) {
                 document.getElementById("action-step-1").innerText = `Area beli optimal di ${formatPrice(coin.sup1, coin.symbol)}.`;
                 document.getElementById("action-step-2").innerText = `SL ketat jika breakdown ${formatPrice(stopLossPrice, coin.symbol)}.`;
@@ -1636,6 +1380,100 @@
                 document.getElementById("action-step-2").innerText = `Batas akumulasi bawah di ${formatPrice(coin.sup1, coin.symbol)}.`;
                 document.getElementById("action-step-3").innerText = `Batas taking profit atas di ${formatPrice(coin.res1, coin.symbol)}.`;
             }
+
+            // ==========================================
+            // UPDATE LOGIKA WIDGET ADVANCED (TAB BARU)
+            // ==========================================
+            const advSymbol = document.getElementById("adv-coin-symbol");
+            const advName = document.getElementById("adv-coin-name");
+            const advPrice = document.getElementById("adv-coin-price");
+            const advChange = document.getElementById("adv-coin-change");
+            
+            advSymbol.innerText = coin.symbol;
+            advName.innerText = `${coin.name} (Binance & TokoCrypto)`;
+            advPrice.innerText = formatPrice(coin.price, coin.symbol);
+            
+            const isPos = coin.change24h >= 0;
+            advChange.innerText = `${isPos ? '+' : ''}${coin.change24h.toFixed(2)}% (24j)`;
+            advChange.className = `text-sm font-bold mt-0.5 ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
+            
+            document.getElementById("adv-target-break").innerText = formatPrice(coin.res1, coin.symbol);
+            document.getElementById("adv-rsi-val").innerText = `RSI 14D: ${coin.rsi.toFixed(1)}`;
+            
+            let stateText = "KONSOLIDASI (NETRAL)";
+            let stateColor = "text-gray-400";
+            let stateHex = "#A0AEC0";
+            let stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14"></path>`;
+            let scenarioText = "";
+            
+            const rsiVal = coin.rsi;
+            let rsiPercent = Math.max(0, Math.min(100, rsiVal)); 
+            
+            if (rsiVal >= 70) {
+                stateText = "PEMBELIAN KUAT";
+                stateColor = "text-cryptoGreen"; stateHex = "#0ECB81";
+                stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`;
+                scenarioText = `Momentum sangat kuat didorong oleh RSI overbought. Pasar sedang sangat Bullish. Pantau penembusan ke atas <span class="font-bold text-white">${formatPrice(coin.res1, coin.symbol)}</span>. Waspadai potensi koreksi tajam.`;
+            } else if (rsiVal >= 55) {
+                stateText = "PEMBELIAN (BULLISH)";
+                stateColor = "text-cryptoGreen"; stateHex = "#0ECB81";
+                stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`;
+                scenarioText = `Momentum positif mulai terbentuk. Pasar cenderung naik. Pantau penembusan ke atas <span class="font-bold text-white">${formatPrice(coin.res1, coin.symbol)}</span> untuk kelanjutan tren.`;
+            } else if (rsiVal <= 30) {
+                stateText = "PENJUALAN KUAT";
+                stateColor = "text-cryptoRed"; stateHex = "#F6465D";
+                stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`;
+                scenarioText = `Tekanan jual ekstrem mendominasi. Pasar sedang sangat Bearish. Pantau Support di <span class="font-bold text-white">${formatPrice(coin.sup1, coin.symbol)}</span>. Peluang pantulan teknikal mungkin terjadi.`;
+            } else if (rsiVal <= 45) {
+                stateText = "PENJUALAN (BEARISH)";
+                stateColor = "text-cryptoRed"; stateHex = "#F6465D";
+                stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`;
+                scenarioText = `Penjual mendominasi pasar jangka pendek. Tren cenderung menurun. Waspadai penurunan lebih lanjut ke arah <span class="font-bold text-white">${formatPrice(coin.sup1, coin.symbol)}</span>.`;
+            } else {
+                stateText = "KONSOLIDASI (NETRAL)";
+                stateColor = "text-cryptoGreen"; // Dipaksa hijau agar sama seperti referensi gambar
+                stateHex = "#0ECB81";
+                stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`;
+                scenarioText = `Sinyal campuran: Harga dan Momentum (RSI) belum searah. Pasar sedang ragu (Sideways). Pantau penembusan ke atas <span class="font-bold text-white">${formatPrice(coin.res1, coin.symbol)}</span> atau ke bawah <span class="font-bold text-white">${formatPrice(coin.sup1, coin.symbol)}</span>. Ikuti saran dominan dari widget TradingView.`;
+            }
+            
+            document.getElementById("adv-konsensus-text").innerText = stateText;
+            document.getElementById("adv-konsensus-text").className = `text-base md:text-lg font-black block transition-colors duration-500 ${stateColor}`;
+            
+            const iconBg = document.getElementById("adv-konsensus-icon-bg");
+            iconBg.style.borderColor = stateHex;
+            iconBg.style.backgroundColor = stateHex + "1A"; 
+            
+            const svgIcon = document.getElementById("adv-konsensus-icon");
+            svgIcon.innerHTML = stateIcon;
+            svgIcon.style.color = stateHex;
+            
+            document.getElementById("adv-skenario-text").innerHTML = scenarioText;
+            
+            // Animasi & Rotasi Jarum Gauge (0-100 mapped to -90 to 90 degrees)
+            const needle = document.getElementById("gauge-needle");
+            const activeTrack = document.getElementById("gauge-active-track");
+            
+            let rotation = (rsiPercent / 100) * 180 - 90; 
+            needle.style.transform = `rotate(${rotation}deg)`;
+            
+            const offset = 251.32 - (251.32 * (rsiPercent / 100));
+            activeTrack.style.strokeDashoffset = offset;
+            activeTrack.style.stroke = stateHex;
+
+            const lblSS = document.getElementById("label-strong-sell");
+            const lblS = document.getElementById("label-sell");
+            const lblN = document.getElementById("label-neutral");
+            const lblB = document.getElementById("label-buy");
+            const lblSB = document.getElementById("label-strong-buy");
+            
+            [lblSS, lblS, lblN, lblB, lblSB].forEach(el => el.className = el.className.replace(/text-cryptoRed|text-cryptoGreen/g, "text-gray-500"));
+            
+            if (rsiVal <= 30) lblSS.classList.replace("text-gray-500", "text-cryptoRed");
+            else if (rsiVal <= 45) lblS.classList.replace("text-gray-500", "text-cryptoRed");
+            else if (rsiVal >= 70) lblSB.classList.replace("text-gray-500", "text-cryptoGreen");
+            else if (rsiVal >= 55) lblB.classList.replace("text-gray-500", "text-cryptoGreen");
+            else lblN.classList.replace("text-gray-500", "text-gray-300"); 
         }
 
         function updateDashboardInfoOnly() {
@@ -1650,29 +1488,29 @@
             changeEl.innerText = `${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}%`;
             
             let vol = coin.volume24h;
-            if(vol !== "--") {
-                 vol = (vol / 1000000).toFixed(2) + "M " + coin.symbol;
-            }
+            if(vol !== "--") vol = (vol / 1000000).toFixed(2) + "M " + coin.symbol;
             volEl.innerText = vol;
+
+            // Silently Update Advanced Widget Live Price too
+            if(document.getElementById("adv-coin-price")) {
+                 document.getElementById("adv-coin-price").innerText = formatPrice(coin.price, coin.symbol);
+                 document.getElementById("adv-coin-change").innerText = `${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}% (24j)`;
+                 document.getElementById("adv-coin-change").className = `text-sm font-bold mt-0.5 ${changeColor}`;
+            }
         }
 
         function updateMultiGrid() {
-            // Render ulang 4 grid sesuai dengan activeGridCoins
             for(let i=1; i<=4; i++) {
                 const coinKey = activeGridCoins[i-1];
                 const box = document.getElementById(`grid-box-${i}`);
-                
                 if (coinKey) {
                     box.style.display = 'flex';
-                    const coin = cryptoDatabase[coinKey];
                     document.getElementById(`grid-title-${i}`).innerHTML = `${cryptoSVGLogos[coinKey].replace('w-10 h-10', 'w-4 h-4')} ${coinKey}`;
                     updateGridChart(coinKey, i);
                 } else {
                     box.style.display = 'none';
                     if (gridChartInstances[i]) {
-                        gridChartInstances[i].destroy();
-                        gridChartInstances[i] = null;
-                        gridRenderedCoins[i] = null;
+                        gridChartInstances[i].destroy(); gridChartInstances[i] = null; gridRenderedCoins[i] = null;
                     }
                 }
             }
@@ -1680,24 +1518,20 @@
 
         function updateGridChart(coinKey, boxId) {
             const coin = cryptoDatabase[coinKey];
-            if (!coin.prices || coin.prices.length === 0) return; // Data belum siap
+            if (!coin.prices || coin.prices.length === 0) return; 
 
             const ctx = document.getElementById(`gridChart-${boxId}`).getContext('2d');
             
-            // Hindari render ulang jika koin yang sama sudah ada di box ini (kecuali update harga live)
             if (gridRenderedCoins[boxId] === coinKey && gridChartInstances[boxId]) {
                  updateGridPricesOnly([coinKey]); 
                  return;
             }
 
-            if (gridChartInstances[boxId]) {
-                gridChartInstances[boxId].destroy();
-            }
+            if (gridChartInstances[boxId]) gridChartInstances[boxId].destroy();
 
             const isPositive = coin.change24h >= 0;
             const labels = generateDateLabels(coin.ohlc.length);
 
-            // Gunakan hanya sebagian data agar grid tidak terlalu rapat (misal 50 candle terakhir)
             const displayLimit = 50; 
             const recentOhlc = coin.ohlc.slice(-displayLimit);
             const recentLabels = labels.slice(-displayLimit);
@@ -1710,53 +1544,33 @@
                 data: {
                     labels: recentLabels,
                     datasets: [{
-                        label: 'Candle',
-                        data: recentOhlc.map(d => [d.o, d.c]),
+                        label: 'Candle', data: recentOhlc.map(d => [d.o, d.c]),
                         backgroundColor: context => {
-                            const index = context.dataIndex;
-                            const ohlc = recentOhlc[index];
-                            if(!ohlc) return '#ffffff';
-                            return ohlc.c >= ohlc.o ? '#0ECB81' : '#F6465D';
+                            const index = context.dataIndex; const ohlc = recentOhlc[index];
+                            if(!ohlc) return '#ffffff'; return ohlc.c >= ohlc.o ? '#0ECB81' : '#F6465D';
                         },
-                        borderWidth: 0,
-                        isCandle: true,
-                        ohlcData: recentOhlc
+                        borderWidth: 0, isCandle: true, ohlcData: recentOhlc
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     layout: { padding: { right: 30, top: 10, bottom: 0, left: 0 } },
                     plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }, 
-                        zoom: {
-                            zoom: { wheel: { enabled: true, speed: 0.1 }, pinch: { enabled: true }, mode: 'x' },
-                            pan: { enabled: true, mode: 'x' }
-                        }
+                        legend: { display: false }, tooltip: { enabled: false }, 
+                        zoom: { zoom: { wheel: { enabled: true, speed: 0.1 }, pinch: { enabled: true }, mode: 'x' }, pan: { enabled: true, mode: 'x' } }
                     },
                     scales: {
-                        x: { 
-                            grid: { display: false }, 
-                            ticks: { display: false }, // Sembunyikan tick X agar lebih bersih
-                            min: Math.max(0, recentLabels.length - 30),
-                            max: recentLabels.length + 2
-                        },
+                        x: { grid: { display: false }, ticks: { display: false }, min: Math.max(0, recentLabels.length - 30), max: recentLabels.length + 2 },
                         y: {
-                            position: 'right',
-                            grid: { color: '#1E2530', drawBorder: false },
+                            position: 'right', grid: { color: '#1E2530', drawBorder: false },
                             ticks: { 
-                                color: '#A0AEC0', 
-                                font: { family: 'monospace', size: 9 },
-                                maxTicksLimit: 5,
+                                color: '#A0AEC0', font: { family: 'monospace', size: 9 }, maxTicksLimit: 5,
                                 callback: function(value) {
-                                    if(coin.price < 1) return value.toFixed(4);
-                                    if(coin.price > 1000) return (value/1000).toFixed(1) + 'k';
+                                    if(coin.price < 1) return value.toFixed(4); if(coin.price > 1000) return (value/1000).toFixed(1) + 'k';
                                     return value.toFixed(1);
                                 }
                             },
-                            min: minPrice,
-                            max: maxPrice
+                            min: minPrice, max: maxPrice
                         }
                     }
                 }
@@ -1765,7 +1579,6 @@
             setupCustomAxisDrag(document.getElementById(`gridChart-${boxId}`), gridChartInstances[boxId]);
             gridRenderedCoins[boxId] = coinKey;
             
-            // Set harga teks awal
             document.getElementById(`grid-price-${boxId}`).innerText = formatPrice(coin.price, coinKey);
             document.getElementById(`grid-price-${boxId}`).className = `font-mono text-xs font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
             updateGridChartLivePrice(coinKey, coin.price);
@@ -1806,25 +1619,18 @@
 
         function startRestPolling() {
             if (updateIntervalId) clearInterval(updateIntervalId);
-            
             updateIntervalId = setInterval(async () => {
                 if (!isUsingFallback) {
                     try {
                         await fetch24hTickers();
-                        // Sesekali update Sinyal view jika tab aktif agar tidak kaku
-                        if (viewMode === 'news') {
-                            renderSignalsOverview();
-                        }
-                    } catch(e) {
-                        console.error("Polling error:", e);
-                    }
+                        if (viewMode === 'news') renderSignalsOverview();
+                    } catch(e) { console.error("Polling error:", e); }
                 }
-            }, 3000); // Update tiap 3 detik via REST (tidak se-agresif WebSocket)
+            }, 3000); 
         }
 
         function startFallbackSimulation() {
             if (updateIntervalId) clearInterval(updateIntervalId);
-            
             updateIntervalId = setInterval(() => {
                 let updatedCoins = [];
                 Object.keys(cryptoDatabase).forEach(key => {
@@ -1832,7 +1638,6 @@
                     const oldPrice = coin.price;
                     const change = (Math.random() - 0.5) * (coin.price * 0.001);
                     coin.price = coin.price + change;
-                    
                     updateTickerUI(key, coin.price, oldPrice);
                     updatedCoins.push(key);
                 });
@@ -1843,17 +1648,14 @@
                 } else if (viewMode === 'multi') {
                     updateGridPricesOnly(updatedCoins);
                     updatedCoins.forEach(coin => {
-                        if (activeGridCoins.includes(coin)) {
-                             updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
-                        }
+                        if (activeGridCoins.includes(coin)) updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
                     });
                 } else if (viewMode === 'news') {
-                    if (Math.random() > 0.8) renderSignalsOverview(); // Update kadang-kadang di simulasi
+                    if (Math.random() > 0.8) renderSignalsOverview(); 
                 }
 
             }, 2500);
         }
-
     </script>
 </body>
 </html>
