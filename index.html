@@ -67,9 +67,9 @@
                 <div>
                     <h1 class="text-lg font-bold text-white tracking-wide flex items-center gap-2">
                         CryptoScan Pro
-                        <span class="text-[10px] bg-accentBlue/10 text-accentBlue border border-accentBlue/30 px-2 py-0.5 rounded-full font-bold tracking-widest text-center">1D ANALYSIS</span>
+                        <span class="text-[10px] bg-accentBlue/10 text-accentBlue border border-accentBlue/30 px-2 py-0.5 rounded-full font-bold tracking-widest text-center">AI POWERED</span>
                     </h1>
-                    <p class="text-[10px] text-gray-400">Analisis Pergerakan Harian & Proyeksi Akurat S/R</p>
+                    <p class="text-[10px] text-gray-400">Analisis Pergerakan Harian & Prediksi Terpadu</p>
                 </div>
             </div>
 
@@ -117,7 +117,7 @@
         <div class="flex flex-wrap border-b border-darkBorder bg-darkCard rounded-t-xl overflow-hidden p-1 gap-1">
             <button onclick="switchViewMode('single')" id="view-btn-single" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                Analisis 1D Detail
+                Analisis & Prediksi Terpadu
             </button>
             <button onclick="switchViewMode('multi')" id="view-btn-multi" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
@@ -125,7 +125,7 @@
             </button>
             <button onclick="switchViewMode('news')" id="view-btn-news" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14"></path></svg>
-                Berita & Sinyal Terkini
+                Berita & Rekomendasi
             </button>
         </div>
     </div>
@@ -148,14 +148,15 @@
                 <div>
                     <h3 class="text-xs font-bold text-gray-400 mb-3.5 tracking-wider uppercase flex items-center gap-2">
                         <svg class="w-4 h-4 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                        Sinyal Harian (1D)
+                        Persentase Prediksi (1D)
                     </h3>
                     
                     <div class="text-center py-5 bg-darkBg/60 rounded-xl border border-darkBorder/60 mb-4 shadow-inner">
-                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-1">Outlook Harian</span>
-                        <span id="summary-signal" class="text-2xl font-black text-cryptoYellow tracking-wide transition-all duration-300 drop-shadow">ANALYZING...</span>
+                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-1">Peluang Arah Harga</span>
+                        <div id="unified-percentage" class="text-4xl font-black text-cryptoYellow tracking-wide drop-shadow mb-1 transition-all">--%</div>
+                        <span id="summary-signal" class="text-xs font-bold text-gray-400 uppercase tracking-widest block transition-colors">ANALYZING...</span>
                         <div class="mt-3 text-xs text-gray-400 flex justify-center gap-4">
-                            <span>RSI (14): <strong id="rsi-val" class="text-white font-mono transition-colors">--</strong></span>
+                            <span>RSI: <strong id="rsi-val" class="text-white font-mono transition-colors">--</strong></span>
                             <div class="w-px h-4 bg-darkBorder"></div>
                             <span>MACD: <strong id="macd-val" class="text-cryptoYellow font-semibold transition-colors">--</strong></span>
                         </div>
@@ -240,7 +241,7 @@
                     </div>
                     <canvas id="mainChart"></canvas>
                 </div>
-                <p class="text-[10px] text-gray-500 mt-3 text-right">💡 Tip Pro: <b>Scroll Mouse</b> untuk Zoom. <b>Tarik & Seret Angka Harga/Tanggal</b> di pinggir untuk menyesuaikan skala.</p>
+                <p class="text-[10px] text-gray-500 mt-3 text-right">💡 Tip Pro: <b>Klik & Seret (Drag) Area Dalam Grafik</b> untuk Pan/Geser. <b>Tarik Angka Harga/Tanggal</b> di pinggir untuk menyesuaikan skala.</p>
             </div>
 
             <div id="advanced-indicator-widget" class="bg-[#131722] border border-[#1E2530] rounded-2xl p-5 shadow-xl shadow-black/40 flex flex-col gap-4 relative overflow-hidden">
@@ -260,14 +261,14 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                     <div class="bg-[#0B0E14] border border-[#1E2530] rounded-xl p-4 flex flex-col justify-between relative shadow-inner">
-                        <p class="text-[9px] font-extrabold text-gray-500 tracking-widest mb-3 uppercase">KONSENSUS BINANCE + RSI</p>
+                        <p class="text-[9px] font-extrabold text-gray-500 tracking-widest mb-3 uppercase">RANGKUMAN PREDIKSI TERPADU</p>
                         <div class="flex items-center gap-3 mb-4">
                             <div id="adv-konsensus-icon-bg" class="w-10 h-10 rounded-full border border-cryptoGreen bg-cryptoGreen/10 flex items-center justify-center shrink-0 transition-colors duration-500">
                                 <svg id="adv-konsensus-icon" class="w-5 h-5 text-cryptoGreen transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
                             </div>
                             <div>
                                 <span id="adv-konsensus-text" class="text-base md:text-lg font-black text-cryptoGreen block transition-colors duration-500">MENGANALISIS...</span>
-                                <span id="adv-rsi-val" class="text-xs text-gray-400 transition-colors">--</span>
+                                <span id="adv-rsi-val" class="text-[10px] font-bold text-gray-400 transition-colors">--</span>
                             </div>
                         </div>
                         <div class="bg-[#131722] border border-[#1E2530] p-3 rounded-lg">
@@ -287,11 +288,11 @@
                                     <circle cx="100" cy="100" r="4" fill="#E2E8F0" />
                                 </g>
                             </svg>
-                            <span id="label-strong-sell" class="absolute bottom-0 left-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors">Penjualan<br>Kuat</span>
-                            <span id="label-sell" class="absolute top-[20px] left-2 text-[9px] font-bold text-gray-500 transition-colors">Penjualan</span>
+                            <span id="label-strong-sell" class="absolute bottom-0 left-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors">Bearish<br>Kuat</span>
+                            <span id="label-sell" class="absolute top-[20px] left-2 text-[9px] font-bold text-gray-500 transition-colors">Bearish</span>
                             <span id="label-neutral" class="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-bold text-gray-500 transition-colors">Netral</span>
-                            <span id="label-buy" class="absolute top-[20px] right-2 text-[9px] font-bold text-gray-500 transition-colors">Pembelian</span>
-                            <span id="label-strong-buy" class="absolute bottom-0 right-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors">Pembelian<br>Kuat</span>
+                            <span id="label-buy" class="absolute top-[20px] right-2 text-[9px] font-bold text-gray-500 transition-colors">Bullish</span>
+                            <span id="label-strong-buy" class="absolute bottom-0 right-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors">Bullish<br>Kuat</span>
                         </div>
                     </div>
                 </div>
@@ -366,7 +367,10 @@
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-1">COIN 1</span>
                     <div class="flex items-center gap-3">
                         <button onclick="resetZoomGridChart(1)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
-                        <span class="font-mono text-xs font-bold transition-colors" id="grid-price-1">--</span>
+                        <div class="flex flex-col items-end">
+                            <span class="font-mono text-xs font-bold transition-colors" id="grid-price-1">--</span>
+                            <span class="text-[9px] font-bold" id="grid-pct-1">--%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="relative flex-grow"><canvas id="gridChart-1"></canvas></div>
@@ -377,7 +381,10 @@
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-2">COIN 2</span>
                     <div class="flex items-center gap-3">
                         <button onclick="resetZoomGridChart(2)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
-                        <span class="font-mono text-xs font-bold transition-colors" id="grid-price-2">--</span>
+                        <div class="flex flex-col items-end">
+                            <span class="font-mono text-xs font-bold transition-colors" id="grid-price-2">--</span>
+                            <span class="text-[9px] font-bold" id="grid-pct-2">--%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="relative flex-grow"><canvas id="gridChart-2"></canvas></div>
@@ -388,7 +395,10 @@
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-3">COIN 3</span>
                     <div class="flex items-center gap-3">
                         <button onclick="resetZoomGridChart(3)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
-                        <span class="font-mono text-xs font-bold transition-colors" id="grid-price-3">--</span>
+                        <div class="flex flex-col items-end">
+                            <span class="font-mono text-xs font-bold transition-colors" id="grid-price-3">--</span>
+                            <span class="text-[9px] font-bold" id="grid-pct-3">--%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="relative flex-grow"><canvas id="gridChart-3"></canvas></div>
@@ -399,7 +409,10 @@
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-4">COIN 4</span>
                     <div class="flex items-center gap-3">
                         <button onclick="resetZoomGridChart(4)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
-                        <span class="font-mono text-xs font-bold transition-colors" id="grid-price-4">--</span>
+                        <div class="flex flex-col items-end">
+                            <span class="font-mono text-xs font-bold transition-colors" id="grid-price-4">--</span>
+                            <span class="text-[9px] font-bold" id="grid-pct-4">--%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="relative flex-grow"><canvas id="gridChart-4"></canvas></div>
@@ -410,7 +423,10 @@
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-5">COIN 5</span>
                     <div class="flex items-center gap-3">
                         <button onclick="resetZoomGridChart(5)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
-                        <span class="font-mono text-xs font-bold transition-colors" id="grid-price-5">--</span>
+                        <div class="flex flex-col items-end">
+                            <span class="font-mono text-xs font-bold transition-colors" id="grid-price-5">--</span>
+                            <span class="text-[9px] font-bold" id="grid-pct-5">--%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="relative flex-grow"><canvas id="gridChart-5"></canvas></div>
@@ -432,7 +448,7 @@
         <section class="lg:col-span-2 flex flex-col gap-4">
             <div class="flex items-center gap-2 mb-2">
                 <svg class="w-5 h-5 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                <h2 class="text-lg font-bold text-white">Dashboard Sinyal & Rekomendasi (1D)</h2>
+                <h2 class="text-lg font-bold text-white">Dashboard Prediksi & Sinyal (1D)</h2>
                 <span class="text-[9px] bg-darkBg border border-darkBorder text-gray-400 px-2 py-0.5 rounded ml-auto">Data Real-time</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="signals-grid-container"></div>
@@ -443,7 +459,7 @@
     <footer class="bg-darkCard border-t border-darkBorder mt-10 py-6 text-gray-400 text-[11px] text-center">
         <div class="max-w-7xl mx-auto px-4 space-y-2">
             <p class="font-bold text-gray-300 uppercase tracking-wider text-[10px]">Peringatan Risiko & Disclaimer</p>
-            <p class="max-w-4xl mx-auto leading-relaxed text-gray-400">Analisis pergerakan harian dan manajemen risiko ini diperoleh dari feed data publik Binance secara real-time. Pasar mata uang kripto memiliki volatilitas yang sangat tinggi. Performa masa lalu tidak menjamin hasil di masa depan.</p>
+            <p class="max-w-4xl mx-auto leading-relaxed text-gray-400">Analisis pergerakan harian dan manajemen risiko ini diperoleh dari feed data publik Binance secara real-time. Persentase prediksi adalah hasil perhitungan matematis algoritma dan bukan jaminan masa depan. Pasar mata uang kripto memiliki volatilitas tinggi.</p>
             <p class="text-gray-600 pt-2 text-[10px]">© 2026 CryptoScan Pro.</p>
         </div>
     </footer>
@@ -455,7 +471,6 @@
         else if (window['chartjs-plugin-zoom']) Chart.register(window['chartjs-plugin-zoom']);
 
         // FUNGSI PENCEGAH RESET ZOOM
-        // Mengunci skala / koordinat pan visual saat ini sebelum update chart dilakukan
         function syncChartZoom(chart) {
             if (!chart) return;
             if (chart.scales.x && chart.scales.x.min !== undefined) {
@@ -468,7 +483,7 @@
             }
         }
 
-        // SISTEM DRAG SUMBU X & Y & PAN AREA EKSKLUSIF (Penyempurnaan Zoom & Geser)
+        // SISTEM DRAG SUMBU X & Y & PAN AREA EKSKLUSIF
         let isDraggingY = false; let isDraggingX = false; let isDraggingPan = false;
         let dragStartY = 0; let dragStartX = 0; let draggedChart = null;
 
@@ -478,7 +493,7 @@
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
             if (isDraggingY || isDraggingX || isDraggingPan) {
-                if (e.cancelable) e.preventDefault(); // Mencegah scroll halaman saat drag
+                if (e.cancelable) e.preventDefault(); 
             }
 
             if (isDraggingY) {
@@ -656,11 +671,11 @@
         Chart.register(livePriceLinePlugin);
 
         const cryptoDatabase = {
-            SOL: { name: "Solana", category: "High-Performance L1 Network", symbol: "SOL", binanceSymbol: "SOLUSDT", price: 145.25, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] },
-            BNB: { name: "BNB", category: "Exchange & Smart Chain Utility", symbol: "BNB", binanceSymbol: "BNBUSDT", price: 580.10, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] },
-            DOGE: { name: "Dogecoin", category: "Meme Coin Utility", symbol: "DOGE", binanceSymbol: "DOGEUSDT", price: 0.1425, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] },
-            TRX: { name: "TRON", category: "Decentralized Web Ecosystem", symbol: "TRX", binanceSymbol: "TRXUSDT", price: 0.1182, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] },
-            XRP: { name: "XRP", category: "Global Payments Network", symbol: "XRP", binanceSymbol: "XRPUSDT", price: 0.5200, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, prices: [], ohlc: [], volumes: [] }
+            SOL: { name: "Solana", category: "High-Performance L1 Network", symbol: "SOL", binanceSymbol: "SOLUSDT", price: 145.25, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
+            BNB: { name: "BNB", category: "Exchange & Smart Chain Utility", symbol: "BNB", binanceSymbol: "BNBUSDT", price: 580.10, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
+            DOGE: { name: "Dogecoin", category: "Meme Coin Utility", symbol: "DOGE", binanceSymbol: "DOGEUSDT", price: 0.1425, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
+            TRX: { name: "TRON", category: "Decentralized Web Ecosystem", symbol: "TRX", binanceSymbol: "TRXUSDT", price: 0.1182, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
+            XRP: { name: "XRP", category: "Global Payments Network", symbol: "XRP", binanceSymbol: "XRPUSDT", price: 0.5200, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] }
         };
 
         const cryptoSVGLogos = {
@@ -873,13 +888,18 @@
                 chart.currentLivePriceStr = formatPrice(price, coinKey);
                 chart.currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
                 
-                syncChartZoom(chart); // Mencegah reset visual
+                syncChartZoom(chart); 
                 chart.update('none');
                 
                 const priceEl = document.getElementById(`grid-price-${boxId}`);
                 if(priceEl) {
                     priceEl.innerText = formatPrice(price, coinKey);
                     priceEl.className = `font-mono text-xs font-bold transition-colors ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
+                }
+                const pctEl = document.getElementById(`grid-pct-${boxId}`);
+                if(pctEl) {
+                    pctEl.innerText = coin.confidenceStr || '--%';
+                    pctEl.className = `text-[9px] font-bold px-1.5 py-0.5 rounded ${coin.confidencePct >= 55 ? 'bg-cryptoGreen/20 text-cryptoGreen' : (coin.confidencePct <= 45 ? 'bg-cryptoRed/20 text-cryptoRed' : 'bg-cryptoYellow/20 text-cryptoYellow')}`;
                 }
             }
         }
@@ -920,7 +940,6 @@
             }
         }
 
-        // FUNGSI UPDATE GLOBAL UI (Side Selector List)
         function updateCoinSelectorsUI() {
             Object.keys(cryptoDatabase).forEach(key => {
                 const coin = cryptoDatabase[key];
@@ -950,7 +969,6 @@
                     c.change24h = parseFloat(ticker.priceChangePercent);
                     c.volume24h = parseFloat(ticker.volume);
 
-                    // Sinkronisasi data live price dengan candlestick terakhir
                     if (c.ohlc && c.ohlc.length > 0) {
                         const lastIdx = c.ohlc.length - 1;
                         const lastCandle = c.ohlc[lastIdx];
@@ -965,11 +983,11 @@
                 }
             });
 
-            updateCoinSelectorsUI(); // Update persentase menu list secara real-time
+            updateCoinSelectorsUI();
 
             if (viewMode === 'single' && updatedCoins.includes(currentCoin)) {
                 calculateTechnicalIndicatorsWeekly(currentCoin);
-                updateDashboard(); // Memastikan indikator dan nominal dirender ulang otomatis
+                updateDashboard(); 
                 updateMainChartLivePrice(cryptoDatabase[currentCoin].price);
                 
                 if (mainChartInstance) {
@@ -977,19 +995,20 @@
                     const last = coin.ohlc[coin.ohlc.length-1];
                     const ds = mainChartInstance.data.datasets[0].data;
                     ds[ds.length-1] = [last.o, last.c];
-                    syncChartZoom(mainChartInstance); // Mencegah reset zoom
+                    syncChartZoom(mainChartInstance); 
                     mainChartInstance.update('none');
                 }
             } else if (viewMode === 'multi') {
                 updatedCoins.forEach(coin => {
                     if (activeGridCoins.includes(coin)) {
+                        calculateTechnicalIndicatorsWeekly(coin);
                         updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
                         const boxId = Object.keys(gridRenderedCoins).find(k => gridRenderedCoins[k] === coin);
                         if (boxId && gridChartInstances[boxId]) {
                             const last = cryptoDatabase[coin].ohlc[cryptoDatabase[coin].ohlc.length-1];
                             const ds = gridChartInstances[boxId].data.datasets[0].data;
                             ds[ds.length-1] = [last.o, last.c];
-                            syncChartZoom(gridChartInstances[boxId]); // Mencegah reset zoom
+                            syncChartZoom(gridChartInstances[boxId]); 
                             gridChartInstances[boxId].update('none');
                         }
                     }
@@ -1048,10 +1067,12 @@
             }
         }
 
+        // FUNGSI KALKULASI PREDIKSI TERPADU (GABUNGAN SEMUA INDIKATOR)
         function calculateTechnicalIndicatorsWeekly(coinKey) {
             const coin = cryptoDatabase[coinKey];
             if (coin.prices.length < 20) return;
 
+            // 1. Kalkulasi RSI
             const rsiPeriod = 14; const prices = coin.prices;
             let gains = 0, losses = 0;
             for (let i = prices.length - rsiPeriod; i < prices.length; i++) {
@@ -1062,6 +1083,7 @@
             let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
             coin.rsi = avgLoss === 0 ? 100 : 100 - (100 / (1 + rs));
 
+            // 2. Kalkulasi SMA20
             let sum20 = 0;
             for (let i = prices.length - 20; i < prices.length; i++) sum20 += prices[i];
             coin.sma20 = sum20 / 20;
@@ -1071,21 +1093,66 @@
             else if (currentPrice < coin.sma20 && coin.rsi < 50) { coin.macd = "BEARISH CROSS"; coin.trendStatus = "DOWNTREND (1D)"; } 
             else { coin.macd = "NEUTRAL"; coin.trendStatus = "KONSOLIDASI"; }
 
+            // 3. Support & Resistance
             const ohlc14 = coin.ohlc.slice(-14); 
             let max14 = Math.max(...ohlc14.map(o => o.h)); let min14 = Math.min(...ohlc14.map(o => o.l));
             coin.res2 = max14; coin.res1 = max14 - ((max14 - min14) * 0.236); 
             coin.sup1 = min14 + ((max14 - min14) * 0.236); coin.sup2 = min14;
 
-            let score = 0;
-            if (coin.rsi < 35) score += 2; else if (coin.rsi < 45) score += 1;
-            else if (coin.rsi > 65) score -= 2; else if (coin.rsi > 55) score -= 1;
-            if (currentPrice > coin.sma20) score += 1; else score -= 1;
-            const distToSup = ((currentPrice - coin.sup1) / currentPrice) * 100;
-            if(distToSup > 0 && distToSup < 3) score += 1; 
+            // 4. SISTEM SCORING TERPADU UNTUK PERSENTASE PREDIKSI
+            let bullScore = 0; // Rentang max skitar -10 hingga +10
+            
+            // Bobot RSI (Max 3 poin)
+            if (coin.rsi < 30) bullScore += 3; // Oversold -> Kuat Buy
+            else if (coin.rsi < 45) bullScore += 1.5;
+            else if (coin.rsi > 70) bullScore -= 3; // Overbought -> Kuat Sell
+            else if (coin.rsi > 55) bullScore -= 1.5;
 
-            if (score >= 3) coin.signal = "STRONG BUY"; else if (score >= 1) coin.signal = "ACCUMULATE";
-            else if (score <= -3) coin.signal = "STRONG SELL"; else if (score <= -1) coin.signal = "REDUCE / SELL";
-            else coin.signal = "HOLD / WAIT";
+            // Bobot Trend (SMA) (Max 3 poin)
+            if (currentPrice > coin.sma20) bullScore += 3;
+            else bullScore -= 3;
+
+            // Bobot Jarak Support/Resistance (Max 2 poin)
+            const distToSup = ((currentPrice - coin.sup1) / currentPrice) * 100;
+            const distToRes = ((coin.res1 - currentPrice) / currentPrice) * 100;
+            if (distToSup > 0 && distToSup < 3) bullScore += 2; // Dekat support = bagus buat beli
+            if (distToRes > 0 && distToRes < 3) bullScore -= 2; // Dekat resist = saatnya jual
+
+            // Bobot Momentum Candlestick Terakhir (Max 2 poin)
+            const lastCandle = coin.ohlc[coin.ohlc.length - 1];
+            if (lastCandle && lastCandle.c >= lastCandle.o) bullScore += 2; // Green candle
+            else bullScore -= 2; // Red candle
+
+            // Konversi Skor (-10 s/d +10) ke Persentase (0% s/d 100%)
+            let confidencePct = ((bullScore + 10) / 20) * 100;
+            
+            // Tambahkan dinamika pergerakan 24h agar persentase terasa hidup
+            confidencePct += (coin.change24h > 0 ? Math.min(5, coin.change24h) : Math.max(-5, coin.change24h));
+            
+            // Batasi nilai agar selalu di range 0 - 100
+            coin.confidencePct = Math.max(0, Math.min(100, confidencePct));
+
+            if (coin.confidencePct >= 65) {
+                coin.signal = "STRONG BUY";
+                coin.confidenceStr = `${coin.confidencePct.toFixed(1)}% BULLISH`;
+                coin.confidenceColor = "text-cryptoGreen";
+            } else if (coin.confidencePct >= 55) {
+                coin.signal = "ACCUMULATE";
+                coin.confidenceStr = `${coin.confidencePct.toFixed(1)}% BULLISH`;
+                coin.confidenceColor = "text-cryptoGreen";
+            } else if (coin.confidencePct <= 35) {
+                coin.signal = "STRONG SELL";
+                coin.confidenceStr = `${(100 - coin.confidencePct).toFixed(1)}% BEARISH`;
+                coin.confidenceColor = "text-cryptoRed";
+            } else if (coin.confidencePct <= 45) {
+                coin.signal = "REDUCE / SELL";
+                coin.confidenceStr = `${(100 - coin.confidencePct).toFixed(1)}% BEARISH`;
+                coin.confidenceColor = "text-cryptoRed";
+            } else {
+                coin.signal = "HOLD / WAIT";
+                coin.confidenceStr = `${coin.confidencePct.toFixed(1)}% NETRAL`;
+                coin.confidenceColor = "text-cryptoYellow";
+            }
         }
 
         function updateMainChart(coinKey) {
@@ -1147,7 +1214,7 @@
                 mainChartInstance.currentLivePriceStr = formatPrice(price, currentCoin);
                 mainChartInstance.currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
                 
-                syncChartZoom(mainChartInstance); // Mencegah reset visual
+                syncChartZoom(mainChartInstance); 
                 mainChartInstance.update('none'); 
             }
         }
@@ -1188,10 +1255,16 @@
             
             updateDashboardInfoOnly();
 
-            const sigEl = document.getElementById("summary-signal"); sigEl.innerText = coin.signal;
-            if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) sigEl.className = "text-2xl font-black text-cryptoGreen tracking-wide drop-shadow transition-colors";
-            else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) sigEl.className = "text-2xl font-black text-cryptoRed tracking-wide drop-shadow transition-colors";
-            else sigEl.className = "text-2xl font-black text-cryptoYellow tracking-wide drop-shadow transition-colors";
+            // Tampilkan Persentase Prediksi Unified
+            const unifiedPctEl = document.getElementById("unified-percentage");
+            unifiedPctEl.innerText = coin.confidenceStr;
+            unifiedPctEl.className = `text-4xl font-black tracking-wide drop-shadow mb-1 transition-all ${coin.confidenceColor}`;
+
+            const sigEl = document.getElementById("summary-signal"); 
+            sigEl.innerText = `Sinyal Final: ${coin.signal}`;
+            if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) sigEl.className = "text-xs font-bold text-cryptoGreen uppercase tracking-widest block transition-colors";
+            else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) sigEl.className = "text-xs font-bold text-cryptoRed uppercase tracking-widest block transition-colors";
+            else sigEl.className = "text-xs font-bold text-cryptoYellow uppercase tracking-widest block transition-colors";
 
             document.getElementById("rsi-val").innerText = coin.rsi.toFixed(1);
             if (coin.rsi > 70) document.getElementById("rsi-val").className = "text-cryptoRed font-mono font-bold transition-colors";
@@ -1247,35 +1320,39 @@
                 document.getElementById("action-step-3").innerText = `Batas taking profit atas di ${formatPrice(coin.res1, coin.symbol)}.`;
             }
 
-            // Update Advanced Indicator Widget
+            // Update Advanced Indicator Widget to use Unified Percentage
             document.getElementById("adv-coin-symbol").innerText = coin.symbol;
             document.getElementById("adv-coin-name").innerText = `${coin.name} (Binance)`;
             document.getElementById("adv-target-break").innerText = formatPrice(coin.res1, coin.symbol);
-            document.getElementById("adv-rsi-val").innerText = `RSI 14D: ${coin.rsi.toFixed(1)}`;
+            document.getElementById("adv-rsi-val").innerText = `AI Skoring (1D)`;
             
-            let stateText = "KONSOLIDASI (NETRAL)"; let stateColor = "text-cryptoGreen"; let stateHex = "#0ECB81"; let stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; let scenarioText = "";
-            let rsiPercent = Math.max(0, Math.min(100, coin.rsi)); 
+            let stateText = coin.confidenceStr; 
+            let stateHex = "#0ECB81"; 
+            let stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; 
+            let scenarioText = "";
             
-            if (coin.rsi >= 70) { stateText = "PEMBELIAN KUAT"; stateColor = "text-cryptoGreen"; stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Momentum sangat kuat didorong oleh RSI overbought. Pantau penembusan ke atas ${formatPrice(coin.res1, coin.symbol)}.`; } 
-            else if (coin.rsi >= 55) { stateText = "PEMBELIAN (BULLISH)"; stateColor = "text-cryptoGreen"; stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Momentum positif mulai terbentuk. Pantau penembusan ke atas ${formatPrice(coin.res1, coin.symbol)} untuk kelanjutan tren.`; } 
-            else if (coin.rsi <= 30) { stateText = "PENJUALAN KUAT"; stateColor = "text-cryptoRed"; stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Tekanan jual ekstrem mendominasi. Pantau Support di ${formatPrice(coin.sup1, coin.symbol)}.`; } 
-            else if (coin.rsi <= 45) { stateText = "PENJUALAN (BEARISH)"; stateColor = "text-cryptoRed"; stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Penjual mendominasi pasar. Waspadai penurunan ke arah ${formatPrice(coin.sup1, coin.symbol)}.`; } 
-            else { stateText = "KONSOLIDASI (NETRAL)"; stateColor = "text-cryptoGreen"; stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Sinyal campuran: Harga dan Momentum (RSI) belum searah. Pantau penembusan ke atas ${formatPrice(coin.res1, coin.symbol)} atau ke bawah ${formatPrice(coin.sup1, coin.symbol)}.`; }
+            if (coin.confidencePct >= 65) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Rangkuman indikator menunjukkan momentum BULLISH yang sangat kuat. Direkomendasikan mencari titik entri beli dengan target ke ${formatPrice(coin.res1, coin.symbol)}.`; } 
+            else if (coin.confidencePct >= 55) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Indikator dominan Bullish namun waspadai koreksi jangka pendek. Tahan posisi (Hold) atau Akumulasi jika harga menyentuh ${formatPrice(coin.sup1, coin.symbol)}.`; } 
+            else if (coin.confidencePct <= 35) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Prediksi teknikal sangat BEARISH. Penjual mendominasi pasar secara penuh. Tunda pembelian hingga harga menguji level lantai di ${formatPrice(coin.sup2, coin.symbol)}.`; } 
+            else if (coin.confidencePct <= 45) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Indikator melemah dan condong ke Bearish. Kurangi eksposur risiko dan pantau apakah support di ${formatPrice(coin.sup1, coin.symbol)} mampu bertahan.`; } 
+            else { stateHex = "#F0B90B"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>`; scenarioText = `Sinyal terpecah (Netral). Harga tertahan di area konsolidasi. Disarankan Wait & See hingga ada penembusan jelas dari garis tren saat ini.`; }
             
-            document.getElementById("adv-konsensus-text").innerText = stateText; document.getElementById("adv-konsensus-text").className = `text-base md:text-lg font-black block transition-colors duration-500 ${stateColor}`;
+            document.getElementById("adv-konsensus-text").innerText = stateText.split('% ')[1] || stateText; 
+            document.getElementById("adv-konsensus-text").className = `text-base md:text-lg font-black block transition-colors duration-500 ${coin.confidenceColor}`;
             document.getElementById("adv-konsensus-icon-bg").style.borderColor = stateHex; document.getElementById("adv-konsensus-icon-bg").style.backgroundColor = stateHex + "1A"; 
             document.getElementById("adv-konsensus-icon").innerHTML = stateIcon; document.getElementById("adv-konsensus-icon").style.color = stateHex;
             document.getElementById("adv-skenario-text").innerHTML = scenarioText;
             
+            // Jarum Gauge Meter kini menggunakan Confidence Percentage
             const needle = document.getElementById("gauge-needle"); const activeTrack = document.getElementById("gauge-active-track");
-            let rotation = (rsiPercent / 100) * 180 - 90; needle.style.transform = `rotate(${rotation}deg)`;
-            activeTrack.style.strokeDashoffset = 251.32 - (251.32 * (rsiPercent / 100)); activeTrack.style.stroke = stateHex;
+            let rotation = (coin.confidencePct / 100) * 180 - 90; needle.style.transform = `rotate(${rotation}deg)`;
+            activeTrack.style.strokeDashoffset = 251.32 - (251.32 * (coin.confidencePct / 100)); activeTrack.style.stroke = stateHex;
 
             const lblSS = document.getElementById("label-strong-sell"); const lblS = document.getElementById("label-sell"); const lblN = document.getElementById("label-neutral"); const lblB = document.getElementById("label-buy"); const lblSB = document.getElementById("label-strong-buy");
-            [lblSS, lblS, lblN, lblB, lblSB].forEach(el => el.className = el.className.replace(/text-cryptoRed|text-cryptoGreen/g, "text-gray-500"));
-            if (coin.rsi <= 30) lblSS.classList.replace("text-gray-500", "text-cryptoRed"); else if (coin.rsi <= 45) lblS.classList.replace("text-gray-500", "text-cryptoRed");
-            else if (coin.rsi >= 70) lblSB.classList.replace("text-gray-500", "text-cryptoGreen"); else if (coin.rsi >= 55) lblB.classList.replace("text-gray-500", "text-cryptoGreen");
-            else lblN.classList.replace("text-gray-500", "text-gray-300"); 
+            [lblSS, lblS, lblN, lblB, lblSB].forEach(el => el.className = el.className.replace(/text-cryptoRed|text-cryptoGreen|text-cryptoYellow/g, "text-gray-500"));
+            if (coin.confidencePct <= 35) lblSS.classList.replace("text-gray-500", "text-cryptoRed"); else if (coin.confidencePct <= 45) lblS.classList.replace("text-gray-500", "text-cryptoRed");
+            else if (coin.confidencePct >= 65) lblSB.classList.replace("text-gray-500", "text-cryptoGreen"); else if (coin.confidencePct >= 55) lblB.classList.replace("text-gray-500", "text-cryptoGreen");
+            else lblN.classList.replace("text-gray-500", "text-cryptoYellow"); 
         }
 
         function updateDashboardInfoOnly() {
@@ -1288,7 +1365,6 @@
             let vol = coin.volume24h; if(vol !== "--") vol = (vol / 1000000).toFixed(2) + "M " + coin.symbol;
             document.getElementById("volume-24h").innerText = vol;
 
-            // Widget Update
             if(document.getElementById("adv-coin-price")) {
                  document.getElementById("adv-coin-price").innerText = formatPrice(coin.price, coin.symbol);
                  const advChange = document.getElementById("adv-coin-change");
@@ -1341,31 +1417,31 @@
                     }
                 });
                 
-                // Update side selectors percentage
                 updateCoinSelectorsUI(); 
 
                 if (viewMode === 'single' && updatedCoins.includes(currentCoin)) {
-                    calculateTechnicalIndicatorsWeekly(currentCoin); // Kalkulasi real-time pergerakan indikator
-                    updateDashboard(); // Merender pergerakan data ke UI secara otomatis
+                    calculateTechnicalIndicatorsWeekly(currentCoin); 
+                    updateDashboard(); 
                     updateMainChartLivePrice(cryptoDatabase[currentCoin].price);
                     
                     if (mainChartInstance) {
                         const coin = cryptoDatabase[currentCoin]; const last = coin.ohlc[coin.ohlc.length-1];
                         mainChartInstance.data.datasets[0].data[mainChartInstance.data.datasets[0].data.length-1] = [last.o, last.c]; 
                         
-                        syncChartZoom(mainChartInstance); // Mencegah reset visual
+                        syncChartZoom(mainChartInstance); 
                         mainChartInstance.update('none');
                     }
                 } else if (viewMode === 'multi') {
                     updatedCoins.forEach(coin => {
                         if (activeGridCoins.includes(coin)) {
+                            calculateTechnicalIndicatorsWeekly(coin); // Penting agar persen di grid terupdate
                             updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
                             const boxId = Object.keys(gridRenderedCoins).find(k => gridRenderedCoins[k] === coin);
                             if (boxId && gridChartInstances[boxId]) {
                                 const last = cryptoDatabase[coin].ohlc[cryptoDatabase[coin].ohlc.length-1];
                                 gridChartInstances[boxId].data.datasets[0].data[cryptoDatabase[coin].ohlc.length-1] = [last.o, last.c]; 
                                 
-                                syncChartZoom(gridChartInstances[boxId]); // Mencegah reset visual
+                                syncChartZoom(gridChartInstances[boxId]); 
                                 gridChartInstances[boxId].update('none');
                             }
                         }
@@ -1394,7 +1470,6 @@
             Object.keys(cryptoDatabase).forEach(key => {
                 const coin = cryptoDatabase[key]; if (!coin.prices || coin.prices.length === 0) return;
                 
-                // Menghitung ulang indikator jika view berita dibuka (update background logic)
                 calculateTechnicalIndicatorsWeekly(key);
 
                 const isPos = coin.change24h >= 0;
@@ -1408,7 +1483,8 @@
                 const rsiCol = coin.rsi > 70 ? "text-cryptoRed" : (coin.rsi < 30 ? "text-cryptoGreen" : "text-white");
 
                 const card = document.createElement("div"); card.className = "bg-darkCard p-4 rounded-xl border border-darkBorder flex flex-col gap-3 shadow-lg transition-colors";
-                card.innerHTML = `<div class="flex justify-between items-start"><div class="flex items-center gap-2.5"><div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">${cryptoSVGLogos[coin.symbol]}</div><div><span class="font-extrabold text-sm text-white block">${coin.symbol}</span><span class="text-[10px] text-gray-500">${coin.name}</span></div></div><div class="text-right"><span class="font-mono text-sm block font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${formatPrice(coin.price, coin.symbol)}</span><span class="text-[10px] font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${isPos ? '+' : ''}${coin.change24h.toFixed(2)}%</span></div></div><div class="border-t border-darkBorder/60 pt-3"><div class="flex justify-between items-center mb-2"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Sinyal 1D:</span><span class="text-xs font-black transition-colors ${sigCol} ${sigBg} border ${sigBor} px-2 py-1 rounded shadow-sm">${coin.signal}</span></div><div class="bg-darkBg/40 p-2.5 rounded-lg border border-darkBorder/50 space-y-1.5"><div class="flex justify-between text-[10px]"><span class="text-gray-500">RSI (14):</span><span class="font-bold transition-colors ${rsiCol}">${coin.rsi.toFixed(1)} - ${rsiKet}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">MACD:</span><span class="font-bold text-white transition-colors">${coin.macd}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">MA20:</span><span class="font-bold transition-colors">${maKet}</span></div></div></div>`;
+                // Modifikasi untuk menampilkan Persentase di Signal Overview
+                card.innerHTML = `<div class="flex justify-between items-start"><div class="flex items-center gap-2.5"><div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">${cryptoSVGLogos[coin.symbol]}</div><div><span class="font-extrabold text-sm text-white block">${coin.symbol}</span><span class="text-[10px] text-gray-500">${coin.name}</span></div></div><div class="text-right"><span class="font-mono text-sm block font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${formatPrice(coin.price, coin.symbol)}</span><span class="text-[10px] font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${isPos ? '+' : ''}${coin.change24h.toFixed(2)}%</span></div></div><div class="border-t border-darkBorder/60 pt-3"><div class="flex justify-between items-center mb-2"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">AI Prediksi 1D:</span><span class="text-xs font-black transition-colors ${coin.confidenceColor}">${coin.confidenceStr}</span></div><div class="bg-darkBg/40 p-2.5 rounded-lg border border-darkBorder/50 space-y-1.5"><div class="flex justify-between text-[10px]"><span class="text-gray-500">RSI (14):</span><span class="font-bold transition-colors ${rsiCol}">${coin.rsi.toFixed(1)} - ${rsiKet}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">MACD:</span><span class="font-bold text-white transition-colors">${coin.macd}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">Aksi Final:</span><span class="font-bold transition-colors ${sigCol}">${coin.signal}</span></div></div></div>`;
                 container.appendChild(card);
             });
         }
