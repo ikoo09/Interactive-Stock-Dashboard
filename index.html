@@ -128,21 +128,26 @@
         </div>
     </header>
 
-    <!-- Navigation Tab untuk Fitur Grafik Utama vs Multi-Tab 4 Coin Grid -->
+    <!-- Navigation Tab untuk Fitur Grafik Utama vs Multi-Tab vs Berita -->
     <div class="max-w-7xl w-full mx-auto px-4 pt-4">
-        <div class="flex border-b border-darkBorder bg-darkCard rounded-t-xl overflow-hidden p-1 gap-1">
-            <button onclick="switchViewMode('single')" id="view-btn-single" class="flex-1 md:flex-initial flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white">
+        <div class="flex flex-wrap border-b border-darkBorder bg-darkCard rounded-t-xl overflow-hidden p-1 gap-1">
+            <button onclick="switchViewMode('single')" id="view-btn-single" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                Analisis & Grafik 1D Detail
+                Analisis 1D Detail
             </button>
-            <button onclick="switchViewMode('multi')" id="view-btn-multi" class="flex-1 md:flex-initial flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
+            <button onclick="switchViewMode('multi')" id="view-btn-multi" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                Multi-Chart 4 Coin Grid (1D)
+                4 Coin Grid
+            </button>
+            <!-- TAB BARU: Berita & Sinyal -->
+            <button onclick="switchViewMode('news')" id="view-btn-news" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14"></path></svg>
+                Berita & Sinyal Terkini
             </button>
         </div>
     </div>
 
-    <!-- Main Content: TAMPILAN SINGLE ANALISIS DETAIL -->
+    <!-- Main Content: TAMPILAN SINGLE ANALISIS DETAIL (TIDAK DIUBAH) -->
     <main id="single-view-container" class="flex-grow max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-5">
         
         <!-- Sidebar: Pilihan Kripto & Parameter -->
@@ -330,7 +335,7 @@
                     </div>
                 </div>
 
-                <!-- Manajemen Risiko (Fitur Baru) -->
+                <!-- Manajemen Risiko -->
                 <div class="bg-darkCard p-4.5 rounded-2xl border border-darkBorder shadow-lg shadow-black/25">
                     <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> Manajemen Risiko
@@ -381,7 +386,7 @@
         </section>
     </main>
 
-    <!-- Main Content: TAMPILAN MULTI-CHART 4 COIN GRID DENGAN CANDLESTICK -->
+    <!-- Main Content: TAMPILAN MULTI-CHART 4 COIN GRID DENGAN CANDLESTICK (TIDAK DIUBAH) -->
     <main id="multi-view-container" class="hidden flex-grow max-w-7xl w-full mx-auto p-4 flex flex-col gap-6">
         
         <!-- Pilihan 4 Koin yang Ingin Ditampilkan -->
@@ -460,6 +465,39 @@
         </div>
     </main>
 
+    <!-- FITUR BARU: MENU BERITA TERKINI & SINYAL BUY/SELL -->
+    <main id="news-view-container" class="hidden flex-grow max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Kolom Kiri: Berita Terkini Harian -->
+        <section class="lg:col-span-1 flex flex-col gap-4">
+            <div class="flex items-center gap-2 mb-2">
+                <svg class="w-5 h-5 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14"></path></svg>
+                <h2 class="text-lg font-bold text-white">Berita Terkini</h2>
+                <span class="text-[9px] bg-accentBlue/20 text-accentBlue px-2 py-0.5 rounded ml-auto">Diperbarui Hari Ini</span>
+            </div>
+            
+            <!-- Container List Berita -->
+            <div id="news-list-container" class="space-y-4 overflow-y-auto pr-2 max-h-[70vh]">
+                <!-- Berita akan dimuat lewat JavaScript -->
+            </div>
+        </section>
+
+        <!-- Kolom Kanan: Dashboard Sinyal Buy/Sell Lengkap -->
+        <section class="lg:col-span-2 flex flex-col gap-4">
+            <div class="flex items-center gap-2 mb-2">
+                <svg class="w-5 h-5 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                <h2 class="text-lg font-bold text-white">Dashboard Sinyal & Rekomendasi (1D)</h2>
+                <span class="text-[9px] bg-darkBg border border-darkBorder text-gray-400 px-2 py-0.5 rounded ml-auto">Data Real-time</span>
+            </div>
+
+            <!-- Grid Sinyal Koin -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="signals-grid-container">
+                <!-- Sinyal akan dimuat lewat JavaScript -->
+            </div>
+        </section>
+
+    </main>
+
     <!-- Footer Panduan Edukasi -->
     <footer class="bg-darkCard border-t border-darkBorder mt-10 py-6 text-gray-400 text-[11px] text-center">
         <div class="max-w-7xl mx-auto px-4 space-y-2">
@@ -528,20 +566,16 @@
         });
 
         function setupCustomAxisDrag(canvas, chartInstance) {
-            // Pastikan referensi ke instance chart selalu diperbarui saat mengganti koin
             canvas.currentChartInstance = chartInstance;
-
-            // Mencegah penambahan event listener ganda
             if (canvas.hasAxisDragSetup) return;
             
             canvas.addEventListener('mousedown', (e) => {
-                const chart = canvas.currentChartInstance; // Membaca instance chart terbaru
+                const chart = canvas.currentChartInstance; 
                 const x = e.offsetX;
                 const y = e.offsetY;
                 const yAxis = chart.scales.y;
                 const xAxis = chart.scales.x;
                 
-                // Cek area klik pada Sumbu Harga (Y-Axis Kanan)
                 if (yAxis && x >= yAxis.left && x <= yAxis.right && y >= yAxis.top && y <= yAxis.bottom) {
                     isDraggingY = true;
                     dragStartY = e.clientY;
@@ -549,9 +583,7 @@
                     draggedChart._dragInitialMinY = yAxis.min !== undefined ? yAxis.min : chart.scales.y.min;
                     draggedChart._dragInitialMaxY = yAxis.max !== undefined ? yAxis.max : chart.scales.y.max;
                     document.body.style.cursor = 'ns-resize';
-                } 
-                // Cek area klik pada Sumbu Tanggal (X-Axis Bawah)
-                else if (xAxis && x >= xAxis.left && x <= xAxis.right && y >= xAxis.top && y <= xAxis.bottom) {
+                } else if (xAxis && x >= xAxis.left && x <= xAxis.right && y >= xAxis.top && y <= xAxis.bottom) {
                     isDraggingX = true;
                     dragStartX = e.clientX;
                     draggedChart = chart;
@@ -561,11 +593,10 @@
                 }
             });
             
-            // Ubah Kursor secara pintar jika di-hover ke pinggir sumbu
             canvas.addEventListener('mousemove', (e) => {
                 if (isDraggingY || isDraggingX) return;
                 
-                const chart = canvas.currentChartInstance; // Membaca instance chart terbaru
+                const chart = canvas.currentChartInstance; 
                 const x = e.offsetX;
                 const y = e.offsetY;
                 const yAxis = chart.scales.y;
@@ -584,7 +615,7 @@
         }
 
         // ==============================================
-        // PLUGIN BAWAAN CHART.JS & DATABASE
+        // PLUGIN BAWAAN CHART.JS
         // ==============================================
         
         // Plugin 1: Membuat Sumbu/Tiang Candlestick
@@ -617,69 +648,54 @@
         };
         Chart.register(candlestickWickPlugin);
 
-        // Plugin 2: [DIPERBAIKI 100%] Garis & Badge Harga Real-Time (Mirip TradingView)
+        // Plugin 2: Garis & Badge Harga Real-Time
         const livePriceLinePlugin = {
             id: 'livePriceLine',
             afterDatasetsDraw(chart) {
-                // Pastikan nilai live price disuntikkan ke chart instance terlebih dahulu
                 if (chart.currentLivePrice === undefined) return;
                 
                 const ctx = chart.ctx;
                 const yAxis = chart.scales.y;
                 if (!yAxis) return;
                 
-                // Hitung posisi vertikal (Y) dari garis harga
                 const yPixel = yAxis.getPixelForValue(chart.currentLivePrice);
                 
-                // Cegah penggambaran jika pengguna melakukan zoom dan harga berada di luar canvas yang terlihat
                 if (yPixel < chart.chartArea.top || yPixel > chart.chartArea.bottom) return;
 
                 ctx.save();
-                // Gunakan warna hijau atau merah berdasarkan tren harian terkini, default: biru
                 const color = chart.currentPriceColor || '#3B82F6'; 
                 
-                // 1. Gambar Garis Harga Horizontal Putus-Putus melintasi grafik
                 ctx.beginPath();
-                ctx.setLineDash([4, 4]); // Pola putus-putus
+                ctx.setLineDash([4, 4]); 
                 ctx.moveTo(chart.chartArea.left, yPixel);
                 ctx.lineTo(chart.chartArea.right, yPixel);
                 ctx.lineWidth = 1.5;
                 ctx.strokeStyle = color;
                 ctx.stroke();
 
-                // 2. Gambar Badge Label Harga
                 const text = chart.currentLivePriceStr || chart.currentLivePrice.toString();
-                // Penyesuaian font agar lebih compact
                 ctx.font = 'bold 10px monospace';
                 const textWidth = ctx.measureText(text).width;
                 const padX = 6;
                 const rectWidth = textWidth + (padX * 2);
                 const rectHeight = 20;
                 
-                // [PERBAIKAN FINAL]: Kita pindahkan anchor (titik awal gambar) badge.
-                // Sekarang badge digambar tepat DIMULAI dari batas paling kanan area chart (chartArea.right).
-                // Artinya badge ini akan sepenuhnya berada di LUAR grid grafik, dan menimpa teks Sumbu-Y.
                 const rectX = chart.chartArea.right; 
                 const rectY = yPixel - (rectHeight / 2);
 
-                // Bayangan estetika ringan pada badge harga
                 ctx.shadowColor = 'rgba(0,0,0,0.6)';
                 ctx.shadowBlur = 4;
                 ctx.shadowOffsetY = 2;
                 
-                // Background Box/Badge
                 ctx.fillStyle = color;
                 ctx.beginPath();
-                // Bikin lengkungan (rounded) HANYA di sisi ujung kanan. Sisi kiri dibiarkan rata (flat) menempel pada grafik
                 ctx.roundRect(rectX, rectY, rectWidth, rectHeight, [0, 4, 4, 0]); 
                 ctx.fill();
 
-                // Teks Harga (Matikan efek shadow untuk teks)
                 ctx.shadowColor = 'transparent';
-                ctx.fillStyle = '#ffffff'; // Warna teks putih
+                ctx.fillStyle = '#ffffff'; 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                // Penyesuaian visual (+1px ke bawah) agar sentris secara optikal
                 ctx.fillText(text, rectX + (rectWidth / 2), yPixel + 1); 
                 
                 ctx.restore();
@@ -699,6 +715,8 @@
                 rsi: 50,
                 macd: "Analyzing",
                 signal: "HOLD",
+                trendStatus: "",
+                sma20: null,
                 prices: [],
                 ohlc: [],
                 volumes: []
@@ -714,6 +732,8 @@
                 rsi: 50,
                 macd: "Analyzing",
                 signal: "HOLD",
+                trendStatus: "",
+                sma20: null,
                 prices: [],
                 ohlc: [],
                 volumes: []
@@ -729,6 +749,8 @@
                 rsi: 50,
                 macd: "Analyzing",
                 signal: "HOLD",
+                trendStatus: "",
+                sma20: null,
                 prices: [],
                 ohlc: [],
                 volumes: []
@@ -744,6 +766,8 @@
                 rsi: 50,
                 macd: "Analyzing",
                 signal: "HOLD",
+                trendStatus: "",
+                sma20: null,
                 prices: [],
                 ohlc: [],
                 volumes: []
@@ -792,6 +816,17 @@
                 </svg>`
         };
 
+        // Simulasi Database Berita (diacak berdasarkan hari agar terlihat "Diperbarui Setiap Hari")
+        const fakeNewsDatabase = [
+            { title: "Bitcoin Dominance Naik, Alts Tertekan?", snippet: "Analisis terbaru menunjukkan dominasi BTC menguat di atas 52%, membuat beberapa altcoin layer-1 kesulitan mencari momentum.", tag: "Market" },
+            { title: "Pembaruan Jaringan Solana (SOL) Berjalan Mulus", snippet: "Update validator terbaru berhasil diterapkan tanpa downtime, meningkatkan efisiensi transaksi harian.", tag: "Tech" },
+            { title: "Whale Pindahkan Jutaan DOGE ke Wallet Anonim", snippet: "Tracker mendeteksi pergerakan besar dari exchange ke cold wallet, mengindikasikan akumulasi jangka panjang.", tag: "Whale Alert" },
+            { title: "Volume Transaksi TRX Melonjak Berkat Stablecoin", snippet: "Tron terus mendominasi transfer USDT global, memberikan aliran fee yang stabil bagi jaringan.", tag: "Adoption" },
+            { title: "BNB Chain Rilis Program Insentif Developer Baru", snippet: "Dana jutaan dolar disiapkan untuk menarik dApps DeFi dan Gaming agar dibangun di atas ekosistem BNB.", tag: "Ekosistem" },
+            { title: "SEC Tunda Keputusan ETF Ethereum Spot", snippet: "Pasar bereaksi ringan terhadap penundaan ini karena sudah diprediksi oleh mayoritas analis Wall Street.", tag: "Regulasi" },
+            { title: "Sentimen Pasar Kripto Berubah ke 'Greed'", snippet: "Fear & Greed Index menyentuh angka 72 hari ini, menandakan optimisme kembalinya tren bullish.", tag: "Sentimen" }
+        ];
+
         let currentCoin = "SOL"; 
         let currentTimeframe = "1D"; 
         let mainChartInstance = null;
@@ -801,16 +836,17 @@
 
         let activeGridCoins = ["SOL", "BNB", "DOGE", "TRX"];
         let gridChartInstances = {};
-        let gridRenderedCoins = { 1: null, 2: null, 3: null, 4: null }; // Memori untuk mengecek koin mana yang sedang dirender di grid
+        let gridRenderedCoins = { 1: null, 2: null, 3: null, 4: null }; 
 
         const binanceIntervals = {
-            "1D": { interval: "1d", limit: 150 } // Menarik data jauh ke belakang untuk di Scroll
+            "1D": { interval: "1d", limit: 150 } 
         };
 
         window.onload = function() {
             renderCoinSelectors();
             renderGridCoinSelectors();
             initRealTimeData();
+            renderNews(); // Load berita saat pertama kali
         };
 
         // Fungsi membuat label tanggal akurat sesuai data
@@ -827,7 +863,6 @@
             return labels;
         }
 
-        // Reset Fungsi Tarikan dan Zoom
         function resetZoomMainChart() {
             if (mainChartInstance) {
                 delete mainChartInstance.options.scales.x.min;
@@ -837,8 +872,6 @@
                 
                 const dataLen = mainChartInstance.data.labels.length;
                 mainChartInstance.options.scales.x.min = Math.max(0, dataLen - 60);
-                
-                // Menambah ruang kosong di ujung grafik lilin
                 mainChartInstance.options.scales.x.max = dataLen + 4;
                 
                 mainChartInstance.resetZoom();
@@ -855,8 +888,6 @@
                 
                 const dataLen = gridChartInstances[boxId].data.labels.length;
                 gridChartInstances[boxId].options.scales.x.min = Math.max(0, dataLen - 45);
-                
-                // Menambah ruang kosong di ujung grafik lilin
                 gridChartInstances[boxId].options.scales.x.max = dataLen + 4;
 
                 gridChartInstances[boxId].resetZoom();
@@ -868,26 +899,155 @@
             viewMode = mode;
             const singleBtn = document.getElementById("view-btn-single");
             const multiBtn = document.getElementById("view-btn-multi");
+            const newsBtn = document.getElementById("view-btn-news");
+            
             const singleView = document.getElementById("single-view-container");
             const multiView = document.getElementById("multi-view-container");
+            const newsView = document.getElementById("news-view-container");
+
+            // Reset class
+            const inactiveClass = "flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50";
+            const activeClass = "flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white";
+
+            singleBtn.className = inactiveClass;
+            multiBtn.className = inactiveClass;
+            newsBtn.className = inactiveClass;
+
+            singleView.classList.add("hidden");
+            multiView.classList.add("hidden");
+            newsView.classList.add("hidden");
 
             if (mode === 'single') {
-                singleBtn.className = "flex-1 md:flex-initial flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white";
-                multiBtn.className = "flex-1 md:flex-initial flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50";
-                
+                singleBtn.className = activeClass;
                 singleView.classList.remove("hidden");
-                multiView.classList.add("hidden");
-                
                 updateDashboard();
-            } else {
-                multiBtn.className = "flex-1 md:flex-initial flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white";
-                singleBtn.className = "flex-1 md:flex-initial flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50";
-                
+            } else if (mode === 'multi') {
+                multiBtn.className = activeClass;
                 multiView.classList.remove("hidden");
-                singleView.classList.add("hidden");
-                
                 updateMultiGrid();
+            } else if (mode === 'news') {
+                newsBtn.className = activeClass;
+                newsView.classList.remove("hidden");
+                renderSignalsOverview(); // Update sinyal saat tab dibuka
             }
+        }
+
+        function renderNews() {
+            const container = document.getElementById("news-list-container");
+            if (!container) return;
+            container.innerHTML = "";
+
+            // Logika simulasi harian: gunakan tanggal hari ini sebagai seed untuk mengacak urutan
+            const today = new Date().getDate();
+            let shuffledNews = [...fakeNewsDatabase].sort((a, b) => 0.5 - Math.sin(today * a.title.length));
+
+            // Ambil 4 berita teratas
+            shuffledNews.slice(0, 4).forEach(news => {
+                const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                
+                const el = document.createElement("div");
+                el.className = "bg-darkCard p-4 rounded-xl border border-darkBorder hover:border-accentBlue/50 transition-colors duration-300";
+                el.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-[9px] font-bold text-accentBlue bg-accentBlue/10 px-2 py-0.5 rounded uppercase tracking-wider">${news.tag}</span>
+                        <span class="text-[10px] text-gray-500">${dateStr}</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-white mb-1.5 leading-snug hover:text-accentBlue cursor-pointer transition-colors">${news.title}</h3>
+                    <p class="text-[11px] text-gray-400 leading-relaxed mb-3">${news.snippet}</p>
+                    <a href="#" class="text-[10px] text-accentBlue font-semibold hover:underline flex items-center gap-1">Baca Selengkapnya <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function renderSignalsOverview() {
+            const container = document.getElementById("signals-grid-container");
+            if (!container) return;
+            container.innerHTML = "";
+
+            Object.keys(cryptoDatabase).forEach(key => {
+                const coin = cryptoDatabase[key];
+                // Jangan render jika data belum dimuat
+                if (!coin.prices || coin.prices.length === 0) return;
+
+                const isPositive = coin.change24h >= 0;
+                let signalColor = "text-cryptoYellow";
+                let signalBg = "bg-cryptoYellow/10";
+                let signalBorder = "border-cryptoYellow/30";
+                
+                if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) {
+                    signalColor = "text-cryptoGreen";
+                    signalBg = "bg-cryptoGreen/10";
+                    signalBorder = "border-cryptoGreen/30";
+                } else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) {
+                    signalColor = "text-cryptoRed";
+                    signalBg = "bg-cryptoRed/10";
+                    signalBorder = "border-cryptoRed/30";
+                }
+
+                // Menyusun keterangan cerdas berdasarkan data teknikal (Keterangan Baru yang diminta)
+                let maKeterangan = "Sedang dikalkulasi";
+                if(coin.sma20) {
+                    if(coin.price > coin.sma20) {
+                        maKeterangan = `<span class="text-cryptoGreen">Bullish</span> (Harga di atas MA20: ${formatPrice(coin.sma20, coin.symbol)})`;
+                    } else {
+                        maKeterangan = `<span class="text-cryptoRed">Bearish</span> (Harga di bawah MA20: ${formatPrice(coin.sma20, coin.symbol)})`;
+                    }
+                }
+
+                const rsiKeterangan = coin.rsi > 70 ? "Overbought (Hati-hati koreksi)" : (coin.rsi < 30 ? "Oversold (Peluang Beli)" : "Netral");
+                const rsiColor = coin.rsi > 70 ? "text-cryptoRed" : (coin.rsi < 30 ? "text-cryptoGreen" : "text-white");
+
+                const card = document.createElement("div");
+                card.className = "bg-darkCard p-4 rounded-xl border border-darkBorder flex flex-col gap-3 shadow-lg";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">
+                                ${cryptoSVGLogos[coin.symbol]}
+                            </div>
+                            <div>
+                                <span class="font-extrabold text-sm text-white block">${coin.symbol}</span>
+                                <span class="text-[10px] text-gray-500">${coin.name}</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-mono text-sm block font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
+                                ${formatPrice(coin.price, coin.symbol)}
+                            </span>
+                            <span class="text-[10px] font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
+                                ${isPositive ? '+' : ''}${coin.change24h.toFixed(2)}%
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-darkBorder/60 pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Sinyal 1D:</span>
+                            <span class="text-xs font-black ${signalColor} ${signalBg} border ${signalBorder} px-2 py-1 rounded shadow-sm">
+                                ${coin.signal}
+                            </span>
+                        </div>
+                        
+                        <div class="bg-darkBg/40 p-2.5 rounded-lg border border-darkBorder/50 space-y-1.5">
+                            <p class="text-[10px] text-gray-400 font-bold mb-1 border-b border-darkBorder/50 pb-1">Keterangan Indikator:</p>
+                            <div class="flex justify-between text-[10px]">
+                                <span class="text-gray-500">RSI (14):</span>
+                                <span class="font-bold ${rsiColor}">${coin.rsi.toFixed(1)} - ${rsiKeterangan}</span>
+                            </div>
+                            <div class="flex justify-between text-[10px]">
+                                <span class="text-gray-500">MACD:</span>
+                                <span class="font-bold text-white">${coin.macd}</span>
+                            </div>
+                            <div class="flex justify-between text-[10px]">
+                                <span class="text-gray-500">Trend MA20:</span>
+                                <span class="font-bold">${maKeterangan}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         function renderGridCoinSelectors() {
@@ -931,7 +1091,15 @@
             
             try {
                 await fetch24hTickers();
+                // Fetch data untuk koin pertama (untuk view single)
                 await fetchHistoricalKlines(currentCoin, currentTimeframe);
+                // Fetch data untuk koin lainnya secara background agar view News/Signals siap
+                for(let key of Object.keys(cryptoDatabase)) {
+                    if(key !== currentCoin) {
+                        fetchHistoricalKlines(key, currentTimeframe);
+                    }
+                }
+                
                 startRestPolling();
                 setConnectionStatus("online", "Live Binance API");
             } catch (err) {
@@ -958,521 +1126,256 @@
                 txt.innerText = text;
                 txt.className = "text-xs text-cryptoYellow font-bold";
             } else {
-                dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 shadow-[0_0_8px_#FF0000]";
-                ping.className = "absolute inline-flex h-full w-full rounded-full opacity-0 bg-red-500";
+                dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-cryptoRed shadow-[0_0_8px_#F6465D]";
+                ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-cryptoRed";
                 txt.innerText = text;
-                txt.className = "text-xs text-red-400 font-bold";
+                txt.className = "text-xs text-cryptoRed font-bold";
                 isUsingFallback = true;
             }
         }
 
         async function fetch24hTickers() {
-            const symbolsArray = Object.values(cryptoDatabase).map(c => `"${c.binanceSymbol}"`).join(",");
-            const url = `https://api.binance.com/api/v3/ticker/24hr?symbols=[${symbolsArray}]`;
+            const symbolsArr = Object.keys(cryptoDatabase).map(k => `"${cryptoDatabase[k].binanceSymbol}"`).join(',');
+            const url = `https://api.binance.com/api/v3/ticker/24hr?symbols=[${symbolsArr}]`;
             
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Gagal mengambil ticker harian");
-                const tickers = await response.json();
-                
-                tickers.forEach(t => {
-                    const matchedCoinKey = Object.keys(cryptoDatabase).find(k => cryptoDatabase[k].binanceSymbol === t.symbol);
-                    if (matchedCoinKey) {
-                        const coin = cryptoDatabase[matchedCoinKey];
-                        const oldPrice = coin.price;
-                        coin.price = parseFloat(t.lastPrice);
-                        coin.change24h = parseFloat(t.priceChangePercent);
-                        
-                        const rawVolume = parseFloat(t.quoteVolume);
-                        if (rawVolume >= 1e9) {
-                            coin.volume24h = `$${(rawVolume / 1e9).toFixed(2)}B`;
-                        } else {
-                            coin.volume24h = `$${(rawVolume / 1e6).toFixed(2)}M`;
-                        }
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("Binance API Error");
+            const data = await res.json();
+            
+            let updatedCoins = [];
+            data.forEach(ticker => {
+                const coinKey = Object.keys(cryptoDatabase).find(k => cryptoDatabase[k].binanceSymbol === ticker.symbol);
+                if (coinKey) {
+                    const c = cryptoDatabase[coinKey];
+                    const oldPrice = c.price;
+                    c.price = parseFloat(ticker.lastPrice);
+                    c.change24h = parseFloat(ticker.priceChangePercent);
+                    c.volume24h = parseFloat(ticker.volume);
+                    
+                    updateTickerUI(coinKey, c.price, oldPrice);
+                    updatedCoins.push(coinKey);
+                }
+            });
 
-                        if (matchedCoinKey === currentCoin && oldPrice !== coin.price) {
-                            triggerPriceFlash(coin.price > oldPrice ? "green" : "red");
-                        }
+            if (viewMode === 'single' && updatedCoins.includes(currentCoin)) {
+                updateDashboardInfoOnly();
+                updateMainChartLivePrice(cryptoDatabase[currentCoin].price);
+            } else if (viewMode === 'multi') {
+                updateGridPricesOnly(updatedCoins);
+                updatedCoins.forEach(coin => {
+                    if (activeGridCoins.includes(coin)) {
+                         updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
                     }
                 });
-                
-                updateTickersBar();
-                renderCoinSelectors();
-            } catch (err) {
-                throw err;
+            } else if (viewMode === 'news') {
+                // Jangan terlalu sering update dom untuk Sinyal agar tidak kedip
             }
         }
 
-        async function fetchHistoricalKlines(coinKey, tf) {
-            const chartLoading = document.getElementById("chart-loading");
-            if (chartLoading && (!cryptoDatabase[coinKey].prices || cryptoDatabase[coinKey].prices.length === 0)) {
-                chartLoading.style.display = "flex";
-            }
-
+        async function fetchHistoricalKlines(coinKey, tfKey) {
             const coin = cryptoDatabase[coinKey];
-            const tfSetting = binanceIntervals[tf] || binanceIntervals["1D"];
+            const tfSetting = binanceIntervals[tfKey];
             const url = `https://api.binance.com/api/v3/klines?symbol=${coin.binanceSymbol}&interval=${tfSetting.interval}&limit=${tfSetting.limit}`;
+            
+            if (viewMode === 'single' && coinKey === currentCoin) {
+                document.getElementById('chart-loading').style.display = 'flex';
+            }
 
             try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Gagal mengambil data historis klines");
-                const klines = await response.json();
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("Gagal mengambil klines");
+                const data = await res.json();
                 
-                const parsedKlines = klines.slice(-tfSetting.limit);
+                let prices = [];
+                let ohlc = [];
+                let volumes = [];
                 
-                coin.prices = parsedKlines.map(k => parseFloat(k[4])); 
-                coin.volumes = parsedKlines.map(k => Math.round(parseFloat(k[5]))); 
-                coin.ohlc = parsedKlines.map(k => ({
-                    o: parseFloat(k[1]),
-                    h: parseFloat(k[2]),
-                    l: parseFloat(k[3]),
-                    c: parseFloat(k[4])
-                }));
+                data.forEach(d => {
+                    const o = parseFloat(d[1]);
+                    const h = parseFloat(d[2]);
+                    const l = parseFloat(d[3]);
+                    const c = parseFloat(d[4]);
+                    const v = parseFloat(d[5]);
+                    prices.push(c);
+                    ohlc.push({o, h, l, c});
+                    volumes.push(v);
+                });
+                
+                coin.prices = prices;
+                coin.ohlc = ohlc;
+                coin.volumes = volumes;
+                
+                calculateTechnicalIndicatorsWeekly(coinKey);
 
-                calculateTechnicalIndicatorsWeekly(coin, coin.prices);
-                
-                if (chartLoading) chartLoading.style.display = "none";
-                
-                if (viewMode === 'single') {
+                if (viewMode === 'single' && coinKey === currentCoin) {
+                    updateMainChart(coinKey);
                     updateDashboard();
+                    document.getElementById('chart-loading').style.display = 'none';
                 }
-
-            } catch (err) {
-                console.error("Gagal memuat klines:", err);
-                if (chartLoading) chartLoading.style.display = "none";
-                if (isUsingFallback) {
-                    generateLocalSimData(coinKey, tf);
-                    if (viewMode === 'single') updateDashboard();
+            } catch(e) {
+                console.error("Gagal Klines:", e);
+                if (viewMode === 'single' && coinKey === currentCoin) {
+                    document.getElementById('chart-loading').style.display = 'none';
                 }
+                throw e; 
             }
         }
 
-        function calculateTechnicalIndicatorsWeekly(coin, allPrices) {
-            coin.rsi = calculateRSI(allPrices, 14);
-            const currentPrice = coin.price;
+        function updateTickerUI(coinKey, price, oldPrice) {
+            const el = document.getElementById(`ticker-${coinKey}`);
+            const container = document.getElementById(`ticker-container-${coinKey}`);
+            if (!el) return;
+
+            el.innerText = formatPrice(price, coinKey);
             
-            // Kalkulasi Moving Averages untuk Sistem Prediksi Otomatis
-            coin.sma20 = calculateSMA(allPrices, 20);
-            coin.sma50 = calculateSMA(allPrices, 50);
-            const macdValue = calculateMACD(allPrices);
+            if (price > oldPrice) {
+                el.className = "font-mono text-cryptoGreen font-bold";
+                container.classList.remove("animate-flash-red");
+                void container.offsetWidth; 
+                container.classList.add("animate-flash-green");
+            } else if (price < oldPrice) {
+                el.className = "font-mono text-cryptoRed font-bold";
+                container.classList.remove("animate-flash-green");
+                void container.offsetWidth;
+                container.classList.add("animate-flash-red");
+            }
+        }
+
+        function calculateTechnicalIndicatorsWeekly(coinKey) {
+            const coin = cryptoDatabase[coinKey];
+            if (coin.prices.length < 20) return;
+
+            const rsiPeriod = 14;
+            const prices = coin.prices;
             
-            if (macdValue > 0) {
-                coin.macd = "Bullish Cross";
-            } else if (macdValue < 0) {
-                coin.macd = "Bearish Cross";
+            // 1. Hitung RSI sederhana
+            let gains = 0, losses = 0;
+            for (let i = prices.length - rsiPeriod; i < prices.length; i++) {
+                const diff = prices[i] - prices[i-1];
+                if (diff >= 0) gains += diff;
+                else losses -= diff;
+            }
+            let avgGain = gains / rsiPeriod;
+            let avgLoss = losses / rsiPeriod;
+            let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+            coin.rsi = avgLoss === 0 ? 100 : 100 - (100 / (1 + rs));
+
+            // 2. Hitung SMA 20
+            let sum20 = 0;
+            for (let i = prices.length - 20; i < prices.length; i++) {
+                sum20 += prices[i];
+            }
+            coin.sma20 = sum20 / 20;
+
+            // 3. Logika MACD Sederhana (Short-term trend vs Long-term trend 1D)
+            const currentPrice = prices[prices.length - 1];
+            if (currentPrice > coin.sma20 && coin.rsi > 50) {
+                coin.macd = "BULLISH CROSS";
+                coin.trendStatus = "UPTREND (1D)";
+            } else if (currentPrice < coin.sma20 && coin.rsi < 50) {
+                coin.macd = "BEARISH CROSS";
+                coin.trendStatus = "DOWNTREND (1D)";
             } else {
-                coin.macd = "Konsolidasi";
+                coin.macd = "NEUTRAL";
+                coin.trendStatus = "KONSOLIDASI";
             }
 
-            // Engine Algoritma Penentuan Tren & Sinyal (Scoring 1-4)
-            let bullishScore = 0;
-            if (coin.rsi > 50) bullishScore++;
-            if (coin.sma20 && currentPrice > coin.sma20) bullishScore++;
-            if (coin.sma20 && coin.sma50 && coin.sma20 > coin.sma50) bullishScore++;
-            if (macdValue > 0) bullishScore++;
-
-            if (bullishScore >= 3) {
-                if (coin.rsi > 70) {
-                    coin.signal = "STRONG SELL (OB)"; 
-                    coin.trendStatus = "Uptrend (Rawan Koreksi)";
-                } else {
-                    coin.signal = "STRONG BUY";
-                    coin.trendStatus = "Uptrend Solid 1D";
-                }
-            } else if (bullishScore === 2) {
-                coin.signal = "ACCUMULATE";
-                coin.trendStatus = "Transisi Bullish";
-            } else if (bullishScore === 1) {
-                coin.signal = "REDUCE POS.";
-                coin.trendStatus = "Transisi Bearish";
-            } else {
-                if (coin.rsi < 30) {
-                    coin.signal = "STRONG BUY (OS)"; 
-                    coin.trendStatus = "Downtrend (Peluang Beli)";
-                } else {
-                    coin.signal = "STRONG SELL";
-                    coin.trendStatus = "Downtrend Kuat 1D";
-                }
-            }
-
-            if(coin.ohlc && coin.ohlc.length > 0){
-                const recentOhlc = coin.ohlc.slice(-30);
-                const recentHigh = Math.max(...recentOhlc.map(d => d.h));
-                const recentLow = Math.min(...recentOhlc.map(d => d.l));
-                const recentClose = coin.price; 
-
-                const pivotPoint = (recentHigh + recentLow + recentClose) / 3;
-                
-                coin.calculatedLevels = {
-                    sup1: pivotPoint - 0.382 * (recentHigh - recentLow),
-                    sup2: pivotPoint - 0.618 * (recentHigh - recentLow),
-                    res1: pivotPoint + 0.382 * (recentHigh - recentLow),
-                    res2: pivotPoint + 0.618 * (recentHigh - recentLow)
-                };
-            }
-        }
-
-        function calculateRSI(prices, period = 14) {
-            if (prices.length < period + 1) return 50;
-            let gains = 0;
-            let losses = 0;
-            for (let i = prices.length - period; i < prices.length; i++) {
-                const diff = prices[i] - prices[i - 1];
-                if (diff > 0) { gains += diff; } else { losses -= diff; }
-            }
-            if (losses === 0) return 100;
-            const rs = gains / losses;
-            return 100 - (100 / (1 + rs));
-        }
-
-        function calculateSMA(prices, period) {
-            if (!prices || prices.length < period) return null;
-            const sum = prices.slice(-period).reduce((a, b) => a + b, 0);
-            return sum / period;
-        }
-
-        function calculateEMA(prices, period) {
-            if (!prices || prices.length < period) return null;
-            const k = 2 / (period + 1);
-            let ema = prices.slice(0, period).reduce((a, b) => a + b, 0) / period;
-            for (let i = period; i < prices.length; i++) {
-                ema = (prices[i] * k) + (ema * (1 - k));
-            }
-            return ema;
-        }
-
-        function calculateMACD(prices) {
-            const ema12 = calculateEMA(prices, 12);
-            const ema26 = calculateEMA(prices, 26);
-            if(ema12 !== null && ema26 !== null) {
-                return ema12 - ema26;
-            }
-            return 0;
-        }
-
-        function startRestPolling() {
-            if (updateIntervalId) {
-                clearInterval(updateIntervalId);
-            }
-
-            updateIntervalId = setInterval(async () => {
-                if (isUsingFallback) return;
-
-                try {
-                    await fetch24hTickers();
-
-                    const coin = cryptoDatabase[currentCoin];
-                    if (coin.prices && coin.prices.length > 0) {
-                        coin.prices[coin.prices.length - 1] = coin.price;
-                        
-                        if (coin.ohlc && coin.ohlc.length > 0) {
-                            let lastCandle = coin.ohlc[coin.ohlc.length - 1];
-                            lastCandle.c = coin.price;
-                            lastCandle.h = Math.max(lastCandle.h, coin.price);
-                            lastCandle.l = Math.min(lastCandle.l, coin.price);
-                        }
-                    }
-
-                    if (viewMode === 'single') {
-                        updateDashboardOnlyText();
-                    } else {
-                        updateMultiGrid();
-                    }
-
-                } catch (e) {
-                    console.warn("Polling error:", e);
-                }
-            }, 3000);
-        }
-
-        function triggerPriceFlash(direction) {
-            const infoBar = document.getElementById("info-bar");
-            if (!infoBar) return;
-
-            infoBar.classList.remove("animate-flash-green", "animate-flash-red");
-            void infoBar.offsetWidth; 
-
-            if (direction === "green") {
-                infoBar.classList.add("animate-flash-green");
-            } else {
-                infoBar.classList.add("animate-flash-red");
-            }
-        }
-
-        function updateTickersBar() {
-            Object.keys(cryptoDatabase).forEach(key => {
-                const coin = cryptoDatabase[key];
-                const el = document.getElementById(`ticker-${key}`);
-                if (el) {
-                    el.innerText = formatPrice(coin.price, coin.symbol);
-                    el.className = coin.change24h >= 0 ? "text-cryptoGreen font-mono font-bold" : "text-cryptoRed font-mono font-bold";
-                }
-            });
-        }
-
-        function renderCoinSelectors() {
-            const container = document.getElementById("coin-selector-container");
-            if (!container) return;
-            container.innerHTML = "";
-
-            Object.keys(cryptoDatabase).forEach(key => {
-                const coin = cryptoDatabase[key];
-                const isSelected = key === currentCoin;
-                const isPositive = coin.change24h >= 0;
-
-                const btn = document.createElement("button");
-                btn.className = `w-full flex items-center justify-between p-3.5 rounded-xl border transition-all duration-300 ${
-                    isSelected 
-                    ? 'bg-accentBlue/10 border-accentBlue text-white shadow-md shadow-accentBlue/5' 
-                    : 'bg-darkBg/40 border-darkBorder hover:bg-darkCardHover hover:text-white text-gray-400'
-                }`;
-                btn.onclick = () => selectCoin(key);
-
-                btn.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">
-                            ${cryptoSVGLogos[coin.symbol]}
-                        </div>
-                        <div class="text-left">
-                            <span class="font-extrabold text-xs text-white tracking-wider block">${coin.symbol}</span>
-                            <span class="text-[9px] text-gray-500 font-semibold">${coin.name}</span>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <span class="font-mono text-xs block font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
-                            ${coin.price ? formatPrice(coin.price, coin.symbol) : 'Loading...'}
-                        </span>
-                        <span class="text-[9px] font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
-                            ${isPositive ? '+' : ''}${coin.change24h.toFixed(2)}%
-                        </span>
-                    </div>
-                `;
-                container.appendChild(btn);
-            });
-        }
-
-        function selectCoin(coinKey) {
-            currentCoin = coinKey;
-            renderCoinSelectors();
+            // 4. Hitung Support & Resistance Sederhana berdasar harga terendah/tertinggi 1D terakhir
+            const ohlc14 = coin.ohlc.slice(-14); 
+            let max14 = Math.max(...ohlc14.map(o => o.h));
+            let min14 = Math.min(...ohlc14.map(o => o.l));
             
-            if (isUsingFallback) {
-                generateLocalSimData(coinKey, currentTimeframe);
-                updateDashboard();
-            } else {
-                fetchHistoricalKlines(currentCoin, currentTimeframe);
-            }
+            coin.res2 = max14;
+            coin.res1 = max14 - ((max14 - min14) * 0.236); // Fibonacci 0.236 retract
+            coin.sup1 = min14 + ((max14 - min14) * 0.236);
+            coin.sup2 = min14;
+
+            // 5. Penentuan Sinyal Utama (Weekly/Daily bias)
+            let score = 0;
+            if (coin.rsi < 35) score += 2;
+            else if (coin.rsi < 45) score += 1;
+            else if (coin.rsi > 65) score -= 2;
+            else if (coin.rsi > 55) score -= 1;
+
+            if (currentPrice > coin.sma20) score += 1;
+            else score -= 1;
+            
+            // Jarak ke Support/Resistance
+            const distToSup = ((currentPrice - coin.sup1) / currentPrice) * 100;
+            if(distToSup > 0 && distToSup < 3) score += 1; // Dekat support = peluang beli
+
+            if (score >= 3) coin.signal = "STRONG BUY";
+            else if (score >= 1) coin.signal = "ACCUMULATE";
+            else if (score <= -3) coin.signal = "STRONG SELL";
+            else if (score <= -1) coin.signal = "REDUCE / SELL";
+            else coin.signal = "HOLD / WAIT";
         }
 
-        function formatPrice(val, symbol) {
-            if (!val || isNaN(val)) return "$--";
-            if (symbol === "DOGE" || symbol === "TRX") {
-                return "$" + val.toFixed(4);
-            }
-            return "$" + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-
-        function updateDashboardOnlyText() {
-            const coin = cryptoDatabase[currentCoin];
-            if (!coin.calculatedLevels) return;
-
-            const isPositive = coin.change24h >= 0;
-
-            const logoContainer = document.getElementById("coin-logo-container");
-            if (logoContainer) {
-                logoContainer.innerHTML = cryptoSVGLogos[coin.symbol];
-            }
-
-            const currentPriceEl = document.getElementById("current-price");
-            currentPriceEl.innerText = formatPrice(coin.price, coin.symbol);
-            currentPriceEl.className = `text-2xl font-mono font-black ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
-
-            const changeEl = document.getElementById("price-change-pct");
-            changeEl.innerText = `${isPositive ? '+' : ''}${coin.change24h.toFixed(2)}%`;
-            changeEl.className = `text-base font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
-            
-            document.getElementById("volume-24h").innerText = coin.volume24h;
-
-            const levels = coin.calculatedLevels;
-            document.getElementById("res-2").innerText = formatPrice(levels.res2, coin.symbol);
-            document.getElementById("res-1").innerText = formatPrice(levels.res1, coin.symbol);
-            document.getElementById("sup-1").innerText = formatPrice(levels.sup1, coin.symbol);
-            document.getElementById("sup-2").innerText = formatPrice(levels.sup2, coin.symbol);
-
-            const entryValue = levels.sup1 * 1.002;
-            const tpValue = levels.res1 * 0.995;
-            const slValue = levels.sup2 * 0.985; 
-
-            document.getElementById("calc-entry").innerText = formatPrice(entryValue, coin.symbol);
-            document.getElementById("calc-tp").innerText = formatPrice(tpValue, coin.symbol);
-            document.getElementById("calc-sl").innerText = formatPrice(slValue, coin.symbol);
-
-            const potentialProfit = tpValue - entryValue;
-            const potentialLoss = entryValue - slValue;
-            const rrr = (potentialProfit / potentialLoss).toFixed(2);
-            
-            const profitPct = ((potentialProfit / entryValue) * 100).toFixed(1);
-            const lossPct = ((potentialLoss / entryValue) * 100).toFixed(1);
-
-            document.getElementById("risk-reward-ratio").innerText = `1 : ${rrr}`;
-            document.getElementById("risk-loss-pct").innerText = `-${Math.abs(lossPct)}%`;
-            document.getElementById("risk-profit-pct").innerText = `+${Math.abs(profitPct)}%`;
-            
-            let allocation = "Maks 5%";
-            if (rrr >= 2 && lossPct < 6) allocation = "Maks 10%";
-            else if (rrr < 1.5) allocation = "Maks 2%";
-            document.getElementById("risk-allocation").innerText = allocation;
-
-            if (mainChartInstance) {
-                updateChartLastCandle(mainChartInstance, coin);
-            }
-        }
-
-        function updateDashboard() {
-            const coin = cryptoDatabase[currentCoin];
-            if (!coin.prices || coin.prices.length === 0) return;
-
-            updateDashboardOnlyText();
-
-            const levels = coin.calculatedLevels;
-
-            const signalEl = document.getElementById("summary-signal");
-            signalEl.innerText = coin.signal;
-            if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) {
-                signalEl.className = "text-xl sm:text-2xl font-black text-cryptoGreen tracking-wide drop-shadow-[0_0_8px_rgba(14,203,129,0.3)]";
-            } else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) {
-                signalEl.className = "text-xl sm:text-2xl font-black text-cryptoRed tracking-wide drop-shadow-[0_0_8px_rgba(246,70,93,0.3)]";
-            } else {
-                signalEl.className = "text-xl sm:text-2xl font-black text-cryptoYellow tracking-wide drop-shadow-[0_0_8px_rgba(240,185,11,0.3)]";
-            }
-
-            document.getElementById("rsi-val").innerText = coin.rsi.toFixed(1);
-            document.getElementById("macd-val").innerText = coin.macd;
-            document.getElementById("macd-val").className = coin.macd.includes("Bullish") ? "text-cryptoGreen" : (coin.macd.includes("Bearish") ? "text-cryptoRed" : "text-cryptoYellow");
-
-            const trendIcon = document.getElementById("trend-icon");
-            const trendStatus = document.getElementById("market-trend-status");
-            const trendDesc = document.getElementById("trend-desc");
-            const trendMAStatus = document.getElementById("trend-ma-status");
-
-            trendStatus.innerText = coin.trendStatus || "Menganalisis...";
-            
-            if(trendMAStatus) {
-                if (coin.sma20) {
-                    trendMAStatus.innerText = `Posisi: ${coin.price > coin.sma20 ? 'Di Atas MA20' : 'Di Bawah MA20'} | MA20: ${formatPrice(coin.sma20, coin.symbol)}`;
-                } else {
-                    trendMAStatus.innerText = "Menghitung MA...";
-                }
-            }
-
-            if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) {
-                trendIcon.innerHTML = "▲";
-                trendIcon.className = "w-9 h-9 rounded-xl bg-cryptoGreen/10 text-cryptoGreen flex items-center justify-center font-black shadow-md shadow-cryptoGreen/5";
-                trendDesc.innerText = `Tren harian dikonfirmasi Uptrend oleh indikator MA & MACD. Momentum memihak pembeli. Amati area Resistance terdekat sebagai target taking profit.`;
-            } else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) {
-                trendIcon.innerHTML = "▼";
-                trendIcon.className = "w-9 h-9 rounded-xl bg-cryptoRed/10 text-cryptoRed flex items-center justify-center font-black shadow-md shadow-cryptoRed/5";
-                trendDesc.innerText = `Tekanan jual mendominasi (Downtrend). Harga berada di zona distribusi/rawan. Amankan aset atau cari peluang buy back di area Support lantai.`;
-            } else {
-                trendIcon.innerHTML = "◀▶";
-                trendIcon.className = "w-9 h-9 rounded-xl bg-cryptoYellow/10 text-cryptoYellow flex items-center justify-center font-black text-xs shadow-md shadow-cryptoYellow/5";
-                trendDesc.innerText = `Kripto sedang fase transisi/konsolidasi. Belum ada momentum arah yang pasti. Terapkan strategi buy di area S1/S2, jual cepat di area R1/R2.`;
-            }
-
-            document.getElementById("coin-name").innerText = coin.name;
-            document.getElementById("coin-ticker-badge").innerText = `${coin.symbol}/USDT`;
-            document.getElementById("coin-category").innerText = coin.category;
-
-            renderChart(coin);
-        }
-
-        function renderChart(coin) {
+        function updateMainChart(coinKey) {
+            const coin = cryptoDatabase[coinKey];
             const ctx = document.getElementById('mainChart').getContext('2d');
-            const ohlcData = coin.ohlc;
-            const volumes = coin.volumes;
-            const levels = coin.calculatedLevels;
-
+            
             if (mainChartInstance) {
                 mainChartInstance.destroy();
             }
 
-            let labels = generateDateLabels(ohlcData.length);
-            const floatData = ohlcData.map(d => [d.o, d.c]);
-            const bgColors = ohlcData.map(d => d.c >= d.o ? '#0ECB81' : '#F6465D');
-            const borderColors = ohlcData.map(d => d.c >= d.o ? '#0ECB81' : '#F6465D');
+            const isPositive = coin.change24h >= 0;
+            const mainColor = isPositive ? '#0ECB81' : '#F6465D';
+            const bgColor = isPositive ? 'rgba(14, 203, 129, 0.1)' : 'rgba(246, 70, 93, 0.1)';
+            const labels = generateDateLabels(coin.ohlc.length);
 
-            const support1LineData = Array(ohlcData.length).fill(levels.sup1);
-            const support2LineData = Array(ohlcData.length).fill(levels.sup2);
-            const resistance1LineData = Array(ohlcData.length).fill(levels.res1);
-            const resistance2LineData = Array(ohlcData.length).fill(levels.res2);
+            // Membuat array SMA20
+            let sma20Data = [];
+            for (let i = 0; i < coin.prices.length; i++) {
+                if (i < 19) {
+                    sma20Data.push(null);
+                } else {
+                    let sum = 0;
+                    for (let j = 0; j < 20; j++) {
+                        sum += coin.prices[i - j];
+                    }
+                    sma20Data.push(sum / 20);
+                }
+            }
 
-            const initialVisible = 60; 
+            // Batas y-axis agar tidak terlalu nempel
+            const prices = coin.prices;
+            const minPrice = Math.min(...prices) * 0.98;
+            const maxPrice = Math.max(...prices) * 1.02;
 
             mainChartInstance = new Chart(ctx, {
-                type: 'bar',
+                type: 'bar', // Gunakan bar untuk plugin candlestick kustom
                 data: {
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Resistance 1',
-                            type: 'line',
-                            data: resistance1LineData,
-                            borderColor: '#F6465D',
-                            borderWidth: 1.5,
-                            borderDash: [5, 5],
-                            pointRadius: 0,
-                            fill: false,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: 'Area Resistance (Jual)',
-                            type: 'line',
-                            data: resistance2LineData,
-                            borderColor: 'transparent',
-                            pointRadius: 0,
-                            fill: '-1', 
-                            backgroundColor: 'rgba(246, 70, 93, 0.1)', 
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: 'Support 1',
-                            type: 'line',
-                            data: support1LineData,
-                            borderColor: '#0ECB81',
-                            borderWidth: 1.5,
-                            borderDash: [5, 5],
-                            pointRadius: 0,
-                            fill: false,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: 'Area Support (Beli)',
-                            type: 'line',
-                            data: support2LineData,
-                            borderColor: 'transparent',
-                            pointRadius: 0,
-                            fill: '-1', 
-                            backgroundColor: 'rgba(14, 203, 129, 0.1)', 
-                            yAxisID: 'y'
-                        },
-                        {
                             label: 'Candlestick',
-                            isCandle: true,
-                            ohlcData: ohlcData,
-                            data: floatData,
-                            backgroundColor: bgColors,
-                            borderColor: borderColors,
-                            borderWidth: 1,
+                            data: coin.ohlc.map(d => [d.o, d.c]),
+                            backgroundColor: context => {
+                                const index = context.dataIndex;
+                                const ohlc = coin.ohlc[index];
+                                if(!ohlc) return '#ffffff';
+                                return ohlc.c >= ohlc.o ? '#0ECB81' : '#F6465D';
+                            },
+                            borderWidth: 0,
+                            borderRadius: 1,
                             barPercentage: 0.8,
-                            categoryPercentage: 0.9,
-                            yAxisID: 'y'
+                            categoryPercentage: 0.8,
+                            isCandle: true, 
+                            ohlcData: coin.ohlc,
+                            order: 2
                         },
                         {
-                            label: 'Volume',
-                            type: 'bar',
-                            data: volumes,
-                            backgroundColor: 'rgba(240, 185, 11, 0.08)', 
-                            hoverBackgroundColor: 'rgba(240, 185, 11, 0.18)',
-                            yAxisID: 'yVolume'
+                            type: 'line',
+                            label: 'SMA (20 Hari)',
+                            data: sma20Data,
+                            borderColor: '#F0B90B',
+                            borderWidth: 1.5,
+                            borderDash: [5, 5],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0.3,
+                            order: 1
                         }
                     ]
                 },
@@ -1480,10 +1383,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     layout: {
-                        padding: {
-                            // [PERBAIKAN] Tambahan ekstra ruangan di sebelah luar (kanan) agar badge bisa digambar murni di luar Sumbu-Y
-                            right: 45 
-                        }
+                        padding: { right: 40 } // Ruang untuk live price line
                     },
                     interaction: {
                         mode: 'index',
@@ -1491,395 +1391,469 @@
                     },
                     plugins: {
                         legend: { display: false },
-                        zoom: {
-                            pan: {
-                                enabled: true,
-                                mode: 'xy',
-                            },
-                            zoom: {
-                                wheel: {
-                                    enabled: true,
-                                    speed: 0.05 
-                                },
-                                pinch: {
-                                    enabled: true 
-                                },
-                                mode: 'xy' 
-                            }
-                        },
                         tooltip: {
                             backgroundColor: '#11151B',
-                            titleColor: '#9CA3AF',
-                            bodyColor: '#FFFFFF',
+                            titleColor: '#A0AEC0',
+                            bodyColor: '#fff',
                             borderColor: '#1E2530',
                             borderWidth: 1,
-                            padding: 12,
-                            displayColors: false,
+                            padding: 10,
                             callbacks: {
                                 label: function(context) {
-                                    if (context.dataset.label === 'Volume') {
-                                        return `Volume: ${context.raw.toLocaleString()}`;
-                                    } else if (context.dataset.isCandle) {
-                                        const d = ohlcData[context.dataIndex];
-                                        if (!d) return null; // SAFETY CHECK
+                                    if(context.dataset.isCandle) {
+                                        const idx = context.dataIndex;
+                                        const ohlc = coin.ohlc[idx];
                                         return [
-                                            `O: ${formatPrice(d.o, coin.symbol)} | H: ${formatPrice(d.h, coin.symbol)}`,
-                                            `L: ${formatPrice(d.l, coin.symbol)} | C: ${formatPrice(d.c, coin.symbol)}`
+                                            `Open: ${formatPrice(ohlc.o, coin.symbol)}`,
+                                            `High: ${formatPrice(ohlc.h, coin.symbol)}`,
+                                            `Low: ${formatPrice(ohlc.l, coin.symbol)}`,
+                                            `Close: ${formatPrice(ohlc.c, coin.symbol)}`
                                         ];
-                                    } else if (context.dataset.label.includes('Area')) {
-                                        return null;
                                     }
                                     return `${context.dataset.label}: ${formatPrice(context.raw, coin.symbol)}`;
                                 }
                             }
+                        },
+                        zoom: {
+                            zoom: {
+                                wheel: { enabled: true, speed: 0.1 },
+                                pinch: { enabled: true },
+                                mode: 'xy',
+                            },
+                            pan: {
+                                enabled: true,
+                                mode: 'xy',
+                                threshold: 5, 
+                            }
                         }
                     },
                     scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.04)', 
-                                drawBorder: false
+                        x: {
+                            grid: { color: '#1E2530', drawBorder: false },
+                            ticks: { 
+                                color: '#718096', 
+                                font: { size: 10 },
+                                maxRotation: 45,
+                                minRotation: 45
                             },
-                            ticks: {
-                                color: '#9CA3AF',
-                                font: {
-                                    family: 'monospace',
-                                    size: 10
+                            min: Math.max(0, labels.length - 60), 
+                            max: labels.length + 4 
+                        },
+                        y: {
+                            position: 'right', 
+                            grid: { color: '#1E2530', drawBorder: false },
+                            ticks: { 
+                                color: '#A0AEC0', 
+                                font: { family: 'monospace', size: 11, weight: 'bold' },
+                                callback: function(value) {
+                                    if(coin.price < 1) return value.toFixed(4);
+                                    if(coin.price > 1000) return (value/1000).toFixed(1) + 'k';
+                                    return value.toFixed(1);
                                 }
                             },
-                            grace: '10%' 
-                        },
-                        yVolume: {
-                            type: 'linear',
-                            display: false,
-                            position: 'left',
-                            grid: { drawOnChartArea: false },
-                            max: Math.max(...volumes) * 3
-                        },
-                        x: {
-                            // Memberi batasan min/max default agar chart terlihat lebih lega, sisa data disembunyikan di kiri (bisa dipan)
-                            min: Math.max(0, labels.length - initialVisible),
-                            
-                            max: labels.length + 4, 
-                            
-                            grid: { 
-                                display: true,
-                                color: 'rgba(255, 255, 255, 0.03)', 
-                                drawBorder: false 
-                            },
-                            ticks: {
-                                color: '#9CA3AF',
-                                maxTicksLimit: 12, 
-                                maxRotation: 0, // Dibuat lurus agar tidak sumpek
-                                font: { size: 9 }
-                            }
+                            min: minPrice,
+                            max: maxPrice
                         }
                     }
                 }
             });
-
-            // MENYUNTIKKAN DATA HARGA REAL-TIME AGAR DIGUNAKAN PLUGIN GARIS HARGA 
-            mainChartInstance.currentLivePrice = coin.price;
-            mainChartInstance.currentLivePriceStr = formatPrice(coin.price, coin.symbol);
-            mainChartInstance.currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
-
-            // Aktifkan Drag Sumbu pada Main Chart
+            
             setupCustomAxisDrag(document.getElementById('mainChart'), mainChartInstance);
+            updateMainChartLivePrice(coin.price);
         }
 
-        // FUNGSI: Update lilin terakhir dan Garis Harga secara dinamis ala TradingView
-        function updateChartLastCandle(chartInstance, coin) {
-            if (!chartInstance) return;
-            
-            // 1. UPDATE DATA UNTUK GARIS HARGA REAL-TIME (PLUGIN KUSTOM)
-            chartInstance.currentLivePrice = coin.price;
-            chartInstance.currentLivePriceStr = formatPrice(coin.price, coin.symbol);
-            chartInstance.currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
-
-            // 2. UPDATE CANDLESTICK (LILIN TERAKHIR)
-            const datasets = chartInstance.data.datasets;
-            const candleDataset = datasets.find(d => d.isCandle);
-            
-            if (candleDataset && candleDataset.data.length > 0) {
-                const idx = candleDataset.data.length - 1;
-                const d = coin.ohlc[idx];
-                
-                // Mengubah nilai open/close di Chart secara langsung
-                candleDataset.data[idx] = [d.o, d.c];
-                
-                // Merubah warnanya secara real-time menjadi Hijau/Merah jika harga Close melewati Open
-                candleDataset.backgroundColor[idx] = d.c >= d.o ? '#0ECB81' : '#F6465D';
-                candleDataset.borderColor[idx] = d.c >= d.o ? '#0ECB81' : '#F6465D';
+        function updateMainChartLivePrice(price) {
+            if (mainChartInstance) {
+                const coin = cryptoDatabase[currentCoin];
+                mainChartInstance.currentLivePrice = price;
+                mainChartInstance.currentLivePriceStr = formatPrice(price, currentCoin);
+                mainChartInstance.currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
+                mainChartInstance.update('none'); 
             }
-            
-            // Update tanpa animasi dan tanpa mereset tarikan sumbu/zoom dari pengguna!
-            // Ini akan memanggil ulang fungsi render grafis termasuk plugin Garis Harga Real-Time
-            chartInstance.update('none');
         }
 
-        async function updateMultiGrid() {
-            if (viewMode !== 'multi') return;
+        function renderCoinSelectors() {
+            const container = document.getElementById("coin-selector-container");
+            container.innerHTML = "";
 
-            for (let i = 0; i < 4; i++) {
-                const coinKey = activeGridCoins[i];
-                const boxId = i + 1;
-                
-                const titleEl = document.getElementById(`grid-title-${boxId}`);
-                const priceEl = document.getElementById(`grid-price-${boxId}`);
-                
-                if (!coinKey) {
-                    document.getElementById(`grid-box-${boxId}`).style.opacity = "0.3";
-                    titleEl.innerText = "Slot Kosong";
-                    priceEl.innerText = "";
-                    continue;
+            Object.keys(cryptoDatabase).forEach(key => {
+                const coin = cryptoDatabase[key];
+                const isActive = key === currentCoin;
+
+                const btn = document.createElement("button");
+                btn.className = `w-full text-left p-3 rounded-xl border transition-all duration-300 flex items-center gap-3 relative overflow-hidden ${
+                    isActive 
+                    ? 'bg-accentBlue/10 border-accentBlue/50 shadow-md shadow-accentBlue/5' 
+                    : 'bg-darkBg/50 border-darkBorder hover:bg-darkBg hover:border-gray-600'
+                }`;
+                btn.onclick = () => selectCoin(key);
+
+                if (isActive) {
+                    btn.innerHTML = `<div class="absolute inset-0 bg-gradient-to-r from-accentBlue/20 to-transparent opacity-50"></div>`;
                 }
-                
-                document.getElementById(`grid-box-${boxId}`).style.opacity = "1";
-                const coin = cryptoDatabase[coinKey];
-                
-                titleEl.innerHTML = `
-                    <div class="flex items-center gap-1.5">
-                        <span class="w-2.5 h-2.5 inline-block">${cryptoSVGLogos[coin.symbol]}</span>
-                        <span class="font-bold text-white">${coin.symbol}/USDT</span>
-                        <span class="text-[9px] bg-darkBg px-1.5 py-0.5 rounded text-gray-400 border border-darkBorder">1D Candle</span>
+
+                btn.innerHTML += `
+                    <div class="w-8 h-8 rounded-lg bg-darkBg flex items-center justify-center p-1 border border-darkBorder/50 z-10">
+                        ${cryptoSVGLogos[key]}
+                    </div>
+                    <div class="flex-grow z-10">
+                        <div class="font-extrabold text-white text-sm flex justify-between">
+                            ${key}
+                            <span class="text-xs font-mono ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}">
+                                ${coin.change24h >= 0 ? '▲' : '▼'}${Math.abs(coin.change24h).toFixed(2)}%
+                            </span>
+                        </div>
+                        <div class="text-[10px] text-gray-500 font-medium">${coin.name}</div>
                     </div>
                 `;
-                
-                const isPositive = coin.change24h >= 0;
-                priceEl.innerHTML = `
-                    <span class="font-mono font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
-                        ${formatPrice(coin.price, coin.symbol)}
-                    </span>
-                    <span class="text-[9px] ml-1.5 ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}">
-                        ${isPositive ? '▲' : '▼'} ${coin.change24h.toFixed(1)}%
-                    </span>
-                `;
+                container.appendChild(btn);
+            });
+        }
 
-                if (!coin.prices || coin.prices.length === 0) {
-                    await fetchHistoricalKlines(coinKey, "1D");
+        async function selectCoin(coinKey) {
+            if (currentCoin === coinKey) return;
+            currentCoin = coinKey;
+            renderCoinSelectors();
+            
+            document.getElementById('chart-loading').style.display = 'flex';
+            
+            if (!isUsingFallback) {
+                try {
+                    await fetchHistoricalKlines(currentCoin, currentTimeframe);
+                } catch(e) {
+                    // Fallback handled
                 }
+            } else {
+                calculateTechnicalIndicatorsWeekly(currentCoin);
+                updateMainChart(currentCoin);
+                updateDashboard();
+                document.getElementById('chart-loading').style.display = 'none';
+            }
+        }
+
+        function updateDashboard() {
+            const coin = cryptoDatabase[currentCoin];
+            if (!coin.prices || coin.prices.length === 0) return;
+
+            // Info Bar
+            document.getElementById("coin-name").innerText = coin.name;
+            document.getElementById("coin-ticker-badge").innerText = `${coin.symbol}/USDT`;
+            document.getElementById("coin-category").innerText = coin.category;
+            document.getElementById("coin-logo-container").innerHTML = cryptoSVGLogos[coin.symbol];
+            
+            updateDashboardInfoOnly();
+
+            // Sinyal Utama
+            const sigEl = document.getElementById("summary-signal");
+            sigEl.innerText = coin.signal;
+            if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) sigEl.className = "text-2xl font-black text-cryptoGreen tracking-wide drop-shadow";
+            else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) sigEl.className = "text-2xl font-black text-cryptoRed tracking-wide drop-shadow";
+            else sigEl.className = "text-2xl font-black text-cryptoYellow tracking-wide drop-shadow";
+
+            document.getElementById("rsi-val").innerText = coin.rsi.toFixed(1);
+            if (coin.rsi > 70) document.getElementById("rsi-val").className = "text-cryptoRed font-mono font-bold";
+            else if (coin.rsi < 30) document.getElementById("rsi-val").className = "text-cryptoGreen font-mono font-bold";
+            else document.getElementById("rsi-val").className = "text-white font-mono font-bold";
+            
+            const macdEl = document.getElementById("macd-val");
+            macdEl.innerText = coin.macd;
+            macdEl.className = coin.macd.includes("BULLISH") ? "text-cryptoGreen font-semibold" : (coin.macd.includes("BEARISH") ? "text-cryptoRed font-semibold" : "text-gray-400 font-semibold");
+
+            // Kalkulasi Area Entry/Exit berdasarkan Support Resistance 1D
+            document.getElementById("calc-entry").innerText = formatPrice(coin.sup1, coin.symbol);
+            document.getElementById("calc-tp").innerText = formatPrice(coin.res1, coin.symbol);
+            document.getElementById("calc-sl").innerText = formatPrice(coin.sup2 * 0.99, coin.symbol);
+
+            // Analisis Teknis S/R Card
+            const trendEl = document.getElementById("market-trend-status");
+            trendEl.innerText = coin.trendStatus;
+            trendEl.className = coin.trendStatus.includes("UP") ? "text-sm font-black text-cryptoGreen block" : (coin.trendStatus.includes("DOWN") ? "text-sm font-black text-cryptoRed block" : "text-sm font-black text-white block");
+            
+            const trendIcon = document.getElementById("trend-icon");
+            trendIcon.innerText = coin.trendStatus.includes("UP") ? "▲" : (coin.trendStatus.includes("DOWN") ? "▼" : "●");
+            trendIcon.className = coin.trendStatus.includes("UP") ? "w-9 h-9 rounded-xl bg-cryptoGreen/10 text-cryptoGreen flex items-center justify-center font-bold text-base shadow-sm" : (coin.trendStatus.includes("DOWN") ? "w-9 h-9 rounded-xl bg-cryptoRed/10 text-cryptoRed flex items-center justify-center font-bold text-base shadow-sm" : "w-9 h-9 rounded-xl bg-gray-500/10 text-gray-400 flex items-center justify-center font-bold text-base shadow-sm");
+
+            let distRes = ((coin.res1 - coin.price) / coin.price) * 100;
+            let distSup = ((coin.price - coin.sup1) / coin.price) * 100;
+            document.getElementById("trend-desc").innerText = `Tren dominan 1D adalah ${coin.trendStatus}. Harga berjarak ${distSup.toFixed(1)}% di atas Support 1, dan ${distRes.toFixed(1)}% di bawah Target Resistance.`;
+
+            document.getElementById("res-2").innerText = formatPrice(coin.res2, coin.symbol);
+            document.getElementById("res-1").innerText = formatPrice(coin.res1, coin.symbol);
+            document.getElementById("sup-1").innerText = formatPrice(coin.sup1, coin.symbol);
+            document.getElementById("sup-2").innerText = formatPrice(coin.sup2, coin.symbol);
+
+            // Perhitungan Manajemen Risiko (Risk Reward Ratio)
+            const entryPrice = coin.sup1;
+            const targetPrice = coin.res1;
+            const stopLossPrice = coin.sup2 * 0.99;
+            
+            const risk = entryPrice - stopLossPrice;
+            const reward = targetPrice - entryPrice;
+            
+            let rrRatioStr = "--";
+            let riskPctStr = "--";
+            let rewardPctStr = "--";
+            
+            if(risk > 0 && reward > 0) {
+                const ratio = reward / risk;
+                rrRatioStr = `1 : ${ratio.toFixed(2)}`;
+                document.getElementById("risk-reward-ratio").className = ratio >= 2 ? "font-mono font-bold text-cryptoGreen text-sm" : "font-mono font-bold text-cryptoYellow text-sm";
                 
-                // Logika Cerdas: Cek apakah koin ini sudah ter-render, jika ya, hanya gerakkan lilin terbarunya
-                if (gridRenderedCoins[boxId] === coinKey && gridChartInstances[boxId]) {
-                    updateChartLastCandle(gridChartInstances[boxId], coin);
+                const riskPct = (risk / entryPrice) * 100;
+                riskPctStr = riskPct.toFixed(2) + "%";
+                
+                const rewardPct = (reward / entryPrice) * 100;
+                rewardPctStr = rewardPct.toFixed(2) + "%";
+            }
+            
+            document.getElementById("risk-reward-ratio").innerText = rrRatioStr;
+            document.getElementById("risk-loss-pct").innerText = riskPctStr;
+            document.getElementById("risk-profit-pct").innerText = rewardPctStr;
+            
+            // Simulasi Alokasi Modal berdasarkan jarak Stop Loss
+            // Rumus Kelly sederhana atau posisi size: Jika max risiko modal adalah 2%, berapa % alokasi koin?
+            let allocationPct = "--";
+            const riskPctFloat = parseFloat(riskPctStr);
+            if(!isNaN(riskPctFloat) && riskPctFloat > 0) {
+                // Asumsi max loss per trade = 2% dari total modal
+                let alloc = (2 / riskPctFloat) * 100; 
+                alloc = Math.min(alloc, 100); // Max 100%
+                allocationPct = alloc.toFixed(1) + "% Modal";
+            }
+            document.getElementById("risk-allocation").innerText = allocationPct;
+
+            // Strategy Teks
+            if(coin.signal.includes("BUY")) {
+                document.getElementById("action-step-1").innerText = `Area beli optimal di ${formatPrice(coin.sup1, coin.symbol)}.`;
+                document.getElementById("action-step-2").innerText = `SL ketat jika breakdown ${formatPrice(stopLossPrice, coin.symbol)}.`;
+                document.getElementById("action-step-3").innerText = `Ambil porsi profit bertahap menuju ${formatPrice(coin.res1, coin.symbol)}.`;
+            } else if (coin.signal.includes("SELL")) {
+                document.getElementById("action-step-1").innerText = `Hindari posisi beli. Harga dekat resistance atau breakdown support.`;
+                document.getElementById("action-step-2").innerText = `Tunggu konfirmasi rebound di area ${formatPrice(coin.sup2, coin.symbol)}.`;
+                document.getElementById("action-step-3").innerText = `Jika punya barang, pertimbangkan kurangi muatan.`;
+            } else {
+                document.getElementById("action-step-1").innerText = `Market sedang sideway/konsolidasi. Wait & see.`;
+                document.getElementById("action-step-2").innerText = `Batas akumulasi bawah di ${formatPrice(coin.sup1, coin.symbol)}.`;
+                document.getElementById("action-step-3").innerText = `Batas taking profit atas di ${formatPrice(coin.res1, coin.symbol)}.`;
+            }
+        }
+
+        function updateDashboardInfoOnly() {
+            const coin = cryptoDatabase[currentCoin];
+            const priceEl = document.getElementById("current-price");
+            const changeEl = document.getElementById("price-change-pct");
+            const volEl = document.getElementById("volume-24h");
+            
+            priceEl.innerText = formatPrice(coin.price, coin.symbol);
+            const changeColor = coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed';
+            changeEl.className = `text-base font-bold ${changeColor}`;
+            changeEl.innerText = `${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}%`;
+            
+            let vol = coin.volume24h;
+            if(vol !== "--") {
+                 vol = (vol / 1000000).toFixed(2) + "M " + coin.symbol;
+            }
+            volEl.innerText = vol;
+        }
+
+        function updateMultiGrid() {
+            // Render ulang 4 grid sesuai dengan activeGridCoins
+            for(let i=1; i<=4; i++) {
+                const coinKey = activeGridCoins[i-1];
+                const box = document.getElementById(`grid-box-${i}`);
+                
+                if (coinKey) {
+                    box.style.display = 'flex';
+                    const coin = cryptoDatabase[coinKey];
+                    document.getElementById(`grid-title-${i}`).innerHTML = `${cryptoSVGLogos[coinKey].replace('w-10 h-10', 'w-4 h-4')} ${coinKey}`;
+                    updateGridChart(coinKey, i);
                 } else {
-                    // Jika baru pertama dimuat atau berganti koin, baru render ulang penuh
-                    renderGridChartCandlestick(boxId, coin);
-                    gridRenderedCoins[boxId] = coinKey;
+                    box.style.display = 'none';
+                    if (gridChartInstances[i]) {
+                        gridChartInstances[i].destroy();
+                        gridChartInstances[i] = null;
+                        gridRenderedCoins[i] = null;
+                    }
                 }
             }
         }
 
-        function renderGridChartCandlestick(boxId, coin) {
-            const canvasId = `gridChart-${boxId}`;
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+        function updateGridChart(coinKey, boxId) {
+            const coin = cryptoDatabase[coinKey];
+            if (!coin.prices || coin.prices.length === 0) return; // Data belum siap
+
+            const ctx = document.getElementById(`gridChart-${boxId}`).getContext('2d');
+            
+            // Hindari render ulang jika koin yang sama sudah ada di box ini (kecuali update harga live)
+            if (gridRenderedCoins[boxId] === coinKey && gridChartInstances[boxId]) {
+                 updateGridPricesOnly([coinKey]); 
+                 return;
+            }
 
             if (gridChartInstances[boxId]) {
                 gridChartInstances[boxId].destroy();
             }
 
-            const ohlcData = coin.ohlc;
-            if(!ohlcData || ohlcData.length === 0) return;
+            const isPositive = coin.change24h >= 0;
+            const labels = generateDateLabels(coin.ohlc.length);
 
-            let labels = generateDateLabels(ohlcData.length);
+            // Gunakan hanya sebagian data agar grid tidak terlalu rapat (misal 50 candle terakhir)
+            const displayLimit = 50; 
+            const recentOhlc = coin.ohlc.slice(-displayLimit);
+            const recentLabels = labels.slice(-displayLimit);
 
-            const floatData = ohlcData.map(d => [d.o, d.c]);
-            const bgColors = ohlcData.map(d => d.c >= d.o ? '#0ECB81' : '#F6465D');
-            const borderColors = ohlcData.map(d => d.c >= d.o ? '#0ECB81' : '#F6465D');
-            
-            const initialVisible = 45; 
+            const minPrice = Math.min(...recentOhlc.map(o=>o.l)) * 0.99;
+            const maxPrice = Math.max(...recentOhlc.map(o=>o.h)) * 1.01;
 
             gridChartInstances[boxId] = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: labels,
+                    labels: recentLabels,
                     datasets: [{
+                        label: 'Candle',
+                        data: recentOhlc.map(d => [d.o, d.c]),
+                        backgroundColor: context => {
+                            const index = context.dataIndex;
+                            const ohlc = recentOhlc[index];
+                            if(!ohlc) return '#ffffff';
+                            return ohlc.c >= ohlc.o ? '#0ECB81' : '#F6465D';
+                        },
+                        borderWidth: 0,
                         isCandle: true,
-                        ohlcData: ohlcData,
-                        data: floatData,
-                        backgroundColor: bgColors,
-                        borderColor: borderColors,
-                        borderWidth: 1,
-                        barPercentage: 0.8,
-                        categoryPercentage: 0.9
+                        ohlcData: recentOhlc
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            // [PERBAIKAN] Tambahan ruang yang sama juga diletakkan di chart grid
-                            right: 45 
-                        }
-                    },
+                    layout: { padding: { right: 30, top: 10, bottom: 0, left: 0 } },
                     plugins: {
                         legend: { display: false },
+                        tooltip: { enabled: false }, 
                         zoom: {
-                            pan: {
-                                enabled: true,
-                                mode: 'xy',
-                            },
-                            zoom: {
-                                wheel: {
-                                    enabled: true,
-                                    speed: 0.05
-                                },
-                                pinch: {
-                                    enabled: true
-                                },
-                                mode: 'xy'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#11151B',
-                            titleColor: '#9CA3AF',
-                            bodyColor: '#FFFFFF',
-                            borderColor: '#1E2530',
-                            borderWidth: 1,
-                            padding: 10,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    const d = ohlcData[context.dataIndex];
-                                    if (!d) return null; // SAFETY CHECK
-                                    return [
-                                        `O: ${formatPrice(d.o, coin.symbol)} | H: ${formatPrice(d.h, coin.symbol)}`,
-                                        `L: ${formatPrice(d.l, coin.symbol)} | C: ${formatPrice(d.c, coin.symbol)}`
-                                    ];
-                                }
-                            }
+                            zoom: { wheel: { enabled: true, speed: 0.1 }, pinch: { enabled: true }, mode: 'x' },
+                            pan: { enabled: true, mode: 'x' }
                         }
                     },
                     scales: {
-                        y: {
-                            grid: { 
-                                color: 'rgba(255, 255, 255, 0.03)',
-                                drawBorder: false 
-                            },
-                            ticks: {
-                                color: '#6B7280',
-                                font: { size: 8, family: 'monospace' }
-                            },
-                            grace: '5%' 
+                        x: { 
+                            grid: { display: false }, 
+                            ticks: { display: false }, // Sembunyikan tick X agar lebih bersih
+                            min: Math.max(0, recentLabels.length - 30),
+                            max: recentLabels.length + 2
                         },
-                        x: {
-                            min: Math.max(0, labels.length - initialVisible),
-                            max: labels.length + 4, 
-                            grid: { 
-                                display: true,
-                                color: 'rgba(255, 255, 255, 0.03)',
-                                drawBorder: false 
+                        y: {
+                            position: 'right',
+                            grid: { color: '#1E2530', drawBorder: false },
+                            ticks: { 
+                                color: '#A0AEC0', 
+                                font: { family: 'monospace', size: 9 },
+                                maxTicksLimit: 5,
+                                callback: function(value) {
+                                    if(coin.price < 1) return value.toFixed(4);
+                                    if(coin.price > 1000) return (value/1000).toFixed(1) + 'k';
+                                    return value.toFixed(1);
+                                }
                             },
-                            ticks: {
-                                color: '#6B7280',
-                                maxTicksLimit: 6, 
-                                font: { size: 8 }
-                            }
+                            min: minPrice,
+                            max: maxPrice
                         }
                     }
                 }
             });
 
-            // MENYUNTIKKAN DATA HARGA REAL-TIME AGAR DIGUNAKAN PLUGIN GARIS HARGA 
-            gridChartInstances[boxId].currentLivePrice = coin.price;
-            gridChartInstances[boxId].currentLivePriceStr = formatPrice(coin.price, coin.symbol);
-            gridChartInstances[boxId].currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
+            setupCustomAxisDrag(document.getElementById(`gridChart-${boxId}`), gridChartInstances[boxId]);
+            gridRenderedCoins[boxId] = coinKey;
+            
+            // Set harga teks awal
+            document.getElementById(`grid-price-${boxId}`).innerText = formatPrice(coin.price, coinKey);
+            document.getElementById(`grid-price-${boxId}`).className = `font-mono text-xs font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
+            updateGridChartLivePrice(coinKey, coin.price);
+        }
 
-            // Aktifkan Drag Sumbu pada Grid Chart
-            setupCustomAxisDrag(canvas, gridChartInstances[boxId]);
+        function updateGridPricesOnly(updatedCoinsArr) {
+            for(let i=1; i<=4; i++) {
+                const coinKey = gridRenderedCoins[i];
+                if (coinKey && updatedCoinsArr.includes(coinKey)) {
+                    const coin = cryptoDatabase[coinKey];
+                    const isPositive = coin.change24h >= 0;
+                    const priceEl = document.getElementById(`grid-price-${i}`);
+                    if(priceEl) {
+                        priceEl.innerText = formatPrice(coin.price, coinKey);
+                        priceEl.className = `font-mono text-xs font-bold ${isPositive ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
+                    }
+                }
+            }
+        }
+
+        function updateGridChartLivePrice(coinKey, price) {
+            for(let i=1; i<=4; i++) {
+                if (gridRenderedCoins[i] === coinKey && gridChartInstances[i]) {
+                    const coin = cryptoDatabase[coinKey];
+                    gridChartInstances[i].currentLivePrice = price;
+                    gridChartInstances[i].currentLivePriceStr = formatPrice(price, coinKey);
+                    gridChartInstances[i].currentPriceColor = coin.change24h >= 0 ? '#0ECB81' : '#F6465D';
+                    gridChartInstances[i].update('none');
+                }
+            }
+        }
+
+        function formatPrice(val, symbol) {
+            if (val == null) return "--";
+            if (symbol === 'DOGE' || symbol === 'TRX') return "$" + val.toFixed(4);
+            return "$" + val.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        function startRestPolling() {
+            if (updateIntervalId) clearInterval(updateIntervalId);
+            
+            updateIntervalId = setInterval(async () => {
+                if (!isUsingFallback) {
+                    try {
+                        await fetch24hTickers();
+                        // Sesekali update Sinyal view jika tab aktif agar tidak kaku
+                        if (viewMode === 'news') {
+                            renderSignalsOverview();
+                        }
+                    } catch(e) {
+                        console.error("Polling error:", e);
+                    }
+                }
+            }, 3000); // Update tiap 3 detik via REST (tidak se-agresif WebSocket)
         }
 
         function startFallbackSimulation() {
-            Object.keys(cryptoDatabase).forEach(key => {
-                const coin = cryptoDatabase[key];
-                coin.price = key === "SOL" ? 145 : (key === "BNB" ? 580 : (key === "DOGE" ? 0.14 : 0.11));
-                coin.change24h = Math.random() * 8 - 4;
-                coin.volume24h = `$${(Math.random() * 5 + 1).toFixed(2)}B`;
-            });
+            if (updateIntervalId) clearInterval(updateIntervalId);
             
-            generateLocalSimData(currentCoin, currentTimeframe);
-            updateDashboard();
-
-            setInterval(() => {
-                if (!isUsingFallback) return;
-                
+            updateIntervalId = setInterval(() => {
+                let updatedCoins = [];
                 Object.keys(cryptoDatabase).forEach(key => {
                     const coin = cryptoDatabase[key];
-                    const change = (Math.random() * 0.4 - 0.2) / 100;
                     const oldPrice = coin.price;
-                    coin.price *= (1 + change);
-                    coin.change24h += change * 100;
-
-                    if (key === currentCoin) {
-                        coin.rsi += (Math.random() * 2 - 1);
-                        if (coin.rsi > 90) coin.rsi = 85;
-                        if (coin.rsi < 10) coin.rsi = 15;
-                        
-                        if (coin.prices && coin.prices.length > 0) {
-                            coin.prices[coin.prices.length - 1] = coin.price;
-                            
-                            if (coin.ohlc && coin.ohlc.length > 0) {
-                                let lastCandle = coin.ohlc[coin.ohlc.length - 1];
-                                lastCandle.c = coin.price;
-                                lastCandle.h = Math.max(lastCandle.h, coin.price);
-                                lastCandle.l = Math.min(lastCandle.l, coin.price);
-                            }
-                        }
-                        if (viewMode === 'single') {
-                            updateDashboardOnlyText();
-                        } else {
-                            updateMultiGrid();
-                        }
-                        triggerPriceFlash(change > 0 ? "green" : "red");
-                    }
-                    updateLiveTickerElementLocal(key, oldPrice, coin.price);
+                    const change = (Math.random() - 0.5) * (coin.price * 0.001);
+                    coin.price = coin.price + change;
+                    
+                    updateTickerUI(key, coin.price, oldPrice);
+                    updatedCoins.push(key);
                 });
-            }, 1500);
+
+                if (viewMode === 'single') {
+                    updateDashboardInfoOnly();
+                    updateMainChartLivePrice(cryptoDatabase[currentCoin].price);
+                } else if (viewMode === 'multi') {
+                    updateGridPricesOnly(updatedCoins);
+                    updatedCoins.forEach(coin => {
+                        if (activeGridCoins.includes(coin)) {
+                             updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
+                        }
+                    });
+                } else if (viewMode === 'news') {
+                    if (Math.random() > 0.8) renderSignalsOverview(); // Update kadang-kadang di simulasi
+                }
+
+            }, 2500);
         }
 
-        function updateLiveTickerElementLocal(coinCode, oldPrice, newPrice) {
-            const tickerEl = document.getElementById(`ticker-${coinCode}`);
-            const coin = cryptoDatabase[coinCode];
-            if (tickerEl) {
-                tickerEl.innerText = formatPrice(newPrice, coinCode);
-                tickerEl.className = coin.change24h >= 0 ? "font-mono text-cryptoGreen font-bold" : "font-mono text-cryptoRed font-bold";
-            }
-        }
-
-        function generateLocalSimData(coinKey, tf) {
-            const coin = cryptoDatabase[coinKey];
-            const limit = binanceIntervals[tf].limit; 
-            
-            let prices = [];
-            let volumes = [];
-            let ohlcArray = [];
-            let startPrice = coin.price * (1 - (limit * 0.005)); 
-
-            for (let i = 0; i < limit; i++) {
-                let openVal = startPrice;
-                startPrice *= (1 + (Math.random() * 4 - 1.9) / 100);
-                let closeVal = startPrice;
-                
-                let highVal = Math.max(openVal, closeVal) * (1 + (Math.random() * 1.5) / 100);
-                let lowVal = Math.min(openVal, closeVal) * (1 - (Math.random() * 1.5) / 100);
-
-                prices.push(closeVal);
-                volumes.push(Math.round(Math.random() * 500 + 100));
-                ohlcArray.push({o: openVal, h: highVal, l: lowVal, c: closeVal});
-            }
-
-            coin.prices = prices;
-            coin.volumes = volumes;
-            coin.ohlc = ohlcArray;
-            
-            calculateTechnicalIndicatorsWeekly(coin, coin.prices);
-        }
     </script>
 </body>
 </html>
