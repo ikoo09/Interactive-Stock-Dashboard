@@ -707,48 +707,64 @@
 
         const binanceIntervals = { "1D": { interval: "1d", limit: 150 } };
 
-        // === SMART FALLBACK ROUTER (Anti Geo-Block) ===
-        // Sistem ini akan mencoba berbagai endpoint Binance dan Public Proxy secara berurutan
-        // untuk memastikan data tetap tembus meskipun diakses dari IP negara yang diblokir Binance.
+        // === SMART FALLBACK ROUTER V2 (Sistem Anti Geo-Block Otomatis) ===
+        // Binance memblokir IP luar negeri. Web ini akan mencari rute (termasuk proxy publik)
+        // yang tembus dari IP perangkat yang sedang membuka web ini.
         const API_ROUTERS = [
             { type: 'direct', url: 'https://api.binance.com' },          // Server Utama
             { type: 'direct', url: 'https://data-api.binance.vision' },  // Server Data Publik Resmi (Sering lolos Geo-block)
             { type: 'direct', url: 'https://api1.binance.com' },         // Backup 1
-            { type: 'direct', url: 'https://api2.binance.com' },         // Backup 2
-            { type: 'proxy', url: 'https://api.allorigins.win/raw?url=' } // Public CORS Proxy (Langkah terakhir jika IP benar-benar di-ban)
+            { type: 'proxy', url: 'https://corsproxy.io/?' },            // Proxy Bypass 1 (Sangat andal)
+            { type: 'proxy', url: 'https://api.allorigins.win/raw?url=' },// Proxy Bypass 2
+            { type: 'proxy', url: 'https://thingproxy.freeboard.io/fetch/' } // Proxy Bypass 3
         ];
         
-        let currentRouterIndex = 0;
+        let workingRouter = null; // Menyimpan rute yang berhasil agar tidak perlu mencari lagi
+
+        async function attemptFetch(router, endpointPath) {
+            let fetchUrl = '';
+            if (router.type === 'direct') {
+                fetchUrl = `${router.url}${endpointPath}`;
+            } else {
+                // Jika via proxy, bungkus URL target data-api karena lebih longgar dari api utama
+                fetchUrl = `${router.url}${encodeURIComponent('https://data-api.binance.vision' + endpointPath)}`;
+            }
+            
+            const response = await fetch(fetchUrl, { cache: "no-store" });
+            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+            return await response.json();
+        }
 
         async function fetchBinanceData(endpointPath) {
-            let attempts = 0;
-            
-            while (attempts < API_ROUTERS.length) {
-                const router = API_ROUTERS[currentRouterIndex];
+            // 1. Gunakan jalur yang sudah terbukti jalan dari IP ini
+            if (workingRouter) {
                 try {
-                    let fetchUrl = '';
-                    if (router.type === 'direct') {
-                        fetchUrl = `${router.url}${endpointPath}`;
-                    } else {
-                        // Jika pakai proxy, target aslinya kita bungkus
-                        fetchUrl = `${router.url}${encodeURIComponent('https://api.binance.com' + endpointPath)}`;
-                    }
-
-                    const response = await fetch(fetchUrl, { cache: "no-store" });
-                    
-                    if (response.ok) {
-                        return await response.json();
-                    } else {
-                        throw new Error(`HTTP Error ${response.status}`);
-                    }
-                } catch (error) {
-                    console.warn(`[Koneksi Ditolak] Endpoint ${router.url} gagal, beralih ke jalur berikutnya...`);
-                    // Pindah ke jalur berikutnya jika ditolak/error
-                    currentRouterIndex = (currentRouterIndex + 1) % API_ROUTERS.length;
-                    attempts++;
+                    return await attemptFetch(workingRouter, endpointPath);
+                } catch (e) {
+                    workingRouter = null; // Reset jika rute proxy tiba-tiba mati
                 }
             }
-            throw new Error("Semua jalur koneksi Binance dan Proxy gagal diakses dari IP ini.");
+
+            // 2. Cari rute yang tembus dari IP pengguna secara berurutan
+            for (let i = 0; i < API_ROUTERS.length; i++) {
+                const router = API_ROUTERS[i];
+                try {
+                    const data = await attemptFetch(router, endpointPath);
+                    
+                    workingRouter = router; // Simpan jalur sukses
+                    
+                    if (router.type === 'proxy') {
+                        setConnectionStatus("online", "Live (Via Proxy Bypass)");
+                    } else {
+                        setConnectionStatus("online", "Live Binance API");
+                    }
+                    
+                    return data;
+                } catch (err) {
+                    console.warn(`[Geo-Blocked] Rute ${router.url} ditolak oleh IP ini. Melanjutkan pencarian...`);
+                }
+            }
+            throw new Error("Semua rute koneksi dan proxy diblokir dari IP ini.");
         }
         // ===============================================
 
@@ -951,7 +967,7 @@
         }
 
         async function initRealTimeData() {
-            setConnectionStatus("connecting", "Mencari rute API terbaik...");
+            setConnectionStatus("connecting", "Menganalisis IP & Mencari Rute...");
             try {
                 await fetch24hTickers();
                 await fetchHistoricalKlines(currentCoin, currentTimeframe);
@@ -959,16 +975,10 @@
                     if(key !== currentCoin) fetchHistoricalKlines(key, currentTimeframe);
                 }
                 startRestPolling();
-                
-                // Cek jika kita pakai proxy dari API_ROUTERS
-                if (API_ROUTERS[currentRouterIndex].type === 'proxy') {
-                    setConnectionStatus("online", "Live (Via Proxy Bypass)");
-                } else {
-                    setConnectionStatus("online", "Live Binance API");
-                }
+                // Status online kini ditangani langsung di dalam fetchBinanceData()
             } catch (err) {
                 console.error("Gagal terhubung ke seluruh sistem API:", err);
-                setConnectionStatus("fallback", "Beralih ke Simulasi (Offline)");
+                setConnectionStatus("fallback", "IP Diblokir. Beralih ke Simulasi.");
                 startFallbackSimulation();
             }
         }
