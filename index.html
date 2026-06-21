@@ -72,7 +72,7 @@
                         CryptoScan Pro
                         <span class="text-[10px] bg-accentBlue/10 text-accentBlue border border-accentBlue/30 px-2 py-0.5 rounded-full font-bold tracking-widest text-center">AI POWERED</span>
                     </h1>
-                    <p class="text-[10px] text-gray-400">Analisis Pergerakan Harian & Prediksi Terpadu</p>
+                    <p class="text-[10px] text-gray-400"><span class="lang-text" data-id="Analisis Pergerakan Harian & Prediksi Terpadu" data-en="Daily Movement Analysis & Unified Prediction">Analisis Pergerakan Harian & Prediksi Terpadu</span></p>
                 </div>
             </div>
 
@@ -80,37 +80,45 @@
             <div class="hidden lg:flex items-center gap-2 text-xs text-gray-400 bg-darkBg/60 p-1.5 rounded-xl border border-darkBorder/80 overflow-x-auto">
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-SOL">
                     <span class="font-semibold text-gray-400">SOL</span>
-                    <span id="ticker-SOL" class="font-mono text-cryptoGreen font-bold">Memuat...</span>
+                    <span id="ticker-SOL" class="font-mono text-cryptoGreen font-bold">...</span>
                 </div>
                 <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-BNB">
                     <span class="font-semibold text-gray-400">BNB</span>
-                    <span id="ticker-BNB" class="font-mono text-cryptoRed font-bold">Memuat...</span>
+                    <span id="ticker-BNB" class="font-mono text-cryptoRed font-bold">...</span>
                 </div>
                 <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-DOGE">
                     <span class="font-semibold text-gray-400">DOGE</span>
-                    <span id="ticker-DOGE" class="font-mono text-cryptoGreen font-bold">Memuat...</span>
+                    <span id="ticker-DOGE" class="font-mono text-cryptoGreen font-bold">...</span>
                 </div>
                 <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-TRX">
                     <span class="font-semibold text-gray-400">TRX</span>
-                    <span id="ticker-TRX" class="font-mono text-gray-300 font-bold">Memuat...</span>
+                    <span id="ticker-TRX" class="font-mono text-gray-300 font-bold">...</span>
                 </div>
                 <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-XRP">
                     <span class="font-semibold text-gray-400">XRP</span>
-                    <span id="ticker-XRP" class="font-mono text-gray-300 font-bold">Memuat...</span>
+                    <span id="ticker-XRP" class="font-mono text-gray-300 font-bold">...</span>
                 </div>
             </div>
 
-            <!-- Indikator Status Koneksi API -->
-            <div class="flex items-center gap-2 bg-darkBg/80 px-3 py-2 rounded-xl border border-darkBorder">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" id="status-ping"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2" id="status-dot"></span>
-                </span>
-                <span class="text-xs text-gray-400 font-semibold" id="status-text">Menghubungkan...</span>
+            <!-- Header Actions: Indikator & Language -->
+            <div class="flex items-center gap-2">
+                <!-- Indikator Status Koneksi API -->
+                <div class="flex items-center gap-2 bg-darkBg/80 px-3 py-2 rounded-xl border border-darkBorder">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" id="status-ping"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2" id="status-dot"></span>
+                    </span>
+                    <span class="text-xs text-gray-400 font-semibold" id="status-text">Menghubungkan...</span>
+                </div>
+                <!-- Tombol Ganti Bahasa -->
+                <button onclick="toggleLanguage()" class="flex items-center gap-1.5 bg-darkBg/80 px-3 py-2 rounded-xl border border-darkBorder hover:border-accentBlue transition-colors group">
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-accentBlue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                    <span id="lang-indicator" class="text-xs font-bold text-gray-300 group-hover:text-white transition-colors">ID</span>
+                </button>
             </div>
         </div>
     </header>
@@ -120,15 +128,15 @@
         <div class="flex flex-wrap border-b border-darkBorder bg-darkCard rounded-t-xl overflow-hidden p-1 gap-1">
             <button onclick="switchViewMode('single')" id="view-btn-single" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                Analisis & Prediksi Terpadu
+                <span class="lang-text" data-id="Analisis & Prediksi Terpadu" data-en="Unified Analysis & Prediction">Analisis & Prediksi Terpadu</span>
             </button>
             <button onclick="switchViewMode('multi')" id="view-btn-multi" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                5 Coin Grid
+                <span class="lang-text" data-id="5 Coin Grid" data-en="5 Coin Grid">5 Coin Grid</span>
             </button>
             <button onclick="switchViewMode('news'); window.open('https://omg10.com/4/11179985', '_blank')" id="view-btn-news" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14"></path></svg>
-                Berita & Rekomendasi
+                <span class="lang-text" data-id="Berita & Rekomendasi" data-en="News & Recommendations">Berita & Rekomendasi</span>
             </button>
         </div>
     </div>
@@ -141,7 +149,7 @@
             <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-xl shadow-black/30">
                 <h3 class="text-xs font-bold text-gray-400 mb-3.5 tracking-wider uppercase flex items-center gap-2">
                     <svg class="w-4 h-4 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    Aset Kripto Pilihan
+                    <span class="lang-text" data-id="Aset Kripto Pilihan" data-en="Selected Crypto Assets">Aset Kripto Pilihan</span>
                 </h3>
                 <div class="flex flex-col gap-2.5" id="coin-selector-container"></div>
             </div>
@@ -151,11 +159,11 @@
                 <div>
                     <h3 class="text-xs font-bold text-gray-400 mb-3.5 tracking-wider uppercase flex items-center gap-2">
                         <svg class="w-4 h-4 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                        Persentase Prediksi (1D)
+                        <span class="lang-text" data-id="Persentase Prediksi (1D)" data-en="Prediction Percentage (1D)">Persentase Prediksi (1D)</span>
                     </h3>
                     
                     <div class="text-center py-5 bg-darkBg/60 rounded-xl border border-darkBorder/60 mb-4 shadow-inner">
-                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-1">Peluang Arah Harga</span>
+                        <span class="lang-text text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-1" data-id="Peluang Arah Harga" data-en="Price Direction Probability">Peluang Arah Harga</span>
                         <div id="unified-percentage" class="text-4xl font-black text-cryptoYellow tracking-wide drop-shadow mb-1 transition-all">--%</div>
                         <span id="summary-signal" class="text-xs font-bold text-gray-400 uppercase tracking-widest block transition-colors">ANALYZING...</span>
                         <div class="mt-3 text-xs text-gray-400 flex justify-center gap-4">
@@ -167,16 +175,16 @@
 
                     <div class="space-y-3.5 bg-darkBg/30 p-3 rounded-xl border border-darkBorder/50">
                         <div class="flex justify-between items-center text-xs pb-2 border-b border-darkBorder/60">
-                            <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-cryptoGreen rounded-full"></span> Rekomendasi Buy:</span>
-                            <span id="calc-entry" class="font-mono text-cryptoGreen font-bold text-sm transition-all">Calculating...</span>
+                            <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-cryptoGreen rounded-full"></span> <span class="lang-text" data-id="Rekomendasi Buy:" data-en="Buy Recommendation:">Rekomendasi Buy:</span></span>
+                            <span id="calc-entry" class="font-mono text-cryptoGreen font-bold text-sm transition-all">...</span>
                         </div>
                         <div class="flex justify-between items-center text-xs pb-2 border-b border-darkBorder/60">
-                            <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-white rounded-full"></span> Target Profit (1D):</span>
-                            <span id="calc-tp" class="font-mono text-white font-bold text-sm transition-all">Calculating...</span>
+                            <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-white rounded-full"></span> <span class="lang-text" data-id="Target Profit (1D):" data-en="Target Profit (1D):">Target Profit (1D):</span></span>
+                            <span id="calc-tp" class="font-mono text-white font-bold text-sm transition-all">...</span>
                         </div>
                         <div class="flex justify-between items-center text-xs">
-                            <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-cryptoRed rounded-full"></span> Stop Loss Limit:</span>
-                            <span id="calc-sl" class="font-mono text-cryptoRed font-bold text-sm transition-all">Calculating...</span>
+                            <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-cryptoRed rounded-full"></span> <span class="lang-text" data-id="Stop Loss Limit:" data-en="Stop Loss Limit:">Stop Loss Limit:</span></span>
+                            <span id="calc-sl" class="font-mono text-cryptoRed font-bold text-sm transition-all">...</span>
                         </div>
                     </div>
                 </div>
@@ -196,23 +204,23 @@
                             <h2 id="coin-name" class="text-xl font-black text-white tracking-wide">--</h2>
                             <span id="coin-ticker-badge" class="text-[10px] bg-darkBg text-accentBlue font-bold border border-accentBlue/30 px-2.5 py-0.5 rounded-lg tracking-wider">--/USDT</span>
                         </div>
-                        <p class="text-xs text-gray-400 mt-0.5">Kategori: <span id="coin-category" class="text-gray-300 font-medium">--</span></p>
+                        <p class="text-xs text-gray-400 mt-0.5"><span class="lang-text" data-id="Kategori:" data-en="Category:">Kategori:</span> <span id="coin-category" class="text-gray-300 font-medium">--</span></p>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap gap-6 items-center relative z-10">
                     <div class="text-left md:text-right">
-                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-0.5">Harga Terkini</span>
+                        <span class="lang-text text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-0.5" data-id="Harga Terkini" data-en="Current Price">Harga Terkini</span>
                         <span id="current-price" class="text-2xl font-mono font-black text-cryptoGreen tracking-wide drop-shadow-sm transition-all">--</span>
                     </div>
                     <div class="h-8 w-px bg-darkBorder hidden sm:block"></div>
                     <div class="text-left md:text-right">
-                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-0.5">Perubahan 24h</span>
+                        <span class="lang-text text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-0.5" data-id="Perubahan 24h" data-en="24h Change">Perubahan 24h</span>
                         <span id="price-change-pct" class="text-base font-bold text-cryptoGreen transition-colors">--</span>
                     </div>
                     <div class="h-8 w-px bg-darkBorder hidden md:block"></div>
                     <div class="text-left md:text-right hidden md:block">
-                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-0.5">Volume Transaksi 24h</span>
+                        <span class="lang-text text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-0.5" data-id="Volume Transaksi 24h" data-en="24h Volume">Volume Transaksi 24h</span>
                         <span id="volume-24h" class="text-base font-mono text-white font-semibold transition-all">--</span>
                     </div>
                 </div>
@@ -221,10 +229,10 @@
             <div class="bg-darkCard p-5 rounded-2xl border border-darkBorder shadow-xl shadow-black/30 flex-grow flex flex-col">
                 <div class="flex flex-wrap justify-between items-center gap-3 mb-5">
                     <div class="flex items-center gap-1.5 bg-darkBg p-1.5 rounded-xl border border-darkBorder">
-                        <button class="timeframe-btn px-5 py-1.5 rounded-lg text-xs font-bold bg-darkBorder text-white transition duration-200 cursor-default" id="tf-1D">1 Day (1 Hari)</button>
-                        <button onclick="resetZoomMainChart()" class="ml-2 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder transition duration-200 flex items-center gap-1" title="Reset posisi dan zoom grafik">
+                        <button class="timeframe-btn px-5 py-1.5 rounded-lg text-xs font-bold bg-darkBorder text-white transition duration-200 cursor-default" id="tf-1D"><span class="lang-text" data-id="1 Day (1 Hari)" data-en="1 Day">1 Day (1 Hari)</span></button>
+                        <button onclick="resetZoomMainChart()" class="ml-2 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder transition duration-200 flex items-center gap-1">
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
-                            Reset Area
+                            <span class="lang-text" data-id="Reset Area" data-en="Reset Area">Reset Area</span>
                         </button>
                     </div>
                     <div class="flex flex-wrap gap-5 text-xs text-gray-400">
@@ -239,12 +247,12 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span class="text-xs font-semibold tracking-wide text-gray-300">Memuat 150 hari data historis...</span>
+                            <span class="lang-text text-xs font-semibold tracking-wide text-gray-300" data-id="Memuat 150 hari data historis..." data-en="Loading 150 days of historical data...">Memuat 150 hari data historis...</span>
                         </div>
                     </div>
                     <canvas id="mainChart"></canvas>
                 </div>
-                <p class="text-[10px] text-gray-500 mt-3 text-right">💡 Tip Pro: <b>Klik & Seret (Drag) Area Dalam Grafik</b> untuk Pan/Geser. <b>Tarik Angka Harga/Tanggal</b> di pinggir untuk menyesuaikan skala.</p>
+                <p class="lang-text text-[10px] text-gray-500 mt-3 text-right" data-id="💡 Tip Pro: Klik & Seret (Drag) Area Dalam Grafik untuk Pan/Geser. Tarik Angka Harga/Tanggal di pinggir untuk menyesuaikan skala." data-en="💡 Pro Tip: Click & Drag the Chart Area to Pan. Drag Price/Date Numbers on the edge to adjust scale.">💡 Tip Pro: Klik & Seret (Drag) Area Dalam Grafik untuk Pan/Geser. Tarik Angka Harga/Tanggal di pinggir untuk menyesuaikan skala.</p>
             </div>
 
             <div id="advanced-indicator-widget" class="bg-[#131722] border border-[#1E2530] rounded-2xl p-5 shadow-xl shadow-black/40 flex flex-col gap-4 relative overflow-hidden">
@@ -264,7 +272,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                     <div class="bg-[#0B0E14] border border-[#1E2530] rounded-xl p-4 flex flex-col justify-between relative shadow-inner">
-                        <p class="text-[9px] font-extrabold text-gray-500 tracking-widest mb-3 uppercase">RANGKUMAN PREDIKSI TERPADU</p>
+                        <p class="lang-text text-[9px] font-extrabold text-gray-500 tracking-widest mb-3 uppercase" data-id="RANGKUMAN PREDIKSI TERPADU" data-en="UNIFIED PREDICTION SUMMARY">RANGKUMAN PREDIKSI TERPADU</p>
                         <div class="flex items-center gap-3 mb-4">
                             <div id="adv-konsensus-icon-bg" class="w-10 h-10 rounded-full border border-cryptoGreen bg-cryptoGreen/10 flex items-center justify-center shrink-0 transition-colors duration-500">
                                 <svg id="adv-konsensus-icon" class="w-5 h-5 text-cryptoGreen transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
@@ -275,7 +283,7 @@
                             </div>
                         </div>
                         <div class="bg-[#131722] border border-[#1E2530] p-3 rounded-lg">
-                            <p class="text-[10px] text-gray-500 mb-1 font-medium">Target Penembusan 1D:</p>
+                            <p class="lang-text text-[10px] text-gray-500 mb-1 font-medium" data-id="Target Penembusan 1D:" data-en="1D Breakout Target:">Target Penembusan 1D:</p>
                             <span id="adv-target-break" class="text-lg font-bold text-white font-mono transition-all">--</span>
                         </div>
                     </div>
@@ -291,18 +299,18 @@
                                     <circle cx="100" cy="100" r="4" fill="#E2E8F0" />
                                 </g>
                             </svg>
-                            <span id="label-strong-sell" class="absolute bottom-0 left-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors">Bearish<br>Kuat</span>
-                            <span id="label-sell" class="absolute top-[20px] left-2 text-[9px] font-bold text-gray-500 transition-colors">Bearish</span>
-                            <span id="label-neutral" class="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-bold text-gray-500 transition-colors">Netral</span>
-                            <span id="label-buy" class="absolute top-[20px] right-2 text-[9px] font-bold text-gray-500 transition-colors">Bullish</span>
-                            <span id="label-strong-buy" class="absolute bottom-0 right-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors">Bullish<br>Kuat</span>
+                            <span id="label-strong-sell" class="lang-text absolute bottom-0 left-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors" data-id="Bearish<br>Kuat" data-en="Strong<br>Bearish">Bearish<br>Kuat</span>
+                            <span id="label-sell" class="lang-text absolute top-[20px] left-2 text-[9px] font-bold text-gray-500 transition-colors" data-id="Bearish" data-en="Bearish">Bearish</span>
+                            <span id="label-neutral" class="lang-text absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-bold text-gray-500 transition-colors" data-id="Netral" data-en="Neutral">Netral</span>
+                            <span id="label-buy" class="lang-text absolute top-[20px] right-2 text-[9px] font-bold text-gray-500 transition-colors" data-id="Bullish" data-en="Bullish">Bullish</span>
+                            <span id="label-strong-buy" class="lang-text absolute bottom-0 right-0 text-[9px] font-bold text-center w-14 leading-tight text-gray-500 transition-colors" data-id="Bullish<br>Kuat" data-en="Strong<br>Bullish">Bullish<br>Kuat</span>
                         </div>
                     </div>
                 </div>
                 <div class="mt-2">
                     <h4 class="text-[10px] font-bold text-accentBlue uppercase tracking-widest mb-2 flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                        SKENARIO TEKNO-FUNDAMENTAL
+                        <span class="lang-text" data-id="SKENARIO TEKNO-FUNDAMENTAL" data-en="TECHNO-FUNDAMENTAL SCENARIO">SKENARIO TEKNO-FUNDAMENTAL</span>
                     </h4>
                     <div class="bg-[#0B0E14] border border-[#1E2530] p-3.5 rounded-xl text-xs text-gray-300 leading-relaxed shadow-inner transition-all duration-300">
                         <p id="adv-skenario-text">Menganalisis skenario pergerakan pasar...</p>
@@ -313,33 +321,33 @@
             <!-- Analisis Teknikal & Pengambilan Keputusan (Mini Cards) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div class="bg-darkCard p-4.5 rounded-2xl border border-darkBorder shadow-lg">
-                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> Arah Tren (1D)</h4>
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> <span class="lang-text" data-id="Arah Tren (1D)" data-en="Trend Direction (1D)">Arah Tren (1D)</span></h4>
                     <div class="flex items-center gap-3.5 bg-darkBg/40 p-3 rounded-xl border border-darkBorder/50 mb-3">
                         <span id="trend-icon" class="w-9 h-9 rounded-xl bg-gray-500/10 text-gray-400 flex items-center justify-center font-bold text-base shadow-sm transition-colors">●</span>
-                        <div><span id="market-trend-status" class="text-sm font-black text-white block transition-colors">Menganalisis...</span><span class="text-[10px] text-gray-500 font-medium">Live Data</span></div>
+                        <div><span id="market-trend-status" class="text-sm font-black text-white block transition-colors">...</span><span class="text-[10px] text-gray-500 font-medium">Live Data</span></div>
                     </div>
                     <p id="trend-desc" class="text-[11px] text-gray-400 leading-relaxed transition-all">Mengevaluasi tren pasar menggunakan data candlestick (1 Hari).</p>
                 </div>
                 <div class="bg-darkCard p-4.5 rounded-2xl border border-darkBorder shadow-lg">
-                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> Level S/R Penting</h4>
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> <span class="lang-text" data-id="Level S/R Penting" data-en="Key S/R Levels">Level S/R Penting</span></h4>
                     <div class="space-y-2.5 bg-darkBg/40 p-3 rounded-xl border border-darkBorder/50">
-                        <div class="flex justify-between items-center text-xs"><span class="text-cryptoRed/80 font-bold">Res 2 (Max):</span><span id="res-2" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
-                        <div class="flex justify-between items-center text-xs"><span class="text-red-400/80 font-bold">Res 1 (Target):</span><span id="res-1" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
-                        <div class="flex justify-between items-center text-xs border-t border-darkBorder/60 pt-2.5"><span class="text-green-400/80 font-bold">Sup 1 (Beli):</span><span id="sup-1" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
-                        <div class="flex justify-between items-center text-xs"><span class="text-cryptoGreen/80 font-bold">Sup 2 (Lantai):</span><span id="sup-2" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
+                        <div class="flex justify-between items-center text-xs"><span class="text-cryptoRed/80 font-bold"><span class="lang-text" data-id="Res 2 (Max):" data-en="Res 2 (Max):">Res 2 (Max):</span></span><span id="res-2" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
+                        <div class="flex justify-between items-center text-xs"><span class="text-red-400/80 font-bold"><span class="lang-text" data-id="Res 1 (Target):" data-en="Res 1 (Target):">Res 1 (Target):</span></span><span id="res-1" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
+                        <div class="flex justify-between items-center text-xs border-t border-darkBorder/60 pt-2.5"><span class="text-green-400/80 font-bold"><span class="lang-text" data-id="Sup 1 (Beli):" data-en="Sup 1 (Buy):">Sup 1 (Beli):</span></span><span id="sup-1" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
+                        <div class="flex justify-between items-center text-xs"><span class="text-cryptoGreen/80 font-bold"><span class="lang-text" data-id="Sup 2 (Lantai):" data-en="Sup 2 (Floor):">Sup 2 (Lantai):</span></span><span id="sup-2" class="font-mono font-bold text-white text-sm transition-all">--</span></div>
                     </div>
                 </div>
                 <div class="bg-darkCard p-4.5 rounded-2xl border border-darkBorder shadow-lg">
-                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> Manajemen Risiko</h4>
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> <span class="lang-text" data-id="Manajemen Risiko" data-en="Risk Management">Manajemen Risiko</span></h4>
                     <div class="space-y-2.5 bg-darkBg/40 p-3 rounded-xl border border-darkBorder/50">
-                        <div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-bold">Rasio R/R:</span><span id="risk-reward-ratio" class="font-mono font-bold text-white text-sm transition-colors">--</span></div>
-                        <div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-bold">Max Risiko:</span><span id="risk-loss-pct" class="font-mono font-bold text-cryptoRed text-sm transition-all">--</span></div>
-                        <div class="flex justify-between items-center text-xs border-t border-darkBorder/60 pt-2.5"><span class="text-gray-400 font-bold">Potensi Profit:</span><span id="risk-profit-pct" class="font-mono font-bold text-cryptoGreen text-sm transition-all">--</span></div>
-                        <div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-bold">Ukuran Modal:</span><span id="risk-allocation" class="font-mono font-bold text-accentBlue text-sm bg-accentBlue/10 px-2 py-0.5 rounded transition-all">--</span></div>
+                        <div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-bold"><span class="lang-text" data-id="Rasio R/R:" data-en="R/R Ratio:">Rasio R/R:</span></span><span id="risk-reward-ratio" class="font-mono font-bold text-white text-sm transition-colors">--</span></div>
+                        <div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-bold"><span class="lang-text" data-id="Max Risiko:" data-en="Max Risk:">Max Risiko:</span></span><span id="risk-loss-pct" class="font-mono font-bold text-cryptoRed text-sm transition-all">--</span></div>
+                        <div class="flex justify-between items-center text-xs border-t border-darkBorder/60 pt-2.5"><span class="text-gray-400 font-bold"><span class="lang-text" data-id="Potensi Profit:" data-en="Profit Potential:">Potensi Profit:</span></span><span id="risk-profit-pct" class="font-mono font-bold text-cryptoGreen text-sm transition-all">--</span></div>
+                        <div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-bold"><span class="lang-text" data-id="Ukuran Modal:" data-en="Capital Size:">Ukuran Modal:</span></span><span id="risk-allocation" class="font-mono font-bold text-accentBlue text-sm bg-accentBlue/10 px-2 py-0.5 rounded transition-all">--</span></div>
                     </div>
                 </div>
                 <div class="bg-darkCard p-4.5 rounded-2xl border border-darkBorder shadow-lg">
-                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> Strategi 1D</h4>
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accentBlue rounded-full"></span> <span class="lang-text" data-id="Strategi 1D" data-en="1D Strategy">Strategi 1D</span></h4>
                     <div class="text-[11px] space-y-2.5">
                         <div class="flex items-start gap-2 bg-darkBg/20 p-2 rounded-lg border border-darkBorder/40"><span class="text-cryptoGreen font-bold">B</span><span id="action-step-1" class="text-gray-300 leading-tight transition-all">--</span></div>
                         <div class="flex items-start gap-2 bg-darkBg/20 p-2 rounded-lg border border-darkBorder/40"><span class="text-cryptoRed font-bold">S</span><span id="action-step-2" class="text-gray-300 leading-tight transition-all">--</span></div>
@@ -356,20 +364,20 @@
             <div>
                 <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
                     <svg class="w-4 h-4 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                    Grid Candlestick Multi-Koin (1D)
+                    <span class="lang-text" data-id="Grid Candlestick Multi-Koin (1D)" data-en="Multi-Coin Candlestick Grid (1D)">Grid Candlestick Multi-Koin (1D)</span>
                 </h3>
-                <p class="text-[11px] text-gray-400 mt-1">Scroll untuk zoom, seret chart untuk pan, atau tarik angka tanggal & harga di pinggir.</p>
+                <p class="lang-text text-[11px] text-gray-400 mt-1" data-id="Scroll untuk zoom, seret chart untuk pan, atau tarik angka tanggal & harga di pinggir." data-en="Scroll to zoom, drag chart to pan, or drag date & price numbers on the edge.">Scroll untuk zoom, seret chart untuk pan, atau tarik angka tanggal & harga di pinggir.</p>
             </div>
             <div class="flex flex-wrap gap-2" id="grid-coins-selectors"></div>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 flex-grow">
-            <!-- Box Chart 1 -->
+            <!-- Box Chart -->
             <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-lg flex flex-col relative h-[300px]" id="grid-box-1">
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-1">COIN 1</span>
                     <div class="flex items-center gap-3">
-                        <button onclick="resetZoomGridChart(1)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
+                        <button onclick="resetZoomGridChart(1)" class="lang-text px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder" data-id="Reset Zoom" data-en="Reset Zoom">Reset Zoom</button>
                         <div class="flex flex-col items-end">
                             <span class="font-mono text-xs font-bold transition-colors" id="grid-price-1">--</span>
                             <span class="text-[9px] font-bold" id="grid-pct-1">--%</span>
@@ -383,7 +391,7 @@
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-2">COIN 2</span>
                     <div class="flex items-center gap-3">
-                        <button onclick="resetZoomGridChart(2)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
+                        <button onclick="resetZoomGridChart(2)" class="lang-text px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder" data-id="Reset Zoom" data-en="Reset Zoom">Reset Zoom</button>
                         <div class="flex flex-col items-end">
                             <span class="font-mono text-xs font-bold transition-colors" id="grid-price-2">--</span>
                             <span class="text-[9px] font-bold" id="grid-pct-2">--%</span>
@@ -397,7 +405,7 @@
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-3">COIN 3</span>
                     <div class="flex items-center gap-3">
-                        <button onclick="resetZoomGridChart(3)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
+                        <button onclick="resetZoomGridChart(3)" class="lang-text px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder" data-id="Reset Zoom" data-en="Reset Zoom">Reset Zoom</button>
                         <div class="flex flex-col items-end">
                             <span class="font-mono text-xs font-bold transition-colors" id="grid-price-3">--</span>
                             <span class="text-[9px] font-bold" id="grid-pct-3">--%</span>
@@ -411,7 +419,7 @@
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-4">COIN 4</span>
                     <div class="flex items-center gap-3">
-                        <button onclick="resetZoomGridChart(4)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
+                        <button onclick="resetZoomGridChart(4)" class="lang-text px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder" data-id="Reset Zoom" data-en="Reset Zoom">Reset Zoom</button>
                         <div class="flex flex-col items-end">
                             <span class="font-mono text-xs font-bold transition-colors" id="grid-price-4">--</span>
                             <span class="text-[9px] font-bold" id="grid-pct-4">--%</span>
@@ -425,7 +433,7 @@
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-5">COIN 5</span>
                     <div class="flex items-center gap-3">
-                        <button onclick="resetZoomGridChart(5)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
+                        <button onclick="resetZoomGridChart(5)" class="lang-text px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder" data-id="Reset Zoom" data-en="Reset Zoom">Reset Zoom</button>
                         <div class="flex flex-col items-end">
                             <span class="font-mono text-xs font-bold transition-colors" id="grid-price-5">--</span>
                             <span class="text-[9px] font-bold" id="grid-pct-5">--%</span>
@@ -442,8 +450,8 @@
         <section class="lg:col-span-1 flex flex-col gap-4">
             <div class="flex items-center gap-2 mb-2">
                 <svg class="w-5 h-5 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14"></path></svg>
-                <h2 class="text-lg font-bold text-white">Berita Terkini</h2>
-                <span class="text-[9px] bg-accentBlue/20 text-accentBlue px-2 py-0.5 rounded ml-auto">Diperbarui Hari Ini</span>
+                <h2 class="lang-text text-lg font-bold text-white" data-id="Berita Terkini" data-en="Latest News">Berita Terkini</h2>
+                <span class="lang-text text-[9px] bg-accentBlue/20 text-accentBlue px-2 py-0.5 rounded ml-auto" data-id="Diperbarui Hari Ini" data-en="Updated Today">Diperbarui Hari Ini</span>
             </div>
             <div id="news-list-container" class="space-y-4 overflow-y-auto pr-2 max-h-[70vh]"></div>
         </section>
@@ -451,8 +459,8 @@
         <section class="lg:col-span-2 flex flex-col gap-4">
             <div class="flex items-center gap-2 mb-2">
                 <svg class="w-5 h-5 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                <h2 class="text-lg font-bold text-white">Dashboard Prediksi & Sinyal (1D)</h2>
-                <span class="text-[9px] bg-darkBg border border-darkBorder text-gray-400 px-2 py-0.5 rounded ml-auto">Data Real-time</span>
+                <h2 class="lang-text text-lg font-bold text-white" data-id="Dashboard Prediksi & Sinyal (1D)" data-en="Prediction & Signal Dashboard (1D)">Dashboard Prediksi & Sinyal (1D)</h2>
+                <span class="lang-text text-[9px] bg-darkBg border border-darkBorder text-gray-400 px-2 py-0.5 rounded ml-auto" data-id="Data Real-time" data-en="Real-time Data">Data Real-time</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="signals-grid-container"></div>
         </section>
@@ -461,14 +469,33 @@
     <!-- Footer -->
     <footer class="bg-darkCard border-t border-darkBorder mt-10 py-6 text-gray-400 text-[11px] text-center">
         <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p class="font-bold text-gray-300 uppercase tracking-wider text-[10px]">Peringatan Risiko & Disclaimer</p>
-            <p class="max-w-4xl mx-auto leading-relaxed text-gray-400">Analisis pergerakan harian dan manajemen risiko ini diperoleh dari feed data publik Binance secara real-time. Persentase prediksi adalah hasil perhitungan matematis algoritma dan bukan jaminan masa depan. Pasar mata uang kripto memiliki volatilitas tinggi.</p>
+            <p class="lang-text font-bold text-gray-300 uppercase tracking-wider text-[10px]" data-id="Peringatan Risiko & Disclaimer" data-en="Risk Warning & Disclaimer">Peringatan Risiko & Disclaimer</p>
+            <p class="lang-text max-w-4xl mx-auto leading-relaxed text-gray-400" data-id="Analisis pergerakan harian dan manajemen risiko ini diperoleh dari feed data publik Binance secara real-time. Persentase prediksi adalah hasil perhitungan matematis algoritma dan bukan jaminan masa depan. Pasar mata uang kripto memiliki volatilitas tinggi." data-en="Daily movement analysis and risk management are derived from real-time Binance public data feeds. Prediction percentages are mathematical algorithmic calculations and not guarantees of the future. The cryptocurrency market is highly volatile.">Analisis pergerakan harian dan manajemen risiko ini diperoleh dari feed data publik Binance secara real-time. Persentase prediksi adalah hasil perhitungan matematis algoritma dan bukan jaminan masa depan. Pasar mata uang kripto memiliki volatilitas tinggi.</p>
             <p class="text-gray-600 pt-2 text-[10px]">© 2026 CryptoScan Pro.</p>
         </div>
     </footer>
 
     <!-- JavaScript Logika Data & Interaksi -->
     <script>
+        // === TRANSLATION LOGIC ===
+        window.currentLang = 'id';
+        function toggleLanguage() {
+            window.currentLang = window.currentLang === 'id' ? 'en' : 'id';
+            document.getElementById('lang-indicator').innerText = window.currentLang.toUpperCase();
+            
+            document.querySelectorAll('.lang-text').forEach(el => {
+                const text = el.getAttribute('data-' + window.currentLang);
+                if (text) el.innerHTML = text;
+            });
+            
+            // Re-render UI to apply dynamically generated texts
+            renderCoinSelectors();
+            if (cryptoDatabase[currentCoin] && cryptoDatabase[currentCoin].prices.length > 0) {
+                calculateTechnicalIndicatorsWeekly(currentCoin);
+                updateDashboard();
+            }
+        }
+
         // MEREGISTRASI PLUGIN ZOOM
         if (typeof ChartZoom !== 'undefined') Chart.register(ChartZoom);
         else if (window['chartjs-plugin-zoom']) Chart.register(window['chartjs-plugin-zoom']);
@@ -710,8 +737,6 @@
         const binanceIntervals = { "1D": { interval: "1d", limit: 150 } };
 
         // === SMART FALLBACK ROUTER V2 (Sistem Anti Geo-Block Otomatis) ===
-        // Binance memblokir IP luar negeri. Web ini akan mencari rute (termasuk proxy publik)
-        // yang tembus dari IP perangkat yang sedang membuka web ini.
         const API_ROUTERS = [
             { type: 'direct', url: 'https://api.binance.com' },          // Server Utama
             { type: 'direct', url: 'https://data-api.binance.vision' },  // Server Data Publik Resmi (Sering lolos Geo-block)
@@ -721,14 +746,13 @@
             { type: 'proxy', url: 'https://thingproxy.freeboard.io/fetch/' } // Proxy Bypass 3
         ];
         
-        let workingRouter = null; // Menyimpan rute yang berhasil agar tidak perlu mencari lagi
+        let workingRouter = null; 
 
         async function attemptFetch(router, endpointPath) {
             let fetchUrl = '';
             if (router.type === 'direct') {
                 fetchUrl = `${router.url}${endpointPath}`;
             } else {
-                // Jika via proxy, bungkus URL target data-api karena lebih longgar dari api utama
                 fetchUrl = `${router.url}${encodeURIComponent('https://data-api.binance.vision' + endpointPath)}`;
             }
             
@@ -738,29 +762,24 @@
         }
 
         async function fetchBinanceData(endpointPath) {
-            // 1. Gunakan jalur yang sudah terbukti jalan dari IP ini
             if (workingRouter) {
                 try {
                     return await attemptFetch(workingRouter, endpointPath);
                 } catch (e) {
-                    workingRouter = null; // Reset jika rute proxy tiba-tiba mati
+                    workingRouter = null; 
                 }
             }
 
-            // 2. Cari rute yang tembus dari IP pengguna secara berurutan
             for (let i = 0; i < API_ROUTERS.length; i++) {
                 const router = API_ROUTERS[i];
                 try {
                     const data = await attemptFetch(router, endpointPath);
-                    
-                    workingRouter = router; // Simpan jalur sukses
-                    
+                    workingRouter = router; 
                     if (router.type === 'proxy') {
-                        setConnectionStatus("online", "Live (Via Proxy Bypass)");
+                        setConnectionStatus("online", window.currentLang === 'id' ? "Live (Via Proxy Bypass)" : "Live (Via Proxy Bypass)");
                     } else {
                         setConnectionStatus("online", "Live Binance API");
                     }
-                    
                     return data;
                 } catch (err) {
                     console.warn(`[Geo-Blocked] Rute ${router.url} ditolak oleh IP ini. Melanjutkan pencarian...`);
@@ -774,7 +793,7 @@
             renderCoinSelectors();
             renderGridCoinSelectors();
             initRealTimeData();
-            renderNews();
+            // renderNews();
         };
 
         function formatPrice(price, symbol) {
@@ -787,10 +806,11 @@
 
         function generateDateLabels(length) {
             let labels = []; let today = new Date();
+            const langLocale = window.currentLang === 'id' ? 'id-ID' : 'en-US';
             for (let i = length - 1; i >= 0; i--) {
                 let d = new Date(today); d.setDate(d.getDate() - i);
                 let day = d.getDate().toString().padStart(2, '0');
-                let month = d.toLocaleString('id-ID', { month: 'short' });
+                let month = d.toLocaleString(langLocale, { month: 'short' });
                 labels.push(`${day} ${month}`);
             }
             return labels;
@@ -836,7 +856,7 @@
 
             if (mode === 'single') { singleBtn.className = activeClass; singleView.classList.remove("hidden"); updateDashboard(); }
             else if (mode === 'multi') { multiBtn.className = activeClass; multiView.classList.remove("hidden"); updateMultiGrid(); }
-            else if (mode === 'news') { newsBtn.className = activeClass; newsView.classList.remove("hidden"); renderSignalsOverview(); }
+            else if (mode === 'news') { newsBtn.className = activeClass; newsView.classList.remove("hidden"); /* renderSignalsOverview(); */ }
         }
 
         function renderGridCoinSelectors() {
@@ -969,19 +989,18 @@
         }
 
         async function initRealTimeData() {
-            setConnectionStatus("connecting", "Menganalisis IP & Mencari Rute...");
+            setConnectionStatus("connecting", window.currentLang === 'id' ? "Menganalisis IP & Mencari Rute..." : "Analyzing IP & Routing...");
             try {
                 await fetch24hTickers();
                 await fetchHistoricalKlines(currentCoin, currentTimeframe);
                 for(let key of Object.keys(cryptoDatabase)) {
                     if(key !== currentCoin) fetchHistoricalKlines(key, currentTimeframe);
                 }
-                startRestPolling();
-                // Status online kini ditangani langsung di dalam fetchBinanceData()
+                // startRestPolling();
             } catch (err) {
                 console.error("Gagal terhubung ke seluruh sistem API:", err);
-                setConnectionStatus("fallback", "IP Diblokir. Beralih ke Simulasi.");
-                startFallbackSimulation();
+                setConnectionStatus("fallback", window.currentLang === 'id' ? "IP Diblokir. Beralih ke Simulasi." : "IP Blocked. Switching to Simulation.");
+                // startFallbackSimulation();
             }
         }
 
@@ -1019,7 +1038,6 @@
             const symbolsArr = Object.keys(cryptoDatabase).map(k => `"${cryptoDatabase[k].binanceSymbol}"`).join(',');
             const endpoint = `/api/v3/ticker/24hr?symbols=[${symbolsArr}]`;
             
-            // Menggunakan Smart Router yang baru dibuat
             const data = await fetchBinanceData(endpoint);
             
             let updatedCoins = [];
@@ -1077,7 +1095,7 @@
                     }
                 });
             } else if (viewMode === 'news') {
-                renderSignalsOverview();
+                // renderSignalsOverview();
             }
         }
 
@@ -1089,7 +1107,6 @@
             if (viewMode === 'single' && coinKey === currentCoin) document.getElementById('chart-loading').style.display = 'flex';
 
             try {
-                // Menggunakan Smart Router yang baru dibuat
                 const data = await fetchBinanceData(endpoint);
                 
                 let prices = []; let ohlc = []; let volumes = [];
@@ -1129,12 +1146,11 @@
             }
         }
 
-        // FUNGSI KALKULASI PREDIKSI TERPADU (GABUNGAN SEMUA INDIKATOR)
         function calculateTechnicalIndicatorsWeekly(coinKey) {
             const coin = cryptoDatabase[coinKey];
+            const isId = window.currentLang === 'id';
             if (coin.prices.length < 20) return;
 
-            // 1. Kalkulasi RSI
             const rsiPeriod = 14; const prices = coin.prices;
             let gains = 0, losses = 0;
             for (let i = prices.length - rsiPeriod; i < prices.length; i++) {
@@ -1145,53 +1161,41 @@
             let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
             coin.rsi = avgLoss === 0 ? 100 : 100 - (100 / (1 + rs));
 
-            // 2. Kalkulasi SMA20
             let sum20 = 0;
             for (let i = prices.length - 20; i < prices.length; i++) sum20 += prices[i];
             coin.sma20 = sum20 / 20;
 
             const currentPrice = prices[prices.length - 1];
-            if (currentPrice > coin.sma20 && coin.rsi > 50) { coin.macd = "BULLISH CROSS"; coin.trendStatus = "UPTREND (1D)"; } 
-            else if (currentPrice < coin.sma20 && coin.rsi < 50) { coin.macd = "BEARISH CROSS"; coin.trendStatus = "DOWNTREND (1D)"; } 
-            else { coin.macd = "NEUTRAL"; coin.trendStatus = "KONSOLIDASI"; }
+            if (currentPrice > coin.sma20 && coin.rsi > 50) { coin.macd = "BULLISH CROSS"; coin.trendStatus = isId ? "UPTREND (1D)" : "UPTREND (1D)"; } 
+            else if (currentPrice < coin.sma20 && coin.rsi < 50) { coin.macd = "BEARISH CROSS"; coin.trendStatus = isId ? "DOWNTREND (1D)" : "DOWNTREND (1D)"; } 
+            else { coin.macd = isId ? "NETRAL" : "NEUTRAL"; coin.trendStatus = isId ? "KONSOLIDASI" : "CONSOLIDATION"; }
 
-            // 3. Support & Resistance
             const ohlc14 = coin.ohlc.slice(-14); 
             let max14 = Math.max(...ohlc14.map(o => o.h)); let min14 = Math.min(...ohlc14.map(o => o.l));
             coin.res2 = max14; coin.res1 = max14 - ((max14 - min14) * 0.236); 
             coin.sup1 = min14 + ((max14 - min14) * 0.236); coin.sup2 = min14;
 
-            // 4. SISTEM SCORING TERPADU UNTUK PERSENTASE PREDIKSI
-            let bullScore = 0; // Rentang max skitar -10 hingga +10
+            let bullScore = 0; 
             
-            // Bobot RSI (Max 3 poin)
-            if (coin.rsi < 30) bullScore += 3; // Oversold -> Kuat Buy
+            if (coin.rsi < 30) bullScore += 3;
             else if (coin.rsi < 45) bullScore += 1.5;
-            else if (coin.rsi > 70) bullScore -= 3; // Overbought -> Kuat Sell
+            else if (coin.rsi > 70) bullScore -= 3;
             else if (coin.rsi > 55) bullScore -= 1.5;
 
-            // Bobot Trend (SMA) (Max 3 poin)
             if (currentPrice > coin.sma20) bullScore += 3;
             else bullScore -= 3;
 
-            // Bobot Jarak Support/Resistance (Max 2 poin)
             const distToSup = ((currentPrice - coin.sup1) / currentPrice) * 100;
             const distToRes = ((coin.res1 - currentPrice) / currentPrice) * 100;
-            if (distToSup > 0 && distToSup < 3) bullScore += 2; // Dekat support = bagus buat beli
-            if (distToRes > 0 && distToRes < 3) bullScore -= 2; // Dekat resist = saatnya jual
+            if (distToSup > 0 && distToSup < 3) bullScore += 2; 
+            if (distToRes > 0 && distToRes < 3) bullScore -= 2; 
 
-            // Bobot Momentum Candlestick Terakhir (Max 2 poin)
             const lastCandle = coin.ohlc[coin.ohlc.length - 1];
-            if (lastCandle && lastCandle.c >= lastCandle.o) bullScore += 2; // Green candle
-            else bullScore -= 2; // Red candle
+            if (lastCandle && lastCandle.c >= lastCandle.o) bullScore += 2; 
+            else bullScore -= 2; 
 
-            // Konversi Skor (-10 s/d +10) ke Persentase (0% s/d 100%)
             let confidencePct = ((bullScore + 10) / 20) * 100;
-            
-            // Tambahkan dinamika pergerakan 24h agar persentase terasa hidup
             confidencePct += (coin.change24h > 0 ? Math.min(5, coin.change24h) : Math.max(-5, coin.change24h));
-            
-            // Batasi nilai agar selalu di range 0 - 100
             coin.confidencePct = Math.max(0, Math.min(100, confidencePct));
 
             if (coin.confidencePct >= 65) {
@@ -1212,7 +1216,7 @@
                 coin.confidenceColor = "text-cryptoRed";
             } else {
                 coin.signal = "HOLD / WAIT";
-                coin.confidenceStr = `${coin.confidencePct.toFixed(1)}% NETRAL`;
+                coin.confidenceStr = `${coin.confidencePct.toFixed(1)}% ${isId ? 'NETRAL' : 'NEUTRAL'}`;
                 coin.confidenceColor = "text-cryptoYellow";
             }
         }
@@ -1239,7 +1243,7 @@
                     labels: labels,
                     datasets: [
                         { label: 'Candlestick', data: coin.ohlc.map(d => [d.o, d.c]), backgroundColor: context => { const ohlc = coin.ohlc[context.dataIndex]; return (!ohlc || ohlc.c >= ohlc.o) ? '#0ECB81' : '#F6465D'; }, borderWidth: 0, borderRadius: 1, barPercentage: 0.8, categoryPercentage: 0.8, isCandle: true, ohlcData: coin.ohlc, order: 2 },
-                        { type: 'line', label: 'SMA (20 Hari)', data: sma20Data, borderColor: '#F0B90B', borderWidth: 1.5, borderDash: [5, 5], pointRadius: 0, fill: false, tension: 0.3, order: 1 }
+                        { type: 'line', label: 'SMA (20)', data: sma20Data, borderColor: '#F0B90B', borderWidth: 1.5, borderDash: [5, 5], pointRadius: 0, fill: false, tension: 0.3, order: 1 }
                     ]
                 },
                 options: {
@@ -1308,22 +1312,20 @@
 
         function updateDashboard() {
             const coin = cryptoDatabase[currentCoin];
+            const isId = window.currentLang === 'id';
             if (!coin.prices || coin.prices.length === 0) return;
 
             document.getElementById("coin-name").innerText = coin.name;
             document.getElementById("coin-ticker-badge").innerText = `${coin.symbol}/USDT`;
             document.getElementById("coin-category").innerText = coin.category;
             document.getElementById("coin-logo-container").innerHTML = cryptoSVGLogos[coin.symbol];
-            
-            updateDashboardInfoOnly();
 
-            // Tampilkan Persentase Prediksi Unified
             const unifiedPctEl = document.getElementById("unified-percentage");
             unifiedPctEl.innerText = coin.confidenceStr;
             unifiedPctEl.className = `text-4xl font-black tracking-wide drop-shadow mb-1 transition-all ${coin.confidenceColor}`;
 
             const sigEl = document.getElementById("summary-signal"); 
-            sigEl.innerText = `Sinyal Final: ${coin.signal}`;
+            sigEl.innerText = isId ? `Sinyal Final: ${coin.signal}` : `Final Signal: ${coin.signal}`;
             if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) sigEl.className = "text-xs font-bold text-cryptoGreen uppercase tracking-widest block transition-colors";
             else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) sigEl.className = "text-xs font-bold text-cryptoRed uppercase tracking-widest block transition-colors";
             else sigEl.className = "text-xs font-bold text-cryptoYellow uppercase tracking-widest block transition-colors";
@@ -1348,7 +1350,9 @@
             trendIcon.className = coin.trendStatus.includes("UP") ? "w-9 h-9 rounded-xl bg-cryptoGreen/10 text-cryptoGreen flex items-center justify-center font-bold text-base shadow-sm transition-colors" : (coin.trendStatus.includes("DOWN") ? "w-9 h-9 rounded-xl bg-cryptoRed/10 text-cryptoRed flex items-center justify-center font-bold text-base shadow-sm transition-colors" : "w-9 h-9 rounded-xl bg-gray-500/10 text-gray-400 flex items-center justify-center font-bold text-base shadow-sm transition-colors");
 
             let distRes = ((coin.res1 - coin.price) / coin.price) * 100; let distSup = ((coin.price - coin.sup1) / coin.price) * 100;
-            document.getElementById("trend-desc").innerText = `Tren dominan 1D adalah ${coin.trendStatus}. Harga berjarak ${Math.abs(distSup).toFixed(1)}% di atas Support 1, dan ${Math.abs(distRes).toFixed(1)}% di bawah Target Resistance.`;
+            document.getElementById("trend-desc").innerText = isId ? 
+                `Tren dominan 1D adalah ${coin.trendStatus}. Harga berjarak ${Math.abs(distSup).toFixed(1)}% di atas Support 1, dan ${Math.abs(distRes).toFixed(1)}% di bawah Target Resistance.` : 
+                `1D dominant trend is ${coin.trendStatus}. Price is ${Math.abs(distSup).toFixed(1)}% above Support 1, and ${Math.abs(distRes).toFixed(1)}% below Target Resistance.`;
 
             document.getElementById("res-2").innerText = formatPrice(coin.res2, coin.symbol); document.getElementById("res-1").innerText = formatPrice(coin.res1, coin.symbol);
             document.getElementById("sup-1").innerText = formatPrice(coin.sup1, coin.symbol); document.getElementById("sup-2").innerText = formatPrice(coin.sup2, coin.symbol);
@@ -1365,39 +1369,38 @@
             document.getElementById("risk-reward-ratio").innerText = rrRatioStr; document.getElementById("risk-loss-pct").innerText = riskPctStr; document.getElementById("risk-profit-pct").innerText = rewardPctStr;
             
             let allocationPct = "--";
-            if(parseFloat(riskPctStr) > 0) { let alloc = Math.min((2 / parseFloat(riskPctStr)) * 100, 100); allocationPct = alloc.toFixed(1) + "% Modal"; }
+            if(parseFloat(riskPctStr) > 0) { let alloc = Math.min((2 / parseFloat(riskPctStr)) * 100, 100); allocationPct = alloc.toFixed(1) + (isId ? "% Modal" : "% Capital"); }
             document.getElementById("risk-allocation").innerText = allocationPct;
 
             if(coin.signal.includes("BUY")) {
-                document.getElementById("action-step-1").innerText = `Area beli optimal di ${formatPrice(coin.sup1, coin.symbol)}.`;
-                document.getElementById("action-step-2").innerText = `SL ketat jika breakdown ${formatPrice(stopLossPrice, coin.symbol)}.`;
-                document.getElementById("action-step-3").innerText = `Ambil porsi profit bertahap menuju ${formatPrice(coin.res1, coin.symbol)}.`;
+                document.getElementById("action-step-1").innerText = isId ? `Area beli optimal di ${formatPrice(coin.sup1, coin.symbol)}.` : `Optimal buy area at ${formatPrice(coin.sup1, coin.symbol)}.`;
+                document.getElementById("action-step-2").innerText = isId ? `SL ketat jika breakdown ${formatPrice(stopLossPrice, coin.symbol)}.` : `Strict SL if breakdown ${formatPrice(stopLossPrice, coin.symbol)}.`;
+                document.getElementById("action-step-3").innerText = isId ? `Ambil porsi profit bertahap menuju ${formatPrice(coin.res1, coin.symbol)}.` : `Take partial profits towards ${formatPrice(coin.res1, coin.symbol)}.`;
             } else if (coin.signal.includes("SELL")) {
-                document.getElementById("action-step-1").innerText = `Hindari posisi beli. Harga dekat resistance atau breakdown support.`;
-                document.getElementById("action-step-2").innerText = `Tunggu konfirmasi rebound di area ${formatPrice(coin.sup2, coin.symbol)}.`;
-                document.getElementById("action-step-3").innerText = `Jika punya barang, pertimbangkan kurangi muatan.`;
+                document.getElementById("action-step-1").innerText = isId ? `Hindari posisi beli. Harga dekat resistance atau breakdown support.` : `Avoid buy positions. Price near resistance or support breakdown.`;
+                document.getElementById("action-step-2").innerText = isId ? `Tunggu konfirmasi rebound di area ${formatPrice(coin.sup2, coin.symbol)}.` : `Wait for rebound confirmation around ${formatPrice(coin.sup2, coin.symbol)}.`;
+                document.getElementById("action-step-3").innerText = isId ? `Jika punya barang, pertimbangkan kurangi muatan.` : `If holding, consider reducing positions.`;
             } else {
-                document.getElementById("action-step-1").innerText = `Market sedang sideway/konsolidasi. Wait & see.`;
-                document.getElementById("action-step-2").innerText = `Batas akumulasi bawah di ${formatPrice(coin.sup1, coin.symbol)}.`;
-                document.getElementById("action-step-3").innerText = `Batas taking profit atas di ${formatPrice(coin.res1, coin.symbol)}.`;
+                document.getElementById("action-step-1").innerText = isId ? `Market sedang sideway/konsolidasi. Wait & see.` : `Market is sideways/consolidating. Wait & see.`;
+                document.getElementById("action-step-2").innerText = isId ? `Batas akumulasi bawah di ${formatPrice(coin.sup1, coin.symbol)}.` : `Lower accumulation bound at ${formatPrice(coin.sup1, coin.symbol)}.`;
+                document.getElementById("action-step-3").innerText = isId ? `Batas taking profit atas di ${formatPrice(coin.res1, coin.symbol)}.` : `Upper taking profit bound at ${formatPrice(coin.res1, coin.symbol)}.`;
             }
 
-            // Update Advanced Indicator Widget to use Unified Percentage
             document.getElementById("adv-coin-symbol").innerText = coin.symbol;
             document.getElementById("adv-coin-name").innerText = `${coin.name} (Binance)`;
             document.getElementById("adv-target-break").innerText = formatPrice(coin.res1, coin.symbol);
-            document.getElementById("adv-rsi-val").innerText = `AI Skoring (1D)`;
+            document.getElementById("adv-rsi-val").innerText = isId ? `AI Skoring (1D)` : `AI Scoring (1D)`;
             
             let stateText = coin.confidenceStr; 
             let stateHex = "#0ECB81"; 
             let stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; 
             let scenarioText = "";
             
-            if (coin.confidencePct >= 65) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Rangkuman indikator menunjukkan momentum BULLISH yang sangat kuat. Direkomendasikan mencari titik entri beli dengan target ke ${formatPrice(coin.res1, coin.symbol)}.`; } 
-            else if (coin.confidencePct >= 55) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Indikator dominan Bullish namun waspadai koreksi jangka pendek. Tahan posisi (Hold) atau Akumulasi jika harga menyentuh ${formatPrice(coin.sup1, coin.symbol)}.`; } 
-            else if (coin.confidencePct <= 35) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Prediksi teknikal sangat BEARISH. Penjual mendominasi pasar secara penuh. Tunda pembelian hingga harga menguji level lantai di ${formatPrice(coin.sup2, coin.symbol)}.`; } 
-            else if (coin.confidencePct <= 45) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Indikator melemah dan condong ke Bearish. Kurangi eksposur risiko dan pantau apakah support di ${formatPrice(coin.sup1, coin.symbol)} mampu bertahan.`; } 
-            else { stateHex = "#F0B90B"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>`; scenarioText = `Sinyal terpecah (Netral). Harga tertahan di area konsolidasi. Disarankan Wait & See hingga ada penembusan jelas dari garis tren saat ini.`; }
+            if (coin.confidencePct >= 65) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = isId ? `Rangkuman indikator menunjukkan momentum BULLISH yang sangat kuat. Direkomendasikan mencari titik entri beli dengan target ke ${formatPrice(coin.res1, coin.symbol)}.` : `Indicator summary shows very strong BULLISH momentum. Recommended to find buy entry points targeting ${formatPrice(coin.res1, coin.symbol)}.`; } 
+            else if (coin.confidencePct >= 55) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = isId ? `Indikator dominan Bullish namun waspadai koreksi jangka pendek. Tahan posisi (Hold) atau Akumulasi jika harga menyentuh ${formatPrice(coin.sup1, coin.symbol)}.` : `Dominant Bullish indicators but beware of short-term correction. Hold or Accumulate if price touches ${formatPrice(coin.sup1, coin.symbol)}.`; } 
+            else if (coin.confidencePct <= 35) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = isId ? `Prediksi teknikal sangat BEARISH. Penjual mendominasi pasar secara penuh. Tunda pembelian hingga harga menguji level lantai di ${formatPrice(coin.sup2, coin.symbol)}.` : `Technical prediction is highly BEARISH. Sellers fully dominate the market. Postpone purchases until price tests the floor level at ${formatPrice(coin.sup2, coin.symbol)}.`; } 
+            else if (coin.confidencePct <= 45) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = isId ? `Indikator melemah dan condong ke Bearish. Kurangi eksposur risiko dan pantau apakah support di ${formatPrice(coin.sup1, coin.symbol)} mampu bertahan.` : `Indicators are weakening and leaning Bearish. Reduce risk exposure and monitor if support at ${formatPrice(coin.sup1, coin.symbol)} holds.`; } 
+            else { stateHex = "#F0B90B"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>`; scenarioText = isId ? `Sinyal terpecah (Netral). Harga tertahan di area konsolidasi. Disarankan Wait & See hingga ada penembusan jelas dari garis tren saat ini.` : `Signals are mixed (Neutral). Price is stuck in a consolidation area. It's recommended to Wait & See until there is a clear breakout from the current trendline.`; }
             
             document.getElementById("adv-konsensus-text").innerText = stateText.split('% ')[1] || stateText; 
             document.getElementById("adv-konsensus-text").className = `text-base md:text-lg font-black block transition-colors duration-500 ${coin.confidenceColor}`;
@@ -1405,150 +1408,9 @@
             document.getElementById("adv-konsensus-icon").innerHTML = stateIcon; document.getElementById("adv-konsensus-icon").style.color = stateHex;
             document.getElementById("adv-skenario-text").innerHTML = scenarioText;
             
-            // Jarum Gauge Meter kini menggunakan Confidence Percentage
             const needle = document.getElementById("gauge-needle"); const activeTrack = document.getElementById("gauge-active-track");
             let rotation = (coin.confidencePct / 100) * 180 - 90; needle.style.transform = `rotate(${rotation}deg)`;
             activeTrack.style.strokeDashoffset = 251.32 - (251.32 * (coin.confidencePct / 100)); activeTrack.style.stroke = stateHex;
-
-            const lblSS = document.getElementById("label-strong-sell"); const lblS = document.getElementById("label-sell"); const lblN = document.getElementById("label-neutral"); const lblB = document.getElementById("label-buy"); const lblSB = document.getElementById("label-strong-buy");
-            [lblSS, lblS, lblN, lblB, lblSB].forEach(el => el.className = el.className.replace(/text-cryptoRed|text-cryptoGreen|text-cryptoYellow/g, "text-gray-500"));
-            if (coin.confidencePct <= 35) lblSS.classList.replace("text-gray-500", "text-cryptoRed"); else if (coin.confidencePct <= 45) lblS.classList.replace("text-gray-500", "text-cryptoRed");
-            else if (coin.confidencePct >= 65) lblSB.classList.replace("text-gray-500", "text-cryptoGreen"); else if (coin.confidencePct >= 55) lblB.classList.replace("text-gray-500", "text-cryptoGreen");
-            else lblN.classList.replace("text-gray-500", "text-cryptoYellow"); 
-        }
-
-        function updateDashboardInfoOnly() {
-            const coin = cryptoDatabase[currentCoin];
-            document.getElementById("current-price").innerText = formatPrice(coin.price, coin.symbol);
-            const changeEl = document.getElementById("price-change-pct");
-            changeEl.className = `text-base font-bold transition-colors ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
-            changeEl.innerText = `${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}%`;
-            
-            let vol = coin.volume24h; if(vol !== "--") vol = (vol / 1000000).toFixed(2) + "M " + coin.symbol;
-            document.getElementById("volume-24h").innerText = vol;
-
-            if(document.getElementById("adv-coin-price")) {
-                 document.getElementById("adv-coin-price").innerText = formatPrice(coin.price, coin.symbol);
-                 const advChange = document.getElementById("adv-coin-change");
-                 const isPos = coin.change24h >= 0;
-                 advChange.innerText = `${isPos ? '+' : ''}${coin.change24h.toFixed(2)}% (24j)`;
-                 advChange.className = `text-sm font-bold mt-0.5 transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
-            }
-        }
-
-        function startRestPolling() {
-            if (updateIntervalId) clearInterval(updateIntervalId);
-            updateIntervalId = setInterval(async () => {
-                try { await fetch24hTickers(); } catch (e) { console.error("Polling error", e); }
-            }, 5000); 
-        }
-
-        function startFallbackSimulation() {
-            if (updateIntervalId) clearInterval(updateIntervalId);
-            Object.keys(cryptoDatabase).forEach(key => {
-                const coin = cryptoDatabase[key];
-                if (coin.prices.length === 0) {
-                    let p = coin.price;
-                    for(let i=0; i<150; i++) {
-                        const change = p * (Math.random() * 0.04 - 0.02);
-                        const o = p; const c = p + change;
-                        const h = Math.max(o, c) + Math.random() * p * 0.02; const l = Math.min(o, c) - Math.random() * p * 0.02;
-                        coin.ohlc.push({o,h,l,c}); coin.prices.push(c); coin.volumes.push(Math.random() * 1000); p = c;
-                    }
-                    coin.price = coin.prices[coin.prices.length-1];
-                }
-            });
-
-            if (viewMode === 'single') { calculateTechnicalIndicatorsWeekly(currentCoin); updateMainChart(currentCoin); updateDashboard(); document.getElementById('chart-loading').style.display = 'none'; }
-            else if (viewMode === 'multi') { updateMultiGrid(); }
-
-            updateIntervalId = setInterval(() => {
-                let updatedCoins = [];
-                Object.keys(cryptoDatabase).forEach(key => {
-                    if (Math.random() > 0.5) {
-                        const coin = cryptoDatabase[key]; const oldPrice = coin.price;
-                        const change = coin.price * (Math.random() * 0.002 - 0.001);
-                        coin.price += change; coin.change24h += (Math.random() * 0.2 - 0.1);
-                        
-                        if (coin.ohlc.length > 0) {
-                            const last = coin.ohlc[coin.ohlc.length-1];
-                            last.c = coin.price; last.h = Math.max(last.h, coin.price); last.l = Math.min(last.l, coin.price);
-                            coin.prices[coin.prices.length-1] = coin.price;
-                        }
-                        updateTickerUI(key, coin.price, oldPrice); updatedCoins.push(key);
-                    }
-                });
-                
-                updateCoinSelectorsUI(); 
-
-                if (viewMode === 'single' && updatedCoins.includes(currentCoin)) {
-                    calculateTechnicalIndicatorsWeekly(currentCoin); 
-                    updateDashboard(); 
-                    updateMainChartLivePrice(cryptoDatabase[currentCoin].price);
-                    
-                    if (mainChartInstance) {
-                        const coin = cryptoDatabase[currentCoin]; const last = coin.ohlc[coin.ohlc.length-1];
-                        mainChartInstance.data.datasets[0].data[mainChartInstance.data.datasets[0].data.length-1] = [last.o, last.c]; 
-                        
-                        syncChartZoom(mainChartInstance); 
-                        mainChartInstance.update('none');
-                    }
-                } else if (viewMode === 'multi') {
-                    updatedCoins.forEach(coin => {
-                        if (activeGridCoins.includes(coin)) {
-                            calculateTechnicalIndicatorsWeekly(coin); // Penting agar persen di grid terupdate
-                            updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
-                            const boxId = Object.keys(gridRenderedCoins).find(k => gridRenderedCoins[k] === coin);
-                            if (boxId && gridChartInstances[boxId]) {
-                                const last = cryptoDatabase[coin].ohlc[cryptoDatabase[coin].ohlc.length-1];
-                                gridChartInstances[boxId].data.datasets[0].data[cryptoDatabase[coin].ohlc.length-1] = [last.o, last.c]; 
-                                
-                                syncChartZoom(gridChartInstances[boxId]); 
-                                gridChartInstances[boxId].update('none');
-                            }
-                        }
-                    });
-                } else if (viewMode === 'news') {
-                    renderSignalsOverview();
-                }
-            }, 3000);
-        }
-
-        function renderNews() {
-            const container = document.getElementById("news-list-container"); if (!container) return;
-            container.innerHTML = "";
-            let shuffledNews = [...fakeNewsDatabase].sort(() => 0.5 - Math.random());
-            shuffledNews.slice(0, 4).forEach(news => {
-                const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                const el = document.createElement("div"); el.className = "bg-darkCard p-4 rounded-xl border border-darkBorder hover:border-accentBlue/50 transition-colors duration-300";
-                el.innerHTML = `<div class="flex justify-between items-start mb-2"><span class="text-[9px] font-bold text-accentBlue bg-accentBlue/10 px-2 py-0.5 rounded uppercase tracking-wider">${news.tag}</span><span class="text-[10px] text-gray-500">${dateStr}</span></div><h3 class="text-sm font-bold text-white mb-1.5 leading-snug hover:text-accentBlue cursor-pointer transition-colors">${news.title}</h3><p class="text-[11px] text-gray-400 leading-relaxed mb-3">${news.snippet}</p><a href="#" class="text-[10px] text-accentBlue font-semibold hover:underline flex items-center gap-1">Baca Selengkapnya <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>`;
-                container.appendChild(el);
-            });
-        }
-
-        function renderSignalsOverview() {
-            const container = document.getElementById("signals-grid-container"); if (!container) return;
-            container.innerHTML = "";
-            Object.keys(cryptoDatabase).forEach(key => {
-                const coin = cryptoDatabase[key]; if (!coin.prices || coin.prices.length === 0) return;
-                
-                calculateTechnicalIndicatorsWeekly(key);
-
-                const isPos = coin.change24h >= 0;
-                let sigCol = "text-cryptoYellow", sigBg = "bg-cryptoYellow/10", sigBor = "border-cryptoYellow/30";
-                if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) { sigCol = "text-cryptoGreen"; sigBg = "bg-cryptoGreen/10"; sigBor = "border-cryptoGreen/30"; } 
-                else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) { sigCol = "text-cryptoRed"; sigBg = "bg-cryptoRed/10"; sigBor = "border-cryptoRed/30"; }
-                
-                let maKet = "Sedang dikalkulasi";
-                if(coin.sma20) maKet = coin.price > coin.sma20 ? `<span class="text-cryptoGreen">Bullish</span> (Di atas MA20)` : `<span class="text-cryptoRed">Bearish</span> (Di bawah MA20)`;
-                const rsiKet = coin.rsi > 70 ? "Overbought" : (coin.rsi < 30 ? "Oversold" : "Netral");
-                const rsiCol = coin.rsi > 70 ? "text-cryptoRed" : (coin.rsi < 30 ? "text-cryptoGreen" : "text-white");
-
-                const card = document.createElement("div"); card.className = "bg-darkCard p-4 rounded-xl border border-darkBorder flex flex-col gap-3 shadow-lg transition-colors";
-                // Modifikasi untuk menampilkan Persentase di Signal Overview
-                card.innerHTML = `<div class="flex justify-between items-start"><div class="flex items-center gap-2.5"><div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">${cryptoSVGLogos[coin.symbol]}</div><div><span class="font-extrabold text-sm text-white block">${coin.symbol}</span><span class="text-[10px] text-gray-500">${coin.name}</span></div></div><div class="text-right"><span class="font-mono text-sm block font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${formatPrice(coin.price, coin.symbol)}</span><span class="text-[10px] font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${isPos ? '+' : ''}${coin.change24h.toFixed(2)}%</span></div></div><div class="border-t border-darkBorder/60 pt-3"><div class="flex justify-between items-center mb-2"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">AI Prediksi 1D:</span><span class="text-xs font-black transition-colors ${coin.confidenceColor}">${coin.confidenceStr}</span></div><div class="bg-darkBg/40 p-2.5 rounded-lg border border-darkBorder/50 space-y-1.5"><div class="flex justify-between text-[10px]"><span class="text-gray-500">RSI (14):</span><span class="font-bold transition-colors ${rsiCol}">${coin.rsi.toFixed(1)} - ${rsiKet}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">MACD:</span><span class="font-bold text-white transition-colors">${coin.macd}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">Aksi Final:</span><span class="font-bold transition-colors ${sigCol}">${coin.signal}</span></div></div></div>`;
-                container.appendChild(card);
-            });
         }
     </script>
 </body>
