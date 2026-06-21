@@ -1,0 +1,22 @@
+{
+  "name": "interactive-stock-dashboard",
+  "version": "1.0.0",
+  "description": "CryptoScan Pro - Interactive Stock Dashboard",
+  "private": true,
+  "scripts": {
+    "dev": "npx http-server -p 3000",
+    "build": "echo 'No build step required for vanilla HTML/JS project'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "crypto",
+    "dashboard",
+    "stock",
+    "analytics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
