@@ -1,0 +1,24 @@
+{
+  "name": "interactive-stock-dashboard",
+  "version": "1.0.0",
+  "description": "CryptoScan Pro - Interactive Stock Dashboard with AI-powered predictions",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikoo09/Interactive-Stock-Dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikoo09/Interactive-Stock-Dashboard/issues"
+  },
+  "homepage": "https://github.com/ikoo09/Interactive-Stock-Dashboard#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
