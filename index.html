@@ -55,6 +55,12 @@
         canvas { cursor: crosshair; }
         canvas:active { cursor: grabbing; }
     </style>
+
+    <!-- Vercel Speed Insights -->
+    <script type="module">
+        import { injectSpeedInsights } from 'https://cdn.jsdelivr.net/npm/@vercel/speed-insights@2.0.0/dist/index.js';
+        injectSpeedInsights();
+    </script>
 </head>
 <body class="bg-darkBg text-gray-200 font-sans min-h-screen flex flex-col antialiased selection:bg-accentBlue/30 selection:text-white">
 
