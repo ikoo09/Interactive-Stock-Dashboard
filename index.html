@@ -5,10 +5,19 @@
     <link rel="icon" type="image/png" href="crypto.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoScan Pro - 1D Candlestick & Zoom</title>
-        <script src="https://5gvci.com/act/files/tag.min.js?z=11179787" data-cfasync="false" async></script>
-        <script>(function(s){s.dataset.zone='11179939',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    
+    <!-- Original Scripts -->
+    <script src="https://5gvci.com/act/files/tag.min.js?z=11179787" data-cfasync="false" async></script>
+    <script>(function(s){s.dataset.zone='11179939',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
-        <!-- Tailwind CSS CDN -->
+    <!-- Vercel Analytics & Speed Insights -->
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Chart.js & Zoom Plugin CDN -->
@@ -1387,168 +1396,211 @@
             document.getElementById("adv-coin-name").innerText = `${coin.name} (Binance)`;
             document.getElementById("adv-target-break").innerText = formatPrice(coin.res1, coin.symbol);
             document.getElementById("adv-rsi-val").innerText = `AI Skoring (1D)`;
-            
-            let stateText = coin.confidenceStr; 
-            let stateHex = "#0ECB81"; 
-            let stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; 
-            let scenarioText = "";
-            
-            if (coin.confidencePct >= 65) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Rangkuman indikator menunjukkan momentum BULLISH yang sangat kuat. Direkomendasikan mencari titik entri beli dengan target ke ${formatPrice(coin.res1, coin.symbol)}.`; } 
-            else if (coin.confidencePct >= 55) { stateHex = "#0ECB81"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`; scenarioText = `Indikator dominan Bullish namun waspadai koreksi jangka pendek. Tahan posisi (Hold) atau Akumulasi jika harga menyentuh ${formatPrice(coin.sup1, coin.symbol)}.`; } 
-            else if (coin.confidencePct <= 35) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Prediksi teknikal sangat BEARISH. Penjual mendominasi pasar secara penuh. Tunda pembelian hingga harga menguji level lantai di ${formatPrice(coin.sup2, coin.symbol)}.`; } 
-            else if (coin.confidencePct <= 45) { stateHex = "#F6465D"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`; scenarioText = `Indikator melemah dan condong ke Bearish. Kurangi eksposur risiko dan pantau apakah support di ${formatPrice(coin.sup1, coin.symbol)} mampu bertahan.`; } 
-            else { stateHex = "#F0B90B"; stateIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>`; scenarioText = `Sinyal terpecah (Netral). Harga tertahan di area konsolidasi. Disarankan Wait & See hingga ada penembusan jelas dari garis tren saat ini.`; }
-            
-            document.getElementById("adv-konsensus-text").innerText = stateText.split('% ')[1] || stateText; 
-            document.getElementById("adv-konsensus-text").className = `text-base md:text-lg font-black block transition-colors duration-500 ${coin.confidenceColor}`;
-            document.getElementById("adv-konsensus-icon-bg").style.borderColor = stateHex; document.getElementById("adv-konsensus-icon-bg").style.backgroundColor = stateHex + "1A"; 
-            document.getElementById("adv-konsensus-icon").innerHTML = stateIcon; document.getElementById("adv-konsensus-icon").style.color = stateHex;
-            document.getElementById("adv-skenario-text").innerHTML = scenarioText;
-            
-            // Jarum Gauge Meter kini menggunakan Confidence Percentage
-            const needle = document.getElementById("gauge-needle"); const activeTrack = document.getElementById("gauge-active-track");
-            let rotation = (coin.confidencePct / 100) * 180 - 90; needle.style.transform = `rotate(${rotation}deg)`;
-            activeTrack.style.strokeDashoffset = 251.32 - (251.32 * (coin.confidencePct / 100)); activeTrack.style.stroke = stateHex;
 
-            const lblSS = document.getElementById("label-strong-sell"); const lblS = document.getElementById("label-sell"); const lblN = document.getElementById("label-neutral"); const lblB = document.getElementById("label-buy"); const lblSB = document.getElementById("label-strong-buy");
-            [lblSS, lblS, lblN, lblB, lblSB].forEach(el => el.className = el.className.replace(/text-cryptoRed|text-cryptoGreen|text-cryptoYellow/g, "text-gray-500"));
-            if (coin.confidencePct <= 35) lblSS.classList.replace("text-gray-500", "text-cryptoRed"); else if (coin.confidencePct <= 45) lblS.classList.replace("text-gray-500", "text-cryptoRed");
-            else if (coin.confidencePct >= 65) lblSB.classList.replace("text-gray-500", "text-cryptoGreen"); else if (coin.confidencePct >= 55) lblB.classList.replace("text-gray-500", "text-cryptoGreen");
-            else lblN.classList.replace("text-gray-500", "text-cryptoYellow"); 
+            // --- BAGIAN YANG DIPERBAIKI (TADI TERPOTONG DI KATA `let`) ---
+            let konsensusText = document.getElementById("adv-konsensus-text");
+            let konsensusIcon = document.getElementById("adv-konsensus-icon");
+            let konsensusBg = document.getElementById("adv-konsensus-icon-bg");
+            
+            konsensusText.innerText = coin.signal;
+            
+            if (coin.confidencePct >= 55) {
+                konsensusText.className = "text-base md:text-lg font-black text-cryptoGreen block transition-colors duration-500";
+                konsensusBg.className = "w-10 h-10 rounded-full border border-cryptoGreen bg-cryptoGreen/10 flex items-center justify-center shrink-0 transition-colors duration-500";
+                konsensusIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>`;
+                konsensusIcon.className = "w-5 h-5 text-cryptoGreen transition-colors duration-500";
+            } else if (coin.confidencePct <= 45) {
+                konsensusText.className = "text-base md:text-lg font-black text-cryptoRed block transition-colors duration-500";
+                konsensusBg.className = "w-10 h-10 rounded-full border border-cryptoRed bg-cryptoRed/10 flex items-center justify-center shrink-0 transition-colors duration-500";
+                konsensusIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"></path>`;
+                konsensusIcon.className = "w-5 h-5 text-cryptoRed transition-colors duration-500";
+            } else {
+                konsensusText.className = "text-base md:text-lg font-black text-cryptoYellow block transition-colors duration-500";
+                konsensusBg.className = "w-10 h-10 rounded-full border border-cryptoYellow bg-cryptoYellow/10 flex items-center justify-center shrink-0 transition-colors duration-500";
+                konsensusIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14"></path>`;
+                konsensusIcon.className = "w-5 h-5 text-cryptoYellow transition-colors duration-500";
+            }
+
+            // Gauge Needle Logic (0% = Bearish Kuat, 100% = Bullish Kuat)
+            const needle = document.getElementById("gauge-needle");
+            const activeTrack = document.getElementById("gauge-active-track");
+            const pct = Math.max(0, Math.min(100, coin.confidencePct));
+            const angle = -90 + (pct * 1.8);
+            if(needle) needle.style.transform = `rotate(${angle}deg)`;
+            
+            const gaugeColor = pct >= 55 ? '#0ECB81' : (pct <= 45 ? '#F6465D' : '#F0B90B');
+            if(activeTrack) {
+                activeTrack.setAttribute("stroke", gaugeColor);
+                const dashOffset = 251.32 - (251.32 * (pct / 100));
+                activeTrack.style.strokeDashoffset = dashOffset;
+            }
+            
+            // Skenario Text
+            document.getElementById("adv-skenario-text").innerText = `Berdasarkan kalkulasi indikator terpadu, ${coin.name} menunjukkan probabilitas ${coin.confidencePct.toFixed(1)}% untuk pergerakan Bullish. ${coin.confidencePct >= 55 ? "Direkomendasikan untuk mencari peluang entry di area support." : (coin.confidencePct <= 45 ? "Direkomendasikan untuk menghindari entry atau mencari area taking profit." : "Pasar dalam kondisi netral, tunggu konfirmasi arah selanjutnya sebelum mengambil keputusan besar.")}`;
         }
 
         function updateDashboardInfoOnly() {
             const coin = cryptoDatabase[currentCoin];
-            document.getElementById("current-price").innerText = formatPrice(coin.price, coin.symbol);
-            const changeEl = document.getElementById("price-change-pct");
-            changeEl.className = `text-base font-bold transition-colors ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
-            changeEl.innerText = `${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}%`;
+            document.getElementById("current-price").innerText = formatPrice(coin.price, currentCoin);
+            const priceChangeEl = document.getElementById("price-change-pct");
+            priceChangeEl.innerText = `${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}%`;
+            priceChangeEl.className = `text-base font-bold transition-colors ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
             
-            let vol = coin.volume24h; if(vol !== "--") vol = (vol / 1000000).toFixed(2) + "M " + coin.symbol;
+            let vol = coin.volume24h;
+            if (vol !== "--") {
+                if (vol > 1000000) vol = (vol / 1000000).toFixed(2) + "M";
+                else if (vol > 1000) vol = (vol / 1000).toFixed(2) + "K";
+            }
             document.getElementById("volume-24h").innerText = vol;
 
-            if(document.getElementById("adv-coin-price")) {
-                 document.getElementById("adv-coin-price").innerText = formatPrice(coin.price, coin.symbol);
-                 const advChange = document.getElementById("adv-coin-change");
-                 const isPos = coin.change24h >= 0;
-                 advChange.innerText = `${isPos ? '+' : ''}${coin.change24h.toFixed(2)}% (24j)`;
-                 advChange.className = `text-sm font-bold mt-0.5 transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
-            }
+            document.getElementById("adv-coin-price").innerText = formatPrice(coin.price, currentCoin);
+            document.getElementById("adv-coin-price").className = `text-2xl font-black font-mono tracking-wider transition-all ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
+            document.getElementById("adv-coin-change").innerText = `${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}%`;
+            document.getElementById("adv-coin-change").className = `text-sm font-bold mt-0.5 transition-colors ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
+        }
+
+        function renderSignalsOverview() {
+            const container = document.getElementById("signals-grid-container");
+            if(!container) return;
+            container.innerHTML = "";
+            
+            Object.keys(cryptoDatabase).forEach(key => {
+                const coin = cryptoDatabase[key];
+                if(coin.prices.length === 0) return;
+                
+                const card = document.createElement("div");
+                card.className = "bg-darkCard p-4 rounded-xl border border-darkBorder flex items-center justify-between";
+                
+                let signalBadge = "";
+                if(coin.confidencePct >= 55) signalBadge = `<span class="px-2 py-1 bg-cryptoGreen/20 text-cryptoGreen text-[10px] font-bold rounded">BULLISH (${coin.confidencePct.toFixed(0)}%)</span>`;
+                else if(coin.confidencePct <= 45) signalBadge = `<span class="px-2 py-1 bg-cryptoRed/20 text-cryptoRed text-[10px] font-bold rounded">BEARISH (${(100-coin.confidencePct).toFixed(0)}%)</span>`;
+                else signalBadge = `<span class="px-2 py-1 bg-cryptoYellow/20 text-cryptoYellow text-[10px] font-bold rounded">NETRAL (${coin.confidencePct.toFixed(0)}%)</span>`;
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8">${cryptoSVGLogos[key]}</div>
+                        <div>
+                            <div class="font-bold text-white text-sm flex items-center gap-2">${key} ${signalBadge}</div>
+                            <div class="text-[10px] text-gray-400 mt-1">Target 1D: ${formatPrice(coin.res1, key)}</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-mono font-bold text-sm ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}">${formatPrice(coin.price, key)}</div>
+                        <div class="text-[10px] ${coin.change24h >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}">${coin.change24h >= 0 ? '+' : ''}${coin.change24h.toFixed(2)}%</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderNews() {
+            const container = document.getElementById("news-list-container");
+            if(!container) return;
+            container.innerHTML = "";
+            
+            fakeNewsDatabase.forEach(news => {
+                const item = document.createElement("div");
+                item.className = "bg-darkCard p-4 rounded-xl border border-darkBorder hover:bg-darkCardHover transition-colors cursor-pointer";
+                item.innerHTML = `
+                    <span class="text-[9px] font-bold bg-darkBg border border-darkBorder text-gray-400 px-2 py-0.5 rounded mb-2 inline-block">${news.tag}</span>
+                    <h3 class="text-sm font-bold text-white mb-1.5 leading-snug">${news.title}</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">${news.snippet}</p>
+                `;
+                container.appendChild(item);
+            });
         }
 
         function startRestPolling() {
             if (updateIntervalId) clearInterval(updateIntervalId);
             updateIntervalId = setInterval(async () => {
-                try { await fetch24hTickers(); } catch (e) { console.error("Polling error", e); }
-            }, 5000); 
+                if (!isUsingFallback) {
+                    try {
+                        await fetch24hTickers();
+                    } catch (e) {
+                        console.warn("Polling interval failed:", e);
+                    }
+                }
+            }, 10000); 
         }
 
         function startFallbackSimulation() {
-            if (updateIntervalId) clearInterval(updateIntervalId);
+            isUsingFallback = true;
             Object.keys(cryptoDatabase).forEach(key => {
                 const coin = cryptoDatabase[key];
-                if (coin.prices.length === 0) {
-                    let p = coin.price;
-                    for(let i=0; i<150; i++) {
-                        const change = p * (Math.random() * 0.04 - 0.02);
-                        const o = p; const c = p + change;
-                        const h = Math.max(o, c) + Math.random() * p * 0.02; const l = Math.min(o, c) - Math.random() * p * 0.02;
-                        coin.ohlc.push({o,h,l,c}); coin.prices.push(c); coin.volumes.push(Math.random() * 1000); p = c;
-                    }
-                    coin.price = coin.prices[coin.prices.length-1];
+                
+                let simulatedPrices = [];
+                let simulatedOhlc = [];
+                let basePrice = coin.price;
+                
+                for(let i = 150; i >= 0; i--) {
+                    const volatility = basePrice * 0.05;
+                    const o = basePrice + (Math.random() * volatility - volatility/2);
+                    const c = o + (Math.random() * volatility - volatility/2);
+                    const h = Math.max(o, c) + (Math.random() * volatility/2);
+                    const l = Math.min(o, c) - (Math.random() * volatility/2);
+                    
+                    simulatedPrices.push(c);
+                    simulatedOhlc.push({o, h, l, c});
+                    basePrice = c; 
                 }
+                
+                coin.prices = simulatedPrices.reverse();
+                coin.ohlc = simulatedOhlc.reverse();
+                calculateTechnicalIndicatorsWeekly(key);
             });
 
-            if (viewMode === 'single') { calculateTechnicalIndicatorsWeekly(currentCoin); updateMainChart(currentCoin); updateDashboard(); document.getElementById('chart-loading').style.display = 'none'; }
-            else if (viewMode === 'multi') { updateMultiGrid(); }
+            updateMainChart(currentCoin);
+            updateDashboard();
+            updateMultiGrid();
+            renderSignalsOverview();
+            document.getElementById('chart-loading').style.display = 'none';
 
+            if (updateIntervalId) clearInterval(updateIntervalId);
             updateIntervalId = setInterval(() => {
-                let updatedCoins = [];
                 Object.keys(cryptoDatabase).forEach(key => {
-                    if (Math.random() > 0.5) {
-                        const coin = cryptoDatabase[key]; const oldPrice = coin.price;
-                        const change = coin.price * (Math.random() * 0.002 - 0.001);
-                        coin.price += change; coin.change24h += (Math.random() * 0.2 - 0.1);
-                        
-                        if (coin.ohlc.length > 0) {
-                            const last = coin.ohlc[coin.ohlc.length-1];
-                            last.c = coin.price; last.h = Math.max(last.h, coin.price); last.l = Math.min(last.l, coin.price);
-                            coin.prices[coin.prices.length-1] = coin.price;
-                        }
-                        updateTickerUI(key, coin.price, oldPrice); updatedCoins.push(key);
-                    }
-                });
-                
-                updateCoinSelectorsUI(); 
-
-                if (viewMode === 'single' && updatedCoins.includes(currentCoin)) {
-                    calculateTechnicalIndicatorsWeekly(currentCoin); 
-                    updateDashboard(); 
-                    updateMainChartLivePrice(cryptoDatabase[currentCoin].price);
+                    const coin = cryptoDatabase[key];
+                    const change = (Math.random() * 0.002) - 0.001; 
+                    const oldPrice = coin.price;
+                    coin.price = coin.price * (1 + change);
+                    coin.change24h = coin.change24h + (change * 100);
                     
+                    const lastCandle = coin.ohlc[coin.ohlc.length - 1];
+                    lastCandle.c = coin.price;
+                    lastCandle.h = Math.max(lastCandle.h, coin.price);
+                    lastCandle.l = Math.min(lastCandle.l, coin.price);
+                    coin.prices[coin.prices.length - 1] = coin.price;
+
+                    updateTickerUI(key, coin.price, oldPrice);
+                });
+                updateCoinSelectorsUI();
+
+                if(viewMode === 'single') {
+                    calculateTechnicalIndicatorsWeekly(currentCoin);
+                    updateDashboard();
+                    updateMainChartLivePrice(cryptoDatabase[currentCoin].price);
                     if (mainChartInstance) {
-                        const coin = cryptoDatabase[currentCoin]; const last = coin.ohlc[coin.ohlc.length-1];
-                        mainChartInstance.data.datasets[0].data[mainChartInstance.data.datasets[0].data.length-1] = [last.o, last.c]; 
-                        
-                        syncChartZoom(mainChartInstance); 
+                        const coin = cryptoDatabase[currentCoin];
+                        const last = coin.ohlc[coin.ohlc.length-1];
+                        const ds = mainChartInstance.data.datasets[0].data;
+                        ds[ds.length-1] = [last.o, last.c];
                         mainChartInstance.update('none');
                     }
-                } else if (viewMode === 'multi') {
-                    updatedCoins.forEach(coin => {
-                        if (activeGridCoins.includes(coin)) {
-                            calculateTechnicalIndicatorsWeekly(coin); // Penting agar persen di grid terupdate
-                            updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
-                            const boxId = Object.keys(gridRenderedCoins).find(k => gridRenderedCoins[k] === coin);
-                            if (boxId && gridChartInstances[boxId]) {
-                                const last = cryptoDatabase[coin].ohlc[cryptoDatabase[coin].ohlc.length-1];
-                                gridChartInstances[boxId].data.datasets[0].data[cryptoDatabase[coin].ohlc.length-1] = [last.o, last.c]; 
-                                
-                                syncChartZoom(gridChartInstances[boxId]); 
-                                gridChartInstances[boxId].update('none');
-                            }
+                } else if(viewMode === 'multi') {
+                    activeGridCoins.forEach(coin => {
+                        calculateTechnicalIndicatorsWeekly(coin);
+                        updateGridChartLivePrice(coin, cryptoDatabase[coin].price);
+                        const boxId = Object.keys(gridRenderedCoins).find(k => gridRenderedCoins[k] === coin);
+                        if (boxId && gridChartInstances[boxId]) {
+                            const last = cryptoDatabase[coin].ohlc[cryptoDatabase[coin].ohlc.length-1];
+                            const ds = gridChartInstances[boxId].data.datasets[0].data;
+                            ds[ds.length-1] = [last.o, last.c];
+                            gridChartInstances[boxId].update('none');
                         }
                     });
-                } else if (viewMode === 'news') {
+                } else {
                     renderSignalsOverview();
                 }
             }, 3000);
-        }
-
-        function renderNews() {
-            const container = document.getElementById("news-list-container"); if (!container) return;
-            container.innerHTML = "";
-            let shuffledNews = [...fakeNewsDatabase].sort(() => 0.5 - Math.random());
-            shuffledNews.slice(0, 4).forEach(news => {
-                const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                const el = document.createElement("div"); el.className = "bg-darkCard p-4 rounded-xl border border-darkBorder hover:border-accentBlue/50 transition-colors duration-300";
-                el.innerHTML = `<div class="flex justify-between items-start mb-2"><span class="text-[9px] font-bold text-accentBlue bg-accentBlue/10 px-2 py-0.5 rounded uppercase tracking-wider">${news.tag}</span><span class="text-[10px] text-gray-500">${dateStr}</span></div><h3 class="text-sm font-bold text-white mb-1.5 leading-snug hover:text-accentBlue cursor-pointer transition-colors">${news.title}</h3><p class="text-[11px] text-gray-400 leading-relaxed mb-3">${news.snippet}</p><a href="#" class="text-[10px] text-accentBlue font-semibold hover:underline flex items-center gap-1">Baca Selengkapnya <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>`;
-                container.appendChild(el);
-            });
-        }
-
-        function renderSignalsOverview() {
-            const container = document.getElementById("signals-grid-container"); if (!container) return;
-            container.innerHTML = "";
-            Object.keys(cryptoDatabase).forEach(key => {
-                const coin = cryptoDatabase[key]; if (!coin.prices || coin.prices.length === 0) return;
-                
-                calculateTechnicalIndicatorsWeekly(key);
-
-                const isPos = coin.change24h >= 0;
-                let sigCol = "text-cryptoYellow", sigBg = "bg-cryptoYellow/10", sigBor = "border-cryptoYellow/30";
-                if (coin.signal.includes("BUY") || coin.signal.includes("ACCUMULATE")) { sigCol = "text-cryptoGreen"; sigBg = "bg-cryptoGreen/10"; sigBor = "border-cryptoGreen/30"; } 
-                else if (coin.signal.includes("SELL") || coin.signal.includes("REDUCE")) { sigCol = "text-cryptoRed"; sigBg = "bg-cryptoRed/10"; sigBor = "border-cryptoRed/30"; }
-                
-                let maKet = "Sedang dikalkulasi";
-                if(coin.sma20) maKet = coin.price > coin.sma20 ? `<span class="text-cryptoGreen">Bullish</span> (Di atas MA20)` : `<span class="text-cryptoRed">Bearish</span> (Di bawah MA20)`;
-                const rsiKet = coin.rsi > 70 ? "Overbought" : (coin.rsi < 30 ? "Oversold" : "Netral");
-                const rsiCol = coin.rsi > 70 ? "text-cryptoRed" : (coin.rsi < 30 ? "text-cryptoGreen" : "text-white");
-
-                const card = document.createElement("div"); card.className = "bg-darkCard p-4 rounded-xl border border-darkBorder flex flex-col gap-3 shadow-lg transition-colors";
-                // Modifikasi untuk menampilkan Persentase di Signal Overview
-                card.innerHTML = `<div class="flex justify-between items-start"><div class="flex items-center gap-2.5"><div class="w-8 h-8 flex items-center justify-center p-0.5 bg-darkBg/60 rounded-lg border border-darkBorder">${cryptoSVGLogos[coin.symbol]}</div><div><span class="font-extrabold text-sm text-white block">${coin.symbol}</span><span class="text-[10px] text-gray-500">${coin.name}</span></div></div><div class="text-right"><span class="font-mono text-sm block font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${formatPrice(coin.price, coin.symbol)}</span><span class="text-[10px] font-bold transition-colors ${isPos ? 'text-cryptoGreen' : 'text-cryptoRed'}">${isPos ? '+' : ''}${coin.change24h.toFixed(2)}%</span></div></div><div class="border-t border-darkBorder/60 pt-3"><div class="flex justify-between items-center mb-2"><span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">AI Prediksi 1D:</span><span class="text-xs font-black transition-colors ${coin.confidenceColor}">${coin.confidenceStr}</span></div><div class="bg-darkBg/40 p-2.5 rounded-lg border border-darkBorder/50 space-y-1.5"><div class="flex justify-between text-[10px]"><span class="text-gray-500">RSI (14):</span><span class="font-bold transition-colors ${rsiCol}">${coin.rsi.toFixed(1)} - ${rsiKet}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">MACD:</span><span class="font-bold text-white transition-colors">${coin.macd}</span></div><div class="flex justify-between text-[10px]"><span class="text-gray-500">Aksi Final:</span><span class="font-bold transition-colors ${sigCol}">${coin.signal}</span></div></div></div>`;
-                container.appendChild(card);
-            });
         }
     </script>
 </body>
