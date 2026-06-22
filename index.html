@@ -12,9 +12,7 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
 
-    <!-- Original Scripts - Dioptimalkan pemuatannya -->
-    <script src="https://5gvci.com/act/files/tag.min.js?z=11179787" data-cfasync="false" async></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9354622871413729" crossorigin="anonymous"></script>
+    <!-- Original Scripts - Dioptimalkan pemuatannya (Dipindahkan ke eksekusi JS tertunda di bawah) -->
 
     <!-- Vercel Analytics & Speed Insights -->
     <script>
@@ -26,7 +24,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- OPTIMASI 2: DEFER semua script berat agar tidak menghalangi render pertama halaman (FCP) -->
+    <!-- OPTIMASI 2: PASTIKAN KATA "defer" ADA DI SINI -->
     <!-- Chart.js & Zoom Plugin CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
@@ -70,6 +68,9 @@
         
         canvas { cursor: crosshair; }
         canvas:active { cursor: grabbing; }
+
+        /* OPTIMASI CLS: Memastikan ruang grafik tidak kempis sebelum dirender */
+        .chart-placeholder { min-height: 400px; background-color: transparent; }
     </style>
 </head>
 <body class="bg-darkBg text-gray-200 font-sans min-h-screen flex flex-col antialiased selection:bg-accentBlue/30 selection:text-white">
@@ -248,7 +249,7 @@
                     </div>
                 </div>
 
-                <div class="relative flex-grow min-h-[400px]">
+                <div class="relative flex-grow min-h-[400px] chart-placeholder">
                     <div id="chart-loading" class="absolute inset-0 flex items-center justify-center bg-darkCard/90 backdrop-blur-sm z-10 text-sm text-gray-400 rounded-xl">
                         <div class="flex flex-col items-center gap-3">
                             <svg class="animate-spin h-9 w-9 text-accentBlue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -773,7 +774,7 @@
         }
 
         // OPTIMASI 3: Mengamankan registrasi plugin Chart dan Injeksi Iklan agar tidak Blocking (Error-free)
-        window.onload = function() {
+        document.addEventListener("DOMContentLoaded", function() {
             // MEREGISTRASI PLUGIN ZOOM & CUSTOM KETIKA CHART.JS SELESAI DIMUAT
             if (typeof Chart !== 'undefined') {
                 if (typeof ChartZoom !== 'undefined') Chart.register(ChartZoom);
@@ -783,20 +784,36 @@
                 Chart.register(livePriceLinePlugin);
             }
 
-            // OPTIMASI 4: Load script iklan secara asinkron dengan penundaan mikro untuk mengoptimalkan LCP & FCP
-            setTimeout(() => {
-                const s = document.createElement('script');
-                s.dataset.zone = '11179939';
-                s.src = 'https://nap5k.com/tag.min.js';
-                // Hindari crash jika documentElement tidak ditemukan
-                (document.body || document.documentElement).appendChild(s);
-            }, 400);
-
+            // Segera render antarmuka web dan ambil data
             renderCoinSelectors();
             renderGridCoinSelectors();
             initRealTimeData();
             renderNews();
-        };
+
+            // OPTIMASI LCP EKSTREM: Tunda eksekusi semua iklan berat selama 2.5 detik
+            // Ini menjamin metrik LCP cepat karena membiarkan pengguna melihat grafik terlebih dahulu.
+            setTimeout(() => {
+                // Iklan 1 (Nap5k)
+                const s1 = document.createElement('script');
+                s1.dataset.zone = '11179939';
+                s1.src = 'https://nap5k.com/tag.min.js';
+                if(document.body) document.body.appendChild(s1);
+
+                // Iklan 2 (5gvci)
+                const s2 = document.createElement('script');
+                s2.dataset.cfasync = 'false';
+                s2.src = 'https://5gvci.com/act/files/tag.min.js?z=11179787';
+                s2.async = true;
+                if(document.head) document.head.appendChild(s2);
+
+                // Iklan 3 (Google Adsense)
+                const s3 = document.createElement('script');
+                s3.crossOrigin = 'anonymous';
+                s3.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9354622871413729';
+                s3.async = true;
+                if(document.head) document.head.appendChild(s3);
+            }, 2500);
+        });
 
         function formatPrice(price, symbol) {
             if (price === undefined || price === null || isNaN(price)) return "--";
