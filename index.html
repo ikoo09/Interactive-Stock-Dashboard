@@ -6,22 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoScan Pro - 1D Candlestick & Zoom</title>
     
-    <!-- Original Scripts -->
+    <!-- OPTIMASI 1: Preconnect ke CDN & API utama untuk mempercepat LCP & FCP -->
+    <link rel="preconnect" href="https://api.binance.com">
+    <link rel="preconnect" href="https://data-api.binance.vision">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+    <!-- Original Scripts - Dioptimalkan pemuatannya -->
     <script src="https://5gvci.com/act/files/tag.min.js?z=11179787" data-cfasync="false" async></script>
-    <script>(function(s){s.dataset.zone='11179939',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9354622871413729"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9354622871413729" crossorigin="anonymous"></script>
 
     <!-- Vercel Analytics & Speed Insights -->
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
+    <script src="/_vercel/insights/script.js"></script>
+    <script src="/_vercel/speed-insights/script.js"></script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- OPTIMASI 2: DEFER semua script berat agar tidak menghalangi render pertama halaman (FCP) -->
     <!-- Chart.js & Zoom Plugin CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
@@ -480,10 +485,6 @@
 
     <!-- JavaScript Logika Data & Interaksi -->
     <script>
-        // MEREGISTRASI PLUGIN ZOOM
-        if (typeof ChartZoom !== 'undefined') Chart.register(ChartZoom);
-        else if (window['chartjs-plugin-zoom']) Chart.register(window['chartjs-plugin-zoom']);
-
         // FUNGSI PENCEGAH RESET ZOOM
         function syncChartZoom(chart) {
             if (!chart) return;
@@ -653,7 +654,6 @@
                 });
             }
         };
-        Chart.register(candlestickWickPlugin);
 
         const livePriceLinePlugin = {
             id: 'livePriceLine',
@@ -682,7 +682,6 @@
                 ctx.restore();
             }
         };
-        Chart.register(livePriceLinePlugin);
 
         const cryptoDatabase = {
             SOL: { name: "Solana", category: "High-Performance L1 Network", symbol: "SOL", binanceSymbol: "SOLUSDT", price: 145.25, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
@@ -721,25 +720,22 @@
         const binanceIntervals = { "1D": { interval: "1d", limit: 150 } };
 
         // === SMART FALLBACK ROUTER V2 (Sistem Anti Geo-Block Otomatis) ===
-        // Binance memblokir IP luar negeri. Web ini akan mencari rute (termasuk proxy publik)
-        // yang tembus dari IP perangkat yang sedang membuka web ini.
         const API_ROUTERS = [
             { type: 'direct', url: 'https://api.binance.com' },          // Server Utama
-            { type: 'direct', url: 'https://data-api.binance.vision' },  // Server Data Publik Resmi (Sering lolos Geo-block)
+            { type: 'direct', url: 'https://data-api.binance.vision' },  // Server Data Publik Resmi
             { type: 'direct', url: 'https://api1.binance.com' },         // Backup 1
-            { type: 'proxy', url: 'https://corsproxy.io/?' },            // Proxy Bypass 1 (Sangat andal)
+            { type: 'proxy', url: 'https://corsproxy.io/?' },            // Proxy Bypass 1
             { type: 'proxy', url: 'https://api.allorigins.win/raw?url=' },// Proxy Bypass 2
             { type: 'proxy', url: 'https://thingproxy.freeboard.io/fetch/' } // Proxy Bypass 3
         ];
         
-        let workingRouter = null; // Menyimpan rute yang berhasil agar tidak perlu mencari lagi
+        let workingRouter = null; 
 
         async function attemptFetch(router, endpointPath) {
             let fetchUrl = '';
             if (router.type === 'direct') {
                 fetchUrl = `${router.url}${endpointPath}`;
             } else {
-                // Jika via proxy, bungkus URL target data-api karena lebih longgar dari api utama
                 fetchUrl = `${router.url}${encodeURIComponent('https://data-api.binance.vision' + endpointPath)}`;
             }
             
@@ -749,29 +745,25 @@
         }
 
         async function fetchBinanceData(endpointPath) {
-            // 1. Gunakan jalur yang sudah terbukti jalan dari IP ini
             if (workingRouter) {
                 try {
                     return await attemptFetch(workingRouter, endpointPath);
                 } catch (e) {
-                    workingRouter = null; // Reset jika rute proxy tiba-tiba mati
+                    workingRouter = null; 
                 }
             }
 
-            // 2. Cari rute yang tembus dari IP pengguna secara berurutan
             for (let i = 0; i < API_ROUTERS.length; i++) {
                 const router = API_ROUTERS[i];
                 try {
                     const data = await attemptFetch(router, endpointPath);
-                    
-                    workingRouter = router; // Simpan jalur sukses
+                    workingRouter = router; 
                     
                     if (router.type === 'proxy') {
                         setConnectionStatus("online", "Live (Via Proxy Bypass)");
                     } else {
                         setConnectionStatus("online", "Live Binance API");
                     }
-                    
                     return data;
                 } catch (err) {
                     console.warn(`[Geo-Blocked] Rute ${router.url} ditolak oleh IP ini. Melanjutkan pencarian...`);
@@ -779,9 +771,27 @@
             }
             throw new Error("Semua rute koneksi dan proxy diblokir dari IP ini.");
         }
-        // ===============================================
 
+        // OPTIMASI 3: Mengamankan registrasi plugin Chart dan Injeksi Iklan agar tidak Blocking (Error-free)
         window.onload = function() {
+            // MEREGISTRASI PLUGIN ZOOM & CUSTOM KETIKA CHART.JS SELESAI DIMUAT
+            if (typeof Chart !== 'undefined') {
+                if (typeof ChartZoom !== 'undefined') Chart.register(ChartZoom);
+                else if (window['chartjs-plugin-zoom']) Chart.register(window['chartjs-plugin-zoom']);
+                
+                Chart.register(candlestickWickPlugin);
+                Chart.register(livePriceLinePlugin);
+            }
+
+            // OPTIMASI 4: Load script iklan secara asinkron dengan penundaan mikro untuk mengoptimalkan LCP & FCP
+            setTimeout(() => {
+                const s = document.createElement('script');
+                s.dataset.zone = '11179939';
+                s.src = 'https://nap5k.com/tag.min.js';
+                // Hindari crash jika documentElement tidak ditemukan
+                (document.body || document.documentElement).appendChild(s);
+            }, 400);
+
             renderCoinSelectors();
             renderGridCoinSelectors();
             initRealTimeData();
@@ -988,7 +998,6 @@
                     if(key !== currentCoin) fetchHistoricalKlines(key, currentTimeframe);
                 }
                 startRestPolling();
-                // Status online kini ditangani langsung di dalam fetchBinanceData()
             } catch (err) {
                 console.error("Gagal terhubung ke seluruh sistem API:", err);
                 setConnectionStatus("fallback", "IP Diblokir. Beralih ke Simulasi.");
@@ -1030,7 +1039,6 @@
             const symbolsArr = Object.keys(cryptoDatabase).map(k => `"${cryptoDatabase[k].binanceSymbol}"`).join(',');
             const endpoint = `/api/v3/ticker/24hr?symbols=[${symbolsArr}]`;
             
-            // Menggunakan Smart Router yang baru dibuat
             const data = await fetchBinanceData(endpoint);
             
             let updatedCoins = [];
@@ -1100,7 +1108,6 @@
             if (viewMode === 'single' && coinKey === currentCoin) document.getElementById('chart-loading').style.display = 'flex';
 
             try {
-                // Menggunakan Smart Router yang baru dibuat
                 const data = await fetchBinanceData(endpoint);
                 
                 let prices = []; let ohlc = []; let volumes = [];
@@ -1145,7 +1152,6 @@
             const coin = cryptoDatabase[coinKey];
             if (coin.prices.length < 20) return;
 
-            // 1. Kalkulasi RSI
             const rsiPeriod = 14; const prices = coin.prices;
             let gains = 0, losses = 0;
             for (let i = prices.length - rsiPeriod; i < prices.length; i++) {
@@ -1156,7 +1162,6 @@
             let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
             coin.rsi = avgLoss === 0 ? 100 : 100 - (100 / (1 + rs));
 
-            // 2. Kalkulasi SMA20
             let sum20 = 0;
             for (let i = prices.length - 20; i < prices.length; i++) sum20 += prices[i];
             coin.sma20 = sum20 / 20;
@@ -1166,43 +1171,32 @@
             else if (currentPrice < coin.sma20 && coin.rsi < 50) { coin.macd = "BEARISH CROSS"; coin.trendStatus = "DOWNTREND (1D)"; } 
             else { coin.macd = "NEUTRAL"; coin.trendStatus = "KONSOLIDASI"; }
 
-            // 3. Support & Resistance
             const ohlc14 = coin.ohlc.slice(-14); 
             let max14 = Math.max(...ohlc14.map(o => o.h)); let min14 = Math.min(...ohlc14.map(o => o.l));
             coin.res2 = max14; coin.res1 = max14 - ((max14 - min14) * 0.236); 
             coin.sup1 = min14 + ((max14 - min14) * 0.236); coin.sup2 = min14;
 
-            // 4. SISTEM SCORING TERPADU UNTUK PERSENTASE PREDIKSI
-            let bullScore = 0; // Rentang max skitar -10 hingga +10
+            let bullScore = 0; 
             
-            // Bobot RSI (Max 3 poin)
-            if (coin.rsi < 30) bullScore += 3; // Oversold -> Kuat Buy
+            if (coin.rsi < 30) bullScore += 3; 
             else if (coin.rsi < 45) bullScore += 1.5;
-            else if (coin.rsi > 70) bullScore -= 3; // Overbought -> Kuat Sell
+            else if (coin.rsi > 70) bullScore -= 3; 
             else if (coin.rsi > 55) bullScore -= 1.5;
 
-            // Bobot Trend (SMA) (Max 3 poin)
             if (currentPrice > coin.sma20) bullScore += 3;
             else bullScore -= 3;
 
-            // Bobot Jarak Support/Resistance (Max 2 poin)
             const distToSup = ((currentPrice - coin.sup1) / currentPrice) * 100;
             const distToRes = ((coin.res1 - currentPrice) / currentPrice) * 100;
-            if (distToSup > 0 && distToSup < 3) bullScore += 2; // Dekat support = bagus buat beli
-            if (distToRes > 0 && distToRes < 3) bullScore -= 2; // Dekat resist = saatnya jual
+            if (distToSup > 0 && distToSup < 3) bullScore += 2; 
+            if (distToRes > 0 && distToRes < 3) bullScore -= 2; 
 
-            // Bobot Momentum Candlestick Terakhir (Max 2 poin)
             const lastCandle = coin.ohlc[coin.ohlc.length - 1];
-            if (lastCandle && lastCandle.c >= lastCandle.o) bullScore += 2; // Green candle
-            else bullScore -= 2; // Red candle
+            if (lastCandle && lastCandle.c >= lastCandle.o) bullScore += 2; 
+            else bullScore -= 2; 
 
-            // Konversi Skor (-10 s/d +10) ke Persentase (0% s/d 100%)
             let confidencePct = ((bullScore + 10) / 20) * 100;
-            
-            // Tambahkan dinamika pergerakan 24h agar persentase terasa hidup
             confidencePct += (coin.change24h > 0 ? Math.min(5, coin.change24h) : Math.max(-5, coin.change24h));
-            
-            // Batasi nilai agar selalu di range 0 - 100
             coin.confidencePct = Math.max(0, Math.min(100, confidencePct));
 
             if (coin.confidencePct >= 65) {
@@ -1328,7 +1322,6 @@
             
             updateDashboardInfoOnly();
 
-            // Tampilkan Persentase Prediksi Unified
             const unifiedPctEl = document.getElementById("unified-percentage");
             unifiedPctEl.innerText = coin.confidenceStr;
             unifiedPctEl.className = `text-4xl font-black tracking-wide drop-shadow mb-1 transition-all ${coin.confidenceColor}`;
@@ -1393,13 +1386,11 @@
                 document.getElementById("action-step-3").innerText = `Batas taking profit atas di ${formatPrice(coin.res1, coin.symbol)}.`;
             }
 
-            // Update Advanced Indicator Widget to use Unified Percentage
             document.getElementById("adv-coin-symbol").innerText = coin.symbol;
             document.getElementById("adv-coin-name").innerText = `${coin.name} (Binance)`;
             document.getElementById("adv-target-break").innerText = formatPrice(coin.res1, coin.symbol);
             document.getElementById("adv-rsi-val").innerText = `AI Skoring (1D)`;
 
-            // --- BAGIAN YANG DIPERBAIKI (TADI TERPOTONG DI KATA `let`) ---
             let konsensusText = document.getElementById("adv-konsensus-text");
             let konsensusIcon = document.getElementById("adv-konsensus-icon");
             let konsensusBg = document.getElementById("adv-konsensus-icon-bg");
@@ -1423,7 +1414,6 @@
                 konsensusIcon.className = "w-5 h-5 text-cryptoYellow transition-colors duration-500";
             }
 
-            // Gauge Needle Logic (0% = Bearish Kuat, 100% = Bullish Kuat)
             const needle = document.getElementById("gauge-needle");
             const activeTrack = document.getElementById("gauge-active-track");
             const pct = Math.max(0, Math.min(100, coin.confidencePct));
@@ -1437,7 +1427,6 @@
                 activeTrack.style.strokeDashoffset = dashOffset;
             }
             
-            // Skenario Text
             document.getElementById("adv-skenario-text").innerText = `Berdasarkan kalkulasi indikator terpadu, ${coin.name} menunjukkan probabilitas ${coin.confidencePct.toFixed(1)}% untuk pergerakan Bullish. ${coin.confidencePct >= 55 ? "Direkomendasikan untuk mencari peluang entry di area support." : (coin.confidencePct <= 45 ? "Direkomendasikan untuk menghindari entry atau mencari area taking profit." : "Pasar dalam kondisi netral, tunggu konfirmasi arah selanjutnya sebelum mengambil keputusan besar.")}`;
         }
 
