@@ -475,12 +475,39 @@
         </section>
     </main>
 
+    <!-- TAMPILAN HALAMAN INFORMASI (ABOUT, CONTACT, DLL) -->
+    <main id="info-page-container" class="hidden flex-grow max-w-4xl w-full mx-auto p-4 flex-col gap-6 mt-4 mb-10">
+        <div class="bg-darkCard border border-darkBorder rounded-2xl shadow-xl overflow-hidden">
+            <div class="p-6 border-b border-darkBorder bg-darkBg/50 flex justify-between items-center">
+                <h2 id="info-page-title" class="text-xl md:text-2xl font-black text-white tracking-wide">Title</h2>
+                <button onclick="closeInfoPage()" class="text-xs font-bold text-gray-400 hover:text-white flex items-center gap-1.5 bg-darkBg px-4 py-2 rounded-lg border border-darkBorder transition-colors shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Kembali ke Dasbor
+                </button>
+            </div>
+            <div id="info-page-body" class="p-6 md:p-8 text-gray-300 text-sm md:text-base leading-relaxed space-y-6">
+                <!-- Content Injected by JS -->
+            </div>
+        </div>
+    </main>
+
     <!-- Footer -->
     <footer class="bg-darkCard border-t border-darkBorder mt-10 py-6 text-gray-400 text-[11px] text-center">
-        <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p class="font-bold text-gray-300 uppercase tracking-wider text-[10px]">Peringatan Risiko & Disclaimer</p>
-            <p class="max-w-4xl mx-auto leading-relaxed text-gray-400">Analisis pergerakan harian dan manajemen risiko ini diperoleh dari feed data publik Binance secara real-time. Persentase prediksi adalah hasil perhitungan matematis algoritma dan bukan jaminan masa depan. Pasar mata uang kripto memiliki volatilitas tinggi.</p>
-            <p class="text-gray-600 pt-2 text-[10px]">© 2026 CryptoScan Pro.</p>
+        <div class="max-w-7xl mx-auto px-4 space-y-4">
+            
+            <!-- Tautan Halaman Informasi -->
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-semibold text-gray-400">
+                <button onclick="openInfoPage('about')" class="hover:text-accentBlue transition-colors">About Us</button>
+                <button onclick="openInfoPage('contact')" class="hover:text-accentBlue transition-colors">Contact</button>
+                <button onclick="openInfoPage('privacy')" class="hover:text-accentBlue transition-colors">Privacy Policy</button>
+                <button onclick="openInfoPage('tos')" class="hover:text-accentBlue transition-colors">Terms of Service</button>
+            </div>
+
+            <div class="pt-2 border-t border-darkBorder/50">
+                <p class="font-bold text-gray-300 uppercase tracking-wider text-[10px] mb-2 mt-4">Peringatan Risiko & Disclaimer</p>
+                <p class="max-w-4xl mx-auto leading-relaxed text-gray-400">Analisis pergerakan harian dan manajemen risiko ini diperoleh dari feed data publik Binance secara real-time. Persentase prediksi adalah hasil perhitungan matematis algoritma dan bukan jaminan masa depan. Pasar mata uang kripto memiliki volatilitas tinggi.</p>
+                <p class="text-gray-600 pt-3 text-[10px]">© 2026 CryptoScan Pro.</p>
+            </div>
         </div>
     </footer>
 
@@ -865,12 +892,21 @@
             const singleView = document.getElementById("single-view-container");
             const multiView = document.getElementById("multi-view-container");
             const newsView = document.getElementById("news-view-container");
+            const infoView = document.getElementById("info-page-container");
 
             const inactiveClass = "flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50";
             const activeClass = "flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 bg-accentBlue text-white";
 
             singleBtn.className = inactiveClass; multiBtn.className = inactiveClass; newsBtn.className = inactiveClass;
-            singleView.classList.add("hidden"); multiView.classList.add("hidden"); newsView.classList.add("hidden");
+            
+            singleView.classList.add("hidden"); 
+            multiView.classList.add("hidden"); 
+            newsView.classList.add("hidden");
+            
+            if (infoView) {
+                infoView.classList.add("hidden");
+                infoView.classList.remove("flex");
+            }
 
             if (mode === 'single') { singleBtn.className = activeClass; singleView.classList.remove("hidden"); updateDashboard(); }
             else if (mode === 'multi') { multiBtn.className = activeClass; multiView.classList.remove("hidden"); updateMultiGrid(); }
@@ -1605,10 +1641,144 @@
                             gridChartInstances[boxId].update('none');
                         }
                     });
-                } else {
+                } else if(viewMode === 'news') {
                     renderSignalsOverview();
                 }
             }, 3000);
+        }
+
+        // ==========================================
+        // DATA & LOGIKA HALAMAN INFORMASI (BARU)
+        // ==========================================
+        const infoPagesData = {
+            'about': {
+                title: 'Tentang Kami',
+                content: `
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-accentBlue mb-2">CryptoScan Pro</h3>
+                        <p>CryptoScan Pro adalah platform analitik dan prediksi pasar mata uang kripto yang ditenagai oleh kecerdasan buatan (AI) dan algoritma kuantitatif tingkat lanjut. Misi kami adalah memberdayakan para trader—baik pemula maupun profesional—dengan data real-time, wawasan teknikal yang akurat, dan manajemen risiko yang terukur.</p>
+                        <p>Kami menggunakan integrasi langsung dengan API publik bursa terkemuka untuk menarik data pergerakan harga secara seketika. Mesin algoritma kami secara otomatis mengkalkulasi indikator teknikal kunci seperti RSI, Moving Averages, serta mendeteksi level Support dan Resistance kritikal tanpa intervensi manual.</p>
+                        <h4 class="font-bold text-white mt-6">Mengapa Memilih Kami?</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-400 mt-2">
+                            <li><strong class="text-gray-300">Data Waktu Nyata:</strong> Feed langsung tanpa penundaan dari server Binance.</li>
+                            <li><strong class="text-gray-300">Analisis Terpadu:</strong> Konsensus AI yang menggabungkan berbagai indikator menjadi satu sinyal yang mudah dipahami.</li>
+                            <li><strong class="text-gray-300">Manajemen Risiko Terukur:</strong> Setiap analisis dilengkapi dengan panduan rasio Risk/Reward untuk melindungi modal trading Anda.</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'contact': {
+                title: 'Hubungi Kami',
+                content: `
+                    <div class="space-y-4">
+                        <p>Kami sangat senang mendengar masukan, pertanyaan, atau saran kemitraan dari Anda. Silakan hubungi tim kami melalui saluran resmi di bawah ini:</p>
+                        
+                        <div class="bg-darkBg/60 p-5 rounded-xl border border-darkBorder mt-6 hover:border-accentBlue/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                Email Dukungan & Bisnis
+                            </h4>
+                            <p class="text-accentBlue font-mono text-sm">support@cryptoscanpro.com</p>
+                        </div>
+
+                        <div class="bg-darkBg/60 p-5 rounded-xl border border-darkBorder mt-4 hover:border-accentBlue/50 transition-colors">
+                            <h4 class="font-bold text-white mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                                Komunitas Telegram
+                            </h4>
+                            <p class="text-accentBlue font-mono text-sm">@CryptoScanPro_Global</p>
+                        </div>
+
+                        <p class="text-[11px] text-gray-500 mt-6 border-t border-darkBorder pt-4">Waktu operasional dukungan kami adalah Senin - Jumat, pukul 09:00 - 18:00 (WIB). Kami akan berusaha membalas pesan Anda dalam waktu maksimal 24 jam kerja.</p>
+                    </div>
+                `
+            },
+            'privacy': {
+                title: 'Kebijakan Privasi (Privacy Policy)',
+                content: `
+                    <div class="space-y-4">
+                        <p class="text-xs text-gray-500 mb-4 inline-block bg-darkBg border border-darkBorder px-2 py-1 rounded">Terakhir Diperbarui: 1 Januari 2026</p>
+                        <p>Privasi Anda sangat penting bagi CryptoScan Pro. Kebijakan ini menjelaskan bagaimana kami berinteraksi dengan data saat Anda menggunakan situs web kami.</p>
+                        
+                        <h4 class="font-bold text-white mt-6">1. Informasi yang TIDAK Kami Kumpulkan</h4>
+                        <p>Kami beroperasi dengan prinsip privasi pertama (privacy-first). Situs kami <strong>tidak</strong> mewajibkan pembuatan akun pengguna (No Login), dan kami <strong>tidak</strong> mengumpulkan data pribadi seperti nama, alamat email, atau nomor telepon secara otomatis.</p>
+                        
+                        <h4 class="font-bold text-white mt-6">2. Data Analytics & Cookie</h4>
+                        <p>Kami menggunakan layanan analitik pihak ketiga yang bersifat anonim (seperti Vercel Web Analytics) untuk memahami bagaimana pengunjung menggunakan situs kami (jumlah kunjungan, waktu muat halaman). Data ini disamarkan (anonymized) dan tidak dapat dilacak kembali ke individu atau perangkat tertentu.</p>
+
+                        <h4 class="font-bold text-white mt-6">3. Koneksi API Pihak Ketiga (Binance)</h4>
+                        <p>Grafik dan data harga diambil secara langsung oleh peramban (browser) web Anda dari API Publik Binance. Alamat IP Anda mungkin terekspos ke server Binance saat mengambil data ini. Hal ini adalah standar operasional web. Kami menyarankan Anda membaca kebijakan privasi Binance untuk informasi lebih lanjut.</p>
+
+                        <h4 class="font-bold text-white mt-6">4. Iklan Pihak Ketiga</h4>
+                        <p>Situs kami menampilkan iklan yang disediakan oleh jaringan periklanan pihak ketiga untuk mendukung biaya operasional server. Jaringan ini dapat menggunakan cookie untuk menampilkan iklan yang relevan. Kami tidak memiliki kontrol langsung atas cookie pihak ketiga tersebut.</p>
+                    </div>
+                `
+            },
+            'tos': {
+                title: 'Ketentuan Layanan (Terms of Service)',
+                content: `
+                    <div class="space-y-4">
+                        <p class="text-xs text-gray-500 mb-4 inline-block bg-darkBg border border-darkBorder px-2 py-1 rounded">Terakhir Diperbarui: 1 Januari 2026</p>
+                        <p>Dengan mengakses dan menggunakan situs web CryptoScan Pro, Anda menyatakan setuju dan terikat pada Ketentuan Layanan berikut ini:</p>
+                        
+                        <h4 class="font-bold text-white mt-6">1. Bukan Nasihat Keuangan (Not Financial Advice)</h4>
+                        <p class="text-cryptoRed/90 bg-cryptoRed/10 p-3 rounded border border-cryptoRed/20">Semua informasi, grafik, analisis, prediksi algoritma, dan "sinyal" yang disediakan di situs ini murni ditujukan untuk tujuan edukasi dan informasi belaka. CryptoScan Pro BUKAN penasihat keuangan terdaftar.</p>
+                        <p>Keputusan investasi dan trading mata uang kripto memiliki risiko kerugian finansial yang sangat tinggi. Anda bertanggung jawab penuh atas setiap transaksi jual/beli yang Anda lakukan.</p>
+                        
+                        <h4 class="font-bold text-white mt-6">2. Keakuratan Data</h4>
+                        <p>Meskipun kami berupaya menyajikan data secara real-time dan seakurat mungkin, kami tidak memberikan jaminan, representasi, atau garansi apa pun atas keakuratan, ketepatan waktu, atau kelengkapan informasi. Data pasar dapat tertunda, salah, atau terganggu karena masalah teknis pada pihak penyedia API utama.</p>
+
+                        <h4 class="font-bold text-white mt-6">3. Penggunaan Platform</h4>
+                        <p>Anda setuju untuk menggunakan platform ini dengan itikad baik. Anda dilarang keras melakukan rekayasa balik (reverse engineering), pengikisan data otomatis (scraping), atau melakukan tindakan yang membebani server kami maupun server penyedia API secara tidak wajar (seperti serangan DDoS).</p>
+
+                        <h4 class="font-bold text-white mt-6">4. Batasan Tanggung Jawab (Limitation of Liability)</h4>
+                        <p>Dalam keadaan dan yurisdiksi hukum apa pun, tim CryptoScan Pro, pengembangnya, atau afiliasinya <strong>TIDAK AKAN</strong> bertanggung jawab atas kerugian finansial, kerugian data, kerusakan mental, atau kerusakan langsung maupun tidak langsung yang timbul dari penggunaan, penyalahgunaan, atau ketidakmampuan Anda dalam menggunakan layanan kami.</p>
+                    </div>
+                `
+            }
+        };
+
+        function openInfoPage(pageKey) {
+            // Sembunyikan semua kontainer utama aplikasi
+            document.getElementById("single-view-container").classList.add("hidden");
+            document.getElementById("multi-view-container").classList.add("hidden");
+            document.getElementById("news-view-container").classList.add("hidden");
+            
+            // Hapus gaya aktif di tombol navigasi atas
+            const inactiveClass = "flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50";
+            document.getElementById("view-btn-single").className = inactiveClass;
+            document.getElementById("view-btn-multi").className = inactiveClass;
+            document.getElementById("view-btn-news").className = inactiveClass;
+            
+            // Tampilkan kontainer Info Halaman
+            const infoContainer = document.getElementById("info-page-container");
+            infoContainer.classList.remove("hidden");
+            infoContainer.classList.add("flex");
+            
+            // Suntikkan konten ke dalam DOM
+            const titleEl = document.getElementById('info-page-title');
+            const bodyEl = document.getElementById('info-page-body');
+
+            if(infoPagesData[pageKey]) {
+                titleEl.innerText = infoPagesData[pageKey].title;
+                bodyEl.innerHTML = infoPagesData[pageKey].content;
+                
+                // Gulir otomatis ke atas (smooth scroll)
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function closeInfoPage() {
+            // Sembunyikan kontainer info
+            const infoContainer = document.getElementById("info-page-container");
+            infoContainer.classList.add("hidden");
+            infoContainer.classList.remove("flex");
+            
+            // Kembalikan status View Aplikasi ke state terakhir (single, multi, atau news)
+            switchViewMode(viewMode); 
+            
+            // Gulir kembali ke atas
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
