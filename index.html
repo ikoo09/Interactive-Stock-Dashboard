@@ -2,7 +2,6 @@
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="google-adsense-account" content="ca-pub-9354622871413729">
     <link rel="icon" type="image/png" href="crypto.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoScan Pro - 1D Candlestick & Zoom</title>
@@ -12,8 +11,6 @@
     <link rel="preconnect" href="https://data-api.binance.vision">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
-
-    <!-- Original Scripts - Dioptimalkan pemuatannya (Dipindahkan ke eksekusi JS tertunda di bawah) -->
 
     <!-- Vercel Analytics & Speed Insights -->
     <script>
@@ -25,11 +22,10 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- OPTIMASI 2: PASTIKAN KATA "defer" ADA DI SINI -->
     <!-- Chart.js & Zoom Plugin CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js" defer></script>
 
     <script>
         tailwind.config = {
@@ -96,29 +92,34 @@
 
             <!-- Ticker Harga Ringkas Real-time -->
             <div class="hidden lg:flex items-center gap-2 text-xs text-gray-400 bg-darkBg/60 p-1.5 rounded-xl border border-darkBorder/80 overflow-x-auto">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-BTC">
+                    <span class="font-semibold text-gray-400">BTC</span>
+                    <span id="ticker-BTC" class="font-mono text-gray-300 font-bold">Memuat...</span>
+                </div>
+                <div class="w-px h-4 bg-darkBorder"></div>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-ETH">
+                    <span class="font-semibold text-gray-400">ETH</span>
+                    <span id="ticker-ETH" class="font-mono text-gray-300 font-bold">Memuat...</span>
+                </div>
+                <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-SOL">
                     <span class="font-semibold text-gray-400">SOL</span>
-                    <span id="ticker-SOL" class="font-mono text-cryptoGreen font-bold">Memuat...</span>
+                    <span id="ticker-SOL" class="font-mono text-gray-300 font-bold">Memuat...</span>
                 </div>
                 <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-BNB">
                     <span class="font-semibold text-gray-400">BNB</span>
-                    <span id="ticker-BNB" class="font-mono text-cryptoRed font-bold">Memuat...</span>
+                    <span id="ticker-BNB" class="font-mono text-gray-300 font-bold">Memuat...</span>
                 </div>
                 <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-DOGE">
                     <span class="font-semibold text-gray-400">DOGE</span>
-                    <span id="ticker-DOGE" class="font-mono text-cryptoGreen font-bold">Memuat...</span>
+                    <span id="ticker-DOGE" class="font-mono text-gray-300 font-bold">Memuat...</span>
                 </div>
                 <div class="w-px h-4 bg-darkBorder"></div>
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-TRX">
                     <span class="font-semibold text-gray-400">TRX</span>
                     <span id="ticker-TRX" class="font-mono text-gray-300 font-bold">Memuat...</span>
-                </div>
-                <div class="w-px h-4 bg-darkBorder"></div>
-                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-300" id="ticker-container-XRP">
-                    <span class="font-semibold text-gray-400">XRP</span>
-                    <span id="ticker-XRP" class="font-mono text-gray-300 font-bold">Memuat...</span>
                 </div>
             </div>
 
@@ -142,7 +143,7 @@
             </button>
             <button onclick="switchViewMode('multi')" id="view-btn-multi" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                5 Coin Grid
+                7 Coin Grid
             </button>
             <button onclick="switchViewMode('news'); window.open('https://omg10.com/4/11195390', '_blank')" id="view-btn-news" class="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold rounded-lg transition duration-200 text-gray-400 hover:text-white hover:bg-darkBg/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14"></path></svg>
@@ -368,7 +369,7 @@
         </section>
     </main>
 
-    <!-- TAMPILAN MULTI-CHART 5 COIN GRID -->
+    <!-- TAMPILAN MULTI-CHART 7 COIN GRID -->
     <main id="multi-view-container" class="hidden flex-grow max-w-7xl w-full mx-auto p-4 flex flex-col gap-6">
         <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-xl flex flex-wrap gap-4 items-center justify-between">
             <div>
@@ -451,6 +452,34 @@
                     </div>
                 </div>
                 <div class="relative flex-grow"><canvas id="gridChart-5"></canvas></div>
+            </div>
+            <!-- Box Chart 6 -->
+            <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-lg flex flex-col relative h-[300px]" id="grid-box-6">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-6">COIN 6</span>
+                    <div class="flex items-center gap-3">
+                        <button onclick="resetZoomGridChart(6)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
+                        <div class="flex flex-col items-end">
+                            <span class="font-mono text-xs font-bold transition-colors" id="grid-price-6">--</span>
+                            <span class="text-[9px] font-bold" id="grid-pct-6">--%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative flex-grow"><canvas id="gridChart-6"></canvas></div>
+            </div>
+            <!-- Box Chart 7 -->
+            <div class="bg-darkCard p-4 rounded-2xl border border-darkBorder shadow-lg flex flex-col relative h-[300px]" id="grid-box-7">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="font-extrabold text-xs tracking-wider flex items-center gap-1.5" id="grid-title-7">COIN 7</span>
+                    <div class="flex items-center gap-3">
+                        <button onclick="resetZoomGridChart(7)" class="px-2 py-1 rounded text-[9px] font-bold bg-darkBg text-gray-400 hover:text-white border border-darkBorder">Reset Zoom</button>
+                        <div class="flex flex-col items-end">
+                            <span class="font-mono text-xs font-bold transition-colors" id="grid-price-7">--</span>
+                            <span class="text-[9px] font-bold" id="grid-pct-7">--%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative flex-grow"><canvas id="gridChart-7"></canvas></div>
             </div>
         </div>
     </main>
@@ -712,7 +741,10 @@
             }
         };
 
+        // DATABASE KOIN TELAH DITAMBAHKAN BTC & ETH
         const cryptoDatabase = {
+            BTC: { name: "Bitcoin", category: "Layer 1 Store of Value", symbol: "BTC", binanceSymbol: "BTCUSDT", price: 65000.00, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
+            ETH: { name: "Ethereum", category: "Smart Contract Platform", symbol: "ETH", binanceSymbol: "ETHUSDT", price: 3500.00, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
             SOL: { name: "Solana", category: "High-Performance L1 Network", symbol: "SOL", binanceSymbol: "SOLUSDT", price: 145.25, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
             BNB: { name: "BNB", category: "Exchange & Smart Chain Utility", symbol: "BNB", binanceSymbol: "BNBUSDT", price: 580.10, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
             DOGE: { name: "Dogecoin", category: "Meme Coin Utility", symbol: "DOGE", binanceSymbol: "DOGEUSDT", price: 0.1425, change24h: 0.0, volume24h: "--", rsi: 50, macd: "Analyzing", signal: "HOLD", trendStatus: "", sma20: null, confidencePct: 50, confidenceStr: "50% NETRAL", prices: [], ohlc: [], volumes: [] },
@@ -721,6 +753,8 @@
         };
 
         const cryptoSVGLogos = {
+            BTC: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(247,147,26,0.5)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.666 22.038-1.244 15.525.358 9.095 1.96 2.664 8.47-1.246 14.9.356c6.43 1.604 10.34 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.594-.972-2.45-2.64-3.03l.54-2.153-1.315-.328-.526 2.107c-.346-.087-.705-.17-1.06-.254l.53-2.127-1.316-.33-.538 2.152c-.287-.067-.565-.132-.835-.193l-1.838-.456-.353 1.41s1.018.232.997.247c.556.138.656.505.638.796l-1.04 4.167c.053.014.122.035.205.07l-.208-.052-.73 2.923c-.068.173-.243.435-.615.342.015.022-.997-.248-.997-.248l-.68 1.523 1.74.433c.322.08.64.163.956.242l-.544 2.183 1.316.328.54-2.176c.36.096.713.185 1.055.27l-.545 2.177 1.317.328.55-2.203c2.25.424 3.945.253 4.67-1.77.584-1.63-.028-2.57-1.205-3.18.853-.197 1.493-.687 1.65-1.743zm-2.74 3.504c-.39 1.564-3.003.716-3.847.507l.685-2.753c.844.21 3.585.545 3.16 2.246zm.4-4.004c-.354 1.416-2.536.67-3.238.495l.623-2.5c.703.176 2.996.47 2.615 2.005z" fill="#F7931A"/></svg>`,
+            ETH: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(98,126,234,0.5)]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.925 23.969L.085 14.614l15.84 9.355zm0 0L31.765 14.614 15.925 23.969zm0-23.969L.101 13.084l15.824 9.333 15.832-9.333L15.925 0z" fill="#627EEA"/></svg>`,
             SOL: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(20,241,149,0.4)]" viewBox="0 0 393 315" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M59.3 53.4H393L333.7 113.3H0L59.3 53.4Z" fill="url(#solGradient1)"/><path d="M333.7 201.7H0L59.3 141.8H393L333.7 201.7Z" fill="url(#solGradient2)"/><path d="M59.3 290H393L333.7 349.9H0L59.3 290Z" fill="url(#solGradient3)"/><defs><linearGradient id="solGradient1" x1="0" y1="53.4" x2="393" y2="113.3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient><linearGradient id="solGradient2" x1="0" y1="141.8" x2="393" y2="201.7" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient><linearGradient id="solGradient3" x1="0" y1="290" x2="393" y2="349.9" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient></defs></svg>`,
             DOGE: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(240,185,11,0.5)]" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="50" fill="#F0B90B" fill-opacity="0.1" stroke="#F0B90B" stroke-width="4"/><path d="M40 38V82H57C69.5 82 78 74 78 60C78 46 69.5 38 57 38H40ZM48 45H57C65 45 71 50 71 60C71 70 65 75 57 75H48V45Z" fill="#F0B90B"/><rect x="33" y="56" width="22" height="7" fill="#F0B90B"/></svg>`,
             TRX: `<svg class="w-10 h-10 drop-shadow-[0_0_8px_rgba(246,70,93,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 5L90 73L10 73L50 5Z" fill="#F6465D" fill-opacity="0.1" stroke="#F6465D" stroke-width="4" stroke-linejoin="round"/><path d="M50 25L75 68H25L50 25Z" fill="#F6465D" stroke="#F6465D" stroke-width="2" stroke-linejoin="round"/></svg>`,
@@ -735,16 +769,16 @@
             { title: "Whale Pindahkan Jutaan DOGE ke Wallet Anonim", snippet: "Tracker mendeteksi pergerakan besar dari exchange ke cold wallet, mengindikasikan akumulasi.", tag: "Whale Alert" }
         ];
 
-        let currentCoin = "SOL"; 
+        let currentCoin = "BTC"; // Diubah ke BTC sebagai default
         let currentTimeframe = "1D"; 
         let mainChartInstance = null;
         let isUsingFallback = false;
         let updateIntervalId = null;
         let viewMode = 'single';
 
-        let activeGridCoins = ["SOL", "BNB", "DOGE", "TRX", "XRP"];
+        let activeGridCoins = ["BTC", "ETH", "SOL", "BNB", "DOGE", "TRX", "XRP"]; // Otomatis aktifkan ketujuh koin
         let gridChartInstances = {};
-        let gridRenderedCoins = { 1: null, 2: null, 3: null, 4: null, 5: null }; 
+        let gridRenderedCoins = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null }; 
 
         const binanceIntervals = { "1D": { interval: "1d", limit: 150 } };
 
@@ -801,7 +835,6 @@
             throw new Error("Semua rute koneksi dan proxy diblokir dari IP ini.");
         }
 
-        // OPTIMASI 3: Mengamankan registrasi plugin Chart dan Injeksi Iklan agar tidak Blocking (Error-free)
         document.addEventListener("DOMContentLoaded", function() {
             // MEREGISTRASI PLUGIN ZOOM & CUSTOM KETIKA CHART.JS SELESAI DIMUAT
             if (typeof Chart !== 'undefined') {
@@ -817,30 +850,6 @@
             renderGridCoinSelectors();
             initRealTimeData();
             renderNews();
-
-            // OPTIMASI LCP EKSTREM: Tunda eksekusi semua iklan berat selama 2.5 detik
-            // Ini menjamin metrik LCP cepat karena membiarkan pengguna melihat grafik terlebih dahulu.
-            setTimeout(() => {
-                // Iklan 1 (Nap5k)
-                const s1 = document.createElement('script');
-                s1.dataset.zone = '11195408';
-                s1.src = 'https://nap5k.com/tag.min.js';
-                if(document.body) document.body.appendChild(s1);
-
-                // Iklan 2 (5gvci)
-                const s2 = document.createElement('script');
-                s2.dataset.cfasync = 'false';
-                s2.src = 'https://5gvci.com/act/files/tag.min.js?z=11195419';
-                s2.async = true;
-                if(document.head) document.head.appendChild(s2);
-
-                // Iklan 3 (Google Adsense)
-                const s3 = document.createElement('script');
-                s3.crossOrigin = 'anonymous';
-                s3.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9354622871413729';
-                s3.async = true;
-                if(document.head) document.head.appendChild(s3);
-            }, 2500);
         });
 
         function formatPrice(price, symbol) {
@@ -935,7 +944,7 @@
                 if (activeGridCoins.length <= 1) return;
                 activeGridCoins.splice(idx, 1);
             } else {
-                if (activeGridCoins.length >= 5) activeGridCoins.shift(); 
+                if (activeGridCoins.length >= 7) activeGridCoins.shift(); 
                 activeGridCoins.push(coinKey);
             }
             renderGridCoinSelectors();
@@ -945,7 +954,7 @@
         function updateMultiGrid() {
             activeGridCoins.forEach((coinKey, index) => {
                 const boxId = index + 1;
-                if (boxId > 5) return;
+                if (boxId > 7) return;
                 
                 const coin = cryptoDatabase[coinKey];
                 const titleEl = document.getElementById(`grid-title-${boxId}`);
@@ -959,7 +968,7 @@
                 }
             });
 
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 7; i++) {
                 const box = document.getElementById(`grid-box-${i}`);
                 if (box) box.style.display = i <= activeGridCoins.length ? 'flex' : 'none';
             }
