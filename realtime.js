@@ -46,8 +46,10 @@
     if (!coins || !coins[key] || !Number.isFinite(price)) return;
     const coin = coins[key];
     const previousPrice = Number(coin._lastRealtimePrice);
+    const previousDisplayed = typeof coin._lastDisplayedPrice === 'string' ? coin._lastDisplayedPrice : null;
+    const displayPrice = formatLivePrice(price);
+    const displayChanged = previousDisplayed !== null && displayPrice !== previousDisplayed;
     const directionUp = Number.isFinite(previousPrice) ? price > previousPrice : null;
-    const changed = !Number.isFinite(previousPrice) || price !== previousPrice;
 
     coin.price = price;
     if (Number.isFinite(changePct)) coin.change24h = changePct;
@@ -61,33 +63,33 @@
       if (Array.isArray(coin.prices) && coin.prices.length) coin.prices[coin.prices.length - 1] = price;
     }
 
-    setText(`ticker-${key}`, formatLivePrice(price));
+    setText(`ticker-${key}`, displayPrice);
     const ticker = document.getElementById(`ticker-${key}`);
     const container = document.getElementById(`ticker-container-${key}`);
     if (ticker) {
       ticker.className = `font-mono font-bold transition-colors ${changePct >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
     }
 
-    // Keep the original green/red 0.8s flash, but do not retrigger it on every
-    // Binance websocket tick. This restores a calm, readable ticker animation.
+    // Flash only when the number the user actually sees changes. Binance can
+    // emit many sub-cent/sub-tick updates that do not change the displayed
+    // value; those must not create a visible flash.
     const now = Date.now();
-    const directionChanged = Number.isFinite(coin._lastFlashDirection) && directionUp !== null && directionUp !== coin._lastFlashDirection;
-    if (container && changed && directionUp !== null &&
-        (!Number.isFinite(coin._lastFlashAt) || now - coin._lastFlashAt >= FLASH_COOLDOWN_MS || directionChanged)) {
+    if (container && displayChanged && directionUp !== null &&
+        (!Number.isFinite(coin._lastFlashAt) || now - coin._lastFlashAt >= FLASH_COOLDOWN_MS)) {
       container.classList.remove('animate-flash-green', 'animate-flash-red');
       void container.offsetWidth;
       container.classList.add(directionUp ? 'animate-flash-green' : 'animate-flash-red');
       coin._lastFlashAt = now;
-      coin._lastFlashDirection = directionUp;
     }
 
     coin._lastRealtimePrice = price;
+    coin._lastDisplayedPrice = displayPrice;
 
     refreshAnalysis(key, false);
 
     if (getCurrentCoin() === key) {
       if (typeof updateMainChartLivePrice === 'function') { try { updateMainChartLivePrice(price); } catch (_) {} }
-      setText('adv-coin-price', formatLivePrice(price));
+      setText('adv-coin-price', displayPrice);
       setText('adv-coin-change', `${changePct >= 0 ? '▲' : '▼'} ${Math.abs(changePct || 0).toFixed(2)}%`);
     }
     if (typeof updateGridChartLivePrice === 'function') { try { updateGridChartLivePrice(key, price); } catch (_) {} }
