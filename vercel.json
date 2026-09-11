@@ -1,0 +1,19 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/v3/:match*",
+      "destination": "https://data-api.binance.vision/api/v3/:match*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/v3/:match*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ]
+}
