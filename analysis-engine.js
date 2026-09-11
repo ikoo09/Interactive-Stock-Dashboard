@@ -18,9 +18,9 @@
     let price=p[p.length-1],e9=ema(p,9),e21=ema(p,21),e50=ema(p,50),e200=ema(p,200),s20=sma(p,20),r=rsi(p),a=atr(o)||Math.abs(price)*.01,m=macd(p),vw=vwap(p,vol),vr=volumeRatio(vol),last=o[o.length-1];
     let hh=o.slice(-30).map(x=>x.h),ll=o.slice(-30).map(x=>x.l),res=Math.max(...hh),sup=Math.min(...ll),range=Math.max(res-sup,a*2);
     let bull=0,bear=0,reasons=[];
-    [[e9,e21],[e21,e50],[e50,e200]].forEach(([x,y])=>{if(finite(x)&&finite(y))(x>y?bull:bear)+=2;});
-    if(finite(vw))(price>vw?bull:bear)+=2;
-    if(finite(s20))(price>s20?bull:bear)+=2;
+    [[e9,e21],[e21,e50],[e50,e200]].forEach(([x,y])=>{if(finite(x)&&finite(y)){if(x>y)bull+=2;else bear+=2;}});
+    if(finite(vw)){if(price>vw)bull+=2;else bear+=2;}
+    if(finite(s20)){if(price>s20)bull+=2;else bear+=2;}
     if(r>=55&&r<=68){bull+=1.5;reasons.push('RSI mendukung momentum bullish');}else if(r<=45&&r>=32){bear+=1.5;reasons.push('RSI mendukung momentum bearish');}else if(r>72){bear+=2;reasons.push('RSI overbought');}else if(r<28){bull+=2;reasons.push('RSI oversold');}
     if(m.hist>0){bull+=2;reasons.push('MACD histogram positif');}else if(m.hist<0){bear+=2;reasons.push('MACD histogram negatif');}
     if(vr>=1.25){if(last.c>=last.o){bull+=2;reasons.push(`volume tinggi (${vr.toFixed(1)}x) mengonfirmasi candle naik`);}else{bear+=2;reasons.push(`volume tinggi (${vr.toFixed(1)}x) mengonfirmasi candle turun`);}}
