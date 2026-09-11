@@ -1,12 +1,44 @@
-// CryptoScan Pro service worker cleanup.
-// Immediately unregister the legacy third-party worker and clear old caches.
-self.addEventListener('install', () => self.skipWaiting());
+// CryptoScan Pro service worker.
+// Keeps the existing dashboard intact and injects the isolated realtime layer.
+const REALTIME_SCRIPT = '/realtime.js?v=1';
+
+self.addEventListener('install', event => {
+  event.waitUntil(self.skipWaiting());
+});
+
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
-    await self.registration.unregister();
     const keys = await caches.keys();
     await Promise.all(keys.map(key => caches.delete(key)));
-    const clients = await self.clients.matchAll({ type: 'window' });
-    clients.forEach(client => client.navigate(client.url));
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET' || request.mode !== 'navigate') return;
+
+  event.respondWith((async () => {
+    try {
+      const response = await fetch(request, { cache: 'no-store' });
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('text/html')) return response;
+
+      const html = await response.text();
+      if (html.includes(REALTIME_SCRIPT)) return new Response(html, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers
+      });
+
+      const injected = html.replace('</body>', `<script src="${REALTIME_SCRIPT}" defer></script></body>`);
+      return new Response(injected, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers
+      });
+    } catch (error) {
+      return fetch(request);
+    }
   })());
 });
