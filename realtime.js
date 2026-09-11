@@ -1,7 +1,7 @@
 /*
  * CryptoScan Pro - Safe realtime market layer.
- * Header ticker uses fixed slots: no horizontal drift, no flashing,
- * and price color only reflects direction.
+ * The top ticker keeps all 7 coins visible in fixed slots.
+ * Only the price text color changes: green up, red down, yellow neutral.
  */
 (() => {
   'use strict';
@@ -13,16 +13,21 @@
   let stopped = false;
   let lastMessageAt = 0;
   let lastDashboardRefresh = 0;
-  let tickerStyleInjected = false;
+  let styleInjected = false;
 
   function getCoins() {
     try {
-      return (typeof cryptoDatabase !== 'undefined' && cryptoDatabase && typeof cryptoDatabase === 'object') ? cryptoDatabase : null;
-    } catch (_) { return null; }
+      return (typeof cryptoDatabase !== 'undefined' && cryptoDatabase && typeof cryptoDatabase === 'object')
+        ? cryptoDatabase
+        : null;
+    } catch (_) {
+      return null;
+    }
   }
 
   function getCurrentCoin() {
-    try { return typeof currentCoin !== 'undefined' ? currentCoin : ''; } catch (_) { return ''; }
+    try { return typeof currentCoin !== 'undefined' ? currentCoin : ''; }
+    catch (_) { return ''; }
   }
 
   function setText(id, value) {
@@ -46,11 +51,11 @@
     return String(symbol || '').toUpperCase().replace(/USDT$/, '');
   }
 
-  function injectFixedTickerStyle() {
-    if (tickerStyleInjected || document.getElementById('cryptoscan-fixed-ticker-style')) return;
+  function injectTickerStyle() {
+    if (styleInjected || document.getElementById('cryptoscan-ticker-stable-style')) return;
 
     const style = document.createElement('style');
-    style.id = 'cryptoscan-fixed-ticker-style';
+    style.id = 'cryptoscan-ticker-stable-style';
     style.textContent = `
       @media (min-width: 1024px) {
         header > div:first-child {
@@ -66,35 +71,41 @@
         }
 
         header > div:first-child > div:nth-child(2) {
-          flex: 0 0 720px !important;
-          width: 720px !important;
-          min-width: 720px !important;
-          max-width: 720px !important;
+          flex: 0 0 810px !important;
+          width: 810px !important;
+          min-width: 810px !important;
+          max-width: 810px !important;
           overflow: hidden !important;
         }
 
         header > div:first-child > div:nth-child(2) > div {
-          width: 720px !important;
-          min-width: 720px !important;
-          max-width: 720px !important;
+          width: 810px !important;
+          min-width: 810px !important;
+          max-width: 810px !important;
+          display: flex !important;
           flex-wrap: nowrap !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
           overflow: hidden !important;
           white-space: nowrap !important;
-          justify-content: flex-start !important;
+          gap: 8px !important;
           box-sizing: border-box !important;
         }
 
         header > div:first-child > div:nth-child(2) > div > div[id^="ticker-container-"] {
-          flex: 0 0 94px !important;
-          width: 94px !important;
-          min-width: 94px !important;
-          max-width: 94px !important;
+          flex: 0 0 96px !important;
+          width: 96px !important;
+          min-width: 96px !important;
+          max-width: 96px !important;
           height: 30px !important;
-          padding-left: 10px !important;
-          padding-right: 6px !important;
+          padding: 0 4px !important;
+          margin: 0 !important;
           box-sizing: border-box !important;
+          display: flex !important;
+          flex-wrap: nowrap !important;
+          align-items: center !important;
           justify-content: flex-start !important;
-          gap: 6px !important;
+          gap: 4px !important;
           overflow: hidden !important;
           white-space: nowrap !important;
         }
@@ -104,26 +115,30 @@
           width: 1px !important;
           min-width: 1px !important;
           max-width: 1px !important;
+          height: 16px !important;
+          margin: 0 !important;
         }
 
         header > div:first-child > div:nth-child(2) > div > div[id^="ticker-container-"] > span:first-child {
-          flex: 0 0 32px !important;
-          width: 32px !important;
-          min-width: 32px !important;
-          max-width: 32px !important;
+          flex: 0 0 30px !important;
+          width: 30px !important;
+          min-width: 30px !important;
+          max-width: 30px !important;
+          overflow: hidden !important;
+          white-space: nowrap !important;
           text-align: left !important;
         }
 
-        [id^="ticker-"] {
-          display: inline-block !important;
-          flex: 0 0 48px !important;
-          width: 48px !important;
-          min-width: 48px !important;
-          max-width: 48px !important;
+        header > div:first-child > div:nth-child(2) > div > div[id^="ticker-container-"] > span[id^="ticker-"] {
+          flex: 0 0 62px !important;
+          width: 62px !important;
+          min-width: 62px !important;
+          max-width: 62px !important;
+          overflow: hidden !important;
           white-space: nowrap !important;
-          overflow: visible !important;
-          box-sizing: border-box !important;
+          display: inline-block !important;
           text-align: left !important;
+          box-sizing: border-box !important;
           background: transparent !important;
           border: 0 !important;
           box-shadow: none !important;
@@ -134,8 +149,8 @@
       }
     `;
 
-    document.head.appendChild(style);
-    tickerStyleInjected = true;
+    (document.head || document.documentElement).appendChild(style);
+    styleInjected = true;
   }
 
   function applyPriceColor(ticker, direction) {
@@ -150,19 +165,16 @@
       'text-red-400'
     );
 
+    ticker.style.color = '';
     ticker.style.background = 'transparent';
     ticker.style.boxShadow = 'none';
     ticker.style.textShadow = 'none';
     ticker.style.animation = 'none';
     ticker.style.transition = 'none';
 
-    if (direction === 'up') {
-      ticker.classList.add('text-cryptoGreen');
-    } else if (direction === 'down') {
-      ticker.classList.add('text-cryptoRed');
-    } else {
-      ticker.classList.add('text-cryptoYellow');
-    }
+    if (direction === 'up') ticker.classList.add('text-cryptoGreen');
+    else if (direction === 'down') ticker.classList.add('text-cryptoRed');
+    else ticker.classList.add('text-cryptoYellow');
   }
 
   function refreshAnalysis(key, forceDashboard = false) {
@@ -186,7 +198,7 @@
     const coins = getCoins();
     if (!coins || !coins[key] || !Number.isFinite(price)) return;
 
-    injectFixedTickerStyle();
+    injectTickerStyle();
 
     const coin = coins[key];
     const previousPrice = Number(coin._lastRealtimePrice);
@@ -207,9 +219,7 @@
       candle.c = price;
       candle.h = Math.max(candle.h, price);
       candle.l = Math.min(candle.l, price);
-      if (Array.isArray(coin.prices) && coin.prices.length) {
-        coin.prices[coin.prices.length - 1] = price;
-      }
+      if (Array.isArray(coin.prices) && coin.prices.length) coin.prices[coin.prices.length - 1] = price;
     }
 
     setText(`ticker-${key}`, displayPrice);
@@ -271,7 +281,6 @@
     if (getCurrentCoin() === key && typeof updateMainChartLivePrice === 'function') {
       try { updateMainChartLivePrice(candle.c); } catch (_) {}
     }
-
     if (typeof updateGridChartLivePrice === 'function') {
       try { updateGridChartLivePrice(key, candle.c); } catch (_) {}
     }
@@ -315,7 +324,7 @@
       reconnectAttempt = 0;
       lastMessageAt = Date.now();
       setStatus('Live Binance');
-      injectFixedTickerStyle();
+      injectTickerStyle();
     });
 
     socket.addEventListener('message', event => {
@@ -351,11 +360,10 @@
   }
 
   function boot() {
-    injectFixedTickerStyle();
+    injectTickerStyle();
     let tries = 0;
     const timer = setInterval(() => {
       tries += 1;
-      injectFixedTickerStyle();
       if (getCoins()) {
         clearInterval(timer);
         connect();
