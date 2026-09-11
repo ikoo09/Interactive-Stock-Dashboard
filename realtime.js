@@ -1,7 +1,7 @@
 /*
  * CryptoScan Pro - Safe realtime market layer.
- * The header ticker stays visually fixed: no moving, no flashing,
- * no background/glow, and no dynamic width changes.
+ * Header ticker uses fixed slots: no horizontal drift, no flashing,
+ * and price color only reflects direction.
  */
 (() => {
   'use strict';
@@ -14,16 +14,6 @@
   let lastMessageAt = 0;
   let lastDashboardRefresh = 0;
   let tickerStyleInjected = false;
-
-  const PRICE_WIDTHS = {
-    BTC: '10ch',
-    ETH: '9ch',
-    SOL: '7ch',
-    BNB: '8ch',
-    DOGE: '8ch',
-    TRX: '8ch',
-    XRP: '6ch'
-  };
 
   function getCoins() {
     try {
@@ -58,45 +48,108 @@
 
   function injectFixedTickerStyle() {
     if (tickerStyleInjected || document.getElementById('cryptoscan-fixed-ticker-style')) return;
+
     const style = document.createElement('style');
     style.id = 'cryptoscan-fixed-ticker-style';
     style.textContent = `
       @media (min-width: 1024px) {
-        header > div:first-child { flex-wrap: nowrap !important; align-items: center !important; }
+        header > div:first-child {
+          flex-wrap: nowrap !important;
+          align-items: center !important;
+          min-width: 0 !important;
+        }
+
         header > div:first-child > div:first-child,
-        header > div:first-child > div:last-child { flex-shrink: 0 !important; }
-        header > div:first-child > div:nth-child(2) { min-width: 0 !important; flex: 0 1 auto !important; overflow: hidden !important; }
-        #ticker-container-BTC { flex-wrap: nowrap !important; overflow: hidden !important; white-space: nowrap !important; }
-        #ticker-container-BTC > div { flex: 0 0 auto !important; white-space: nowrap !important; }
-      }
-      [id^="ticker-"] {
-        display: inline-block !important;
-        flex: 0 0 auto !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        box-sizing: border-box !important;
-        text-align: left !important;
-        background: transparent !important;
-        border: 0 !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
-        animation: none !important;
-        transition: none !important;
+        header > div:first-child > div:last-child {
+          flex: 0 0 auto !important;
+          flex-shrink: 0 !important;
+        }
+
+        header > div:first-child > div:nth-child(2) {
+          flex: 0 0 720px !important;
+          width: 720px !important;
+          min-width: 720px !important;
+          max-width: 720px !important;
+          overflow: hidden !important;
+        }
+
+        header > div:first-child > div:nth-child(2) > div {
+          width: 720px !important;
+          min-width: 720px !important;
+          max-width: 720px !important;
+          flex-wrap: nowrap !important;
+          overflow: hidden !important;
+          white-space: nowrap !important;
+          justify-content: flex-start !important;
+          box-sizing: border-box !important;
+        }
+
+        header > div:first-child > div:nth-child(2) > div > div[id^="ticker-container-"] {
+          flex: 0 0 94px !important;
+          width: 94px !important;
+          min-width: 94px !important;
+          max-width: 94px !important;
+          height: 30px !important;
+          padding-left: 10px !important;
+          padding-right: 6px !important;
+          box-sizing: border-box !important;
+          justify-content: flex-start !important;
+          gap: 6px !important;
+          overflow: hidden !important;
+          white-space: nowrap !important;
+        }
+
+        header > div:first-child > div:nth-child(2) > div > div.w-px {
+          flex: 0 0 1px !important;
+          width: 1px !important;
+          min-width: 1px !important;
+          max-width: 1px !important;
+        }
+
+        header > div:first-child > div:nth-child(2) > div > div[id^="ticker-container-"] > span:first-child {
+          flex: 0 0 32px !important;
+          width: 32px !important;
+          min-width: 32px !important;
+          max-width: 32px !important;
+          text-align: left !important;
+        }
+
+        [id^="ticker-"] {
+          display: inline-block !important;
+          flex: 0 0 48px !important;
+          width: 48px !important;
+          min-width: 48px !important;
+          max-width: 48px !important;
+          white-space: nowrap !important;
+          overflow: visible !important;
+          box-sizing: border-box !important;
+          text-align: left !important;
+          background: transparent !important;
+          border: 0 !important;
+          box-shadow: none !important;
+          text-shadow: none !important;
+          animation: none !important;
+          transition: none !important;
+        }
       }
     `;
+
     document.head.appendChild(style);
-
-    Object.entries(PRICE_WIDTHS).forEach(([key, width]) => {
-      const ticker = document.getElementById(`ticker-${key}`);
-      if (ticker) ticker.style.width = width;
-    });
-
     tickerStyleInjected = true;
   }
 
   function applyPriceColor(ticker, direction) {
     if (!ticker) return;
-    ticker.classList.remove('text-cryptoGreen', 'text-cryptoRed', 'text-cryptoYellow', 'text-gray-300', 'text-green-400', 'text-red-400');
+
+    ticker.classList.remove(
+      'text-cryptoGreen',
+      'text-cryptoRed',
+      'text-cryptoYellow',
+      'text-gray-300',
+      'text-green-400',
+      'text-red-400'
+    );
+
     ticker.style.background = 'transparent';
     ticker.style.boxShadow = 'none';
     ticker.style.textShadow = 'none';
@@ -116,6 +169,7 @@
     if (typeof calculateTechnicalIndicatorsWeekly === 'function') {
       try { calculateTechnicalIndicatorsWeekly(key); } catch (_) {}
     }
+
     const now = Date.now();
     if (
       getCurrentCoin() === key &&
@@ -217,6 +271,7 @@
     if (getCurrentCoin() === key && typeof updateMainChartLivePrice === 'function') {
       try { updateMainChartLivePrice(candle.c); } catch (_) {}
     }
+
     if (typeof updateGridChartLivePrice === 'function') {
       try { updateGridChartLivePrice(key, candle.c); } catch (_) {}
     }
@@ -233,6 +288,7 @@
 
   function connect() {
     if (stopped) return;
+
     const coins = getCoins();
     if (!coins) {
       setTimeout(connect, 1000);
@@ -307,6 +363,7 @@
         clearInterval(timer);
       }
     }, 500);
+
     document.addEventListener('visibilitychange', visibilityRecovery);
     window.addEventListener('online', connect);
   }
