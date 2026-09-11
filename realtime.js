@@ -42,20 +42,18 @@
           min-width: 0 !important;
         }
 
-        /* Brand and live-status keep their natural width. */
         header > div:first-child > div:first-child,
         header > div:first-child > div:last-child {
           flex: 0 0 auto !important;
           flex-shrink: 0 !important;
         }
 
-        /* Compact fixed ticker area so all 7 coins fit without clipping XRP. */
         header > div:first-child > div:nth-child(2) {
           flex: 0 0 760px !important;
           width: 760px !important;
           min-width: 760px !important;
           max-width: 760px !important;
-          overflow: hidden !important;
+          overflow: visible !important;
           display: flex !important;
           flex-wrap: nowrap !important;
           align-items: center !important;
@@ -71,13 +69,12 @@
           flex-wrap: nowrap !important;
           justify-content: flex-start !important;
           align-items: center !important;
-          overflow: hidden !important;
+          overflow: visible !important;
           white-space: nowrap !important;
           gap: 4px !important;
           box-sizing: border-box !important;
         }
 
-        /* Every coin gets the same fixed slot. */
         header > div:first-child > div:nth-child(2) > div[id^="ticker-container-"] {
           flex: 0 0 100px !important;
           width: 100px !important;
@@ -92,8 +89,17 @@
           align-items: center !important;
           justify-content: flex-start !important;
           gap: 4px !important;
-          overflow: hidden !important;
+          overflow: visible !important;
           white-space: nowrap !important;
+        }
+
+        /* Give only XRP a few extra pixels so its nominal is never clipped. */
+        #ticker-container-XRP {
+          flex-basis: 106px !important;
+          width: 106px !important;
+          min-width: 106px !important;
+          max-width: 106px !important;
+          padding-right: 2px !important;
         }
 
         header > div:first-child > div:nth-child(2) > div.w-px {
