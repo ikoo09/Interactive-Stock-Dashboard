@@ -49,12 +49,12 @@
           flex-shrink: 0 !important;
         }
 
-        /* This is the ACTUAL outer ticker box. */
+        /* Compact fixed ticker area so all 7 coins fit without clipping XRP. */
         header > div:first-child > div:nth-child(2) {
-          flex: 0 0 840px !important;
-          width: 840px !important;
-          min-width: 840px !important;
-          max-width: 840px !important;
+          flex: 0 0 760px !important;
+          width: 760px !important;
+          min-width: 760px !important;
+          max-width: 760px !important;
           overflow: hidden !important;
           display: flex !important;
           flex-wrap: nowrap !important;
@@ -63,21 +63,35 @@
           box-sizing: border-box !important;
         }
 
-        /* Every ticker item is a direct child of the outer box. */
+        header > div:first-child > div:nth-child(2) > div {
+          width: 760px !important;
+          min-width: 760px !important;
+          max-width: 760px !important;
+          display: flex !important;
+          flex-wrap: nowrap !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          overflow: hidden !important;
+          white-space: nowrap !important;
+          gap: 4px !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Every coin gets the same fixed slot. */
         header > div:first-child > div:nth-child(2) > div[id^="ticker-container-"] {
-          flex: 0 0 112px !important;
-          width: 112px !important;
-          min-width: 112px !important;
-          max-width: 112px !important;
+          flex: 0 0 100px !important;
+          width: 100px !important;
+          min-width: 100px !important;
+          max-width: 100px !important;
           height: 30px !important;
           margin: 0 !important;
-          padding: 0 6px 0 10px !important;
+          padding: 0 4px 0 8px !important;
           box-sizing: border-box !important;
           display: flex !important;
           flex-wrap: nowrap !important;
           align-items: center !important;
           justify-content: flex-start !important;
-          gap: 6px !important;
+          gap: 4px !important;
           overflow: hidden !important;
           white-space: nowrap !important;
         }
@@ -92,10 +106,10 @@
         }
 
         header > div:first-child > div:nth-child(2) > div[id^="ticker-container-"] > span:first-child {
-          flex: 0 0 34px !important;
-          width: 34px !important;
-          min-width: 34px !important;
-          max-width: 34px !important;
+          flex: 0 0 28px !important;
+          width: 28px !important;
+          min-width: 28px !important;
+          max-width: 28px !important;
           overflow: visible !important;
           white-space: nowrap !important;
           text-align: left !important;
