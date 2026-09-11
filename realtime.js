@@ -1,7 +1,6 @@
 /*
  * CryptoScan Pro - Safe realtime market layer
- * This module only updates existing state/DOM/chart live-price hooks.
- * It never replaces the dashboard's original chart initialization.
+ * Only updates the existing state/DOM/chart live-price hooks.
  */
 (() => {
   'use strict';
@@ -14,9 +13,13 @@
   let lastMessageAt = 0;
 
   function getCoins() {
-    return (window.cryptoDatabase && typeof window.cryptoDatabase === 'object')
-      ? window.cryptoDatabase
-      : null;
+    try {
+      return (typeof cryptoDatabase !== 'undefined' && cryptoDatabase && typeof cryptoDatabase === 'object') ? cryptoDatabase : null;
+    } catch (_) { return null; }
+  }
+
+  function getCurrentCoin() {
+    try { return typeof currentCoin !== 'undefined' ? currentCoin : ''; } catch (_) { return ''; }
   }
 
   function setText(id, value) {
@@ -27,7 +30,6 @@
   function formatLivePrice(price) {
     if (!Number.isFinite(price)) return '--';
     if (price < 1) return price.toFixed(5);
-    if (price < 100) return price.toFixed(2);
     if (price < 1000) return price.toFixed(2);
     return price.toLocaleString('en-US', { maximumFractionDigits: 2 });
   }
@@ -37,17 +39,17 @@
     if (el) el.textContent = text;
   }
 
-  function normalizeSymbol(symbol) {
-    return String(symbol || '').toUpperCase();
+  function normalizeKey(symbol) {
+    return String(symbol || '').toUpperCase().replace(/USDT$/, '');
   }
 
   function updateTicker(symbol, price, changePct) {
-    const key = normalizeSymbol(symbol).replace('USDT', '');
+    const key = normalizeKey(symbol);
     const coins = getCoins();
-    if (coins && coins[key]) {
-      coins[key].price = price;
-      if (Number.isFinite(changePct)) coins[key].change24h = changePct;
-    }
+    if (!coins || !coins[key]) return;
+
+    coins[key].price = price;
+    if (Number.isFinite(changePct)) coins[key].change24h = changePct;
 
     setText(`ticker-${key}`, formatLivePrice(price));
 
@@ -57,33 +59,26 @@
       ticker.classList.add(changePct >= 0 ? 'text-green-400' : 'text-red-400');
     }
 
-    if (typeof window.updateMainChartLivePrice === 'function' &&
-        typeof window.currentCoin === 'string' &&
-        window.currentCoin === key) {
-      try { window.updateMainChartLivePrice(price); } catch (_) {}
-    }
-
-    if (typeof window.updateGridChartLivePrice === 'function') {
-      try { window.updateGridChartLivePrice(key, price); } catch (_) {}
-    }
-
-    if (window.currentCoin === key) {
+    if (getCurrentCoin() === key) {
+      if (typeof updateMainChartLivePrice === 'function') {
+        try { updateMainChartLivePrice(price); } catch (_) {}
+      }
       setText('adv-coin-price', formatLivePrice(price));
       setText('adv-coin-change', `${changePct >= 0 ? '▲' : '▼'} ${Math.abs(changePct || 0).toFixed(2)}%`);
+    }
+
+    if (typeof updateGridChartLivePrice === 'function') {
+      try { updateGridChartLivePrice(key, price); } catch (_) {}
     }
   }
 
   function updateDailyKline(symbol, k) {
-    const key = normalizeSymbol(symbol).replace('USDT', '');
+    const key = normalizeKey(symbol);
     const coins = getCoins();
     if (!coins || !coins[key] || !k) return;
 
     const coin = coins[key];
-    const candle = {
-      o: Number(k.o), h: Number(k.h), l: Number(k.l), c: Number(k.c),
-      time: Number(k.t), volume: Number(k.v)
-    };
-
+    const candle = { o: Number(k.o), h: Number(k.h), l: Number(k.l), c: Number(k.c), volume: Number(k.v) };
     if (!Number.isFinite(candle.c)) return;
 
     if (!Array.isArray(coin.ohlc)) coin.ohlc = [];
@@ -92,29 +87,23 @@
 
     const lastIndex = coin.ohlc.length - 1;
     if (lastIndex >= 0) {
-      coin.ohlc[lastIndex] = {
-        ...coin.ohlc[lastIndex],
-        o: candle.o, h: candle.h, l: candle.l, c: candle.c
-      };
+      coin.ohlc[lastIndex] = { ...coin.ohlc[lastIndex], o: candle.o, h: candle.h, l: candle.l, c: candle.c };
       coin.prices[lastIndex] = candle.c;
       coin.volumes[lastIndex] = candle.volume;
     }
-
     coin.price = candle.c;
 
-    if (typeof window.updateMainChartLivePrice === 'function' &&
-        window.currentCoin === key) {
-      try { window.updateMainChartLivePrice(candle.c); } catch (_) {}
+    if (getCurrentCoin() === key && typeof updateMainChartLivePrice === 'function') {
+      try { updateMainChartLivePrice(candle.c); } catch (_) {}
+    }
+    if (typeof updateGridChartLivePrice === 'function') {
+      try { updateGridChartLivePrice(key, candle.c); } catch (_) {}
     }
 
-    if (typeof window.updateGridChartLivePrice === 'function') {
-      try { window.updateGridChartLivePrice(key, candle.c); } catch (_) {}
-    }
-
-    if (k.x === true && typeof window.calculateTechnicalIndicatorsWeekly === 'function') {
-      try { window.calculateTechnicalIndicatorsWeekly(key); } catch (_) {}
-      if (window.currentCoin === key && typeof window.updateDashboard === 'function') {
-        try { window.updateDashboard(); } catch (_) {}
+    if (k.x === true && typeof calculateTechnicalIndicatorsWeekly === 'function') {
+      try { calculateTechnicalIndicatorsWeekly(key); } catch (_) {}
+      if (getCurrentCoin() === key && typeof updateDashboard === 'function') {
+        try { updateDashboard(); } catch (_) {}
       }
     }
   }
@@ -136,10 +125,7 @@
       return;
     }
 
-    const symbols = Object.values(coins)
-      .map(c => String(c.binanceSymbol || '').toLowerCase())
-      .filter(Boolean);
-
+    const symbols = Object.values(coins).map(c => String(c.binanceSymbol || '').toLowerCase()).filter(Boolean);
     if (!symbols.length) return;
 
     const streams = [];
@@ -148,10 +134,7 @@
       streams.push(`${symbol}@kline_1d`);
     });
 
-    try {
-      if (socket) socket.close();
-    } catch (_) {}
-
+    try { if (socket) socket.close(); } catch (_) {}
     setStatus('Live Binance');
     socket = new WebSocket(STREAM_BASE + streams.join('/'));
 
@@ -167,12 +150,8 @@
         const packet = JSON.parse(event.data);
         const data = packet && packet.data ? packet.data : packet;
         if (!data || !data.e) return;
-
-        if (data.e === '24hrTicker') {
-          updateTicker(data.s, Number(data.c), Number(data.P));
-        } else if (data.e === 'kline' && data.k && data.k.i === '1d') {
-          updateDailyKline(data.s, data.k);
-        }
+        if (data.e === '24hrTicker') updateTicker(data.s, Number(data.c), Number(data.P));
+        else if (data.e === 'kline' && data.k && data.k.i === '1d') updateDailyKline(data.s, data.k);
       } catch (_) {}
     });
 
@@ -190,12 +169,10 @@
   }
 
   function visibilityRecovery() {
-    if (document.visibilityState === 'visible') {
-      const stale = Date.now() - lastMessageAt > 15000;
-      if (stale || !socket || socket.readyState !== WebSocket.OPEN) {
-        reconnectAttempt = 0;
-        connect();
-      }
+    if (document.visibilityState !== 'visible') return;
+    if (Date.now() - lastMessageAt > 15000 || !socket || socket.readyState !== WebSocket.OPEN) {
+      reconnectAttempt = 0;
+      connect();
     }
   }
 
@@ -206,7 +183,7 @@
       if (getCoins()) {
         clearInterval(timer);
         connect();
-      } else if (tries > 30) {
+      } else if (tries >= 30) {
         clearInterval(timer);
       }
     }, 500);
