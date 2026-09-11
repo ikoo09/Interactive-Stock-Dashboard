@@ -1,22 +1,29 @@
 /*
- * CryptoScan Pro - Safe realtime market layer
- * Keeps the existing dashboard/chart untouched.
- * Ticker handling is deliberately minimal: update price, color and a
- * short non-layout-shifting flash only when the displayed number changes.
+ * CryptoScan Pro - Safe realtime market layer.
+ * The header ticker stays visually fixed: no moving, no flashing,
+ * no background/glow, and no dynamic width changes.
  */
 (() => {
   'use strict';
 
   const STREAM_BASE = 'wss://stream.binance.com:9443/stream?streams=';
-  const FLASH_COOLDOWN_MS = 5000;
-  const FLASH_DURATION_MS = 450;
-
   let socket = null;
   let reconnectTimer = null;
   let reconnectAttempt = 0;
   let stopped = false;
   let lastMessageAt = 0;
   let lastDashboardRefresh = 0;
+  let tickerStyleInjected = false;
+
+  const PRICE_WIDTHS = {
+    BTC: '10ch',
+    ETH: '9ch',
+    SOL: '7ch',
+    BNB: '8ch',
+    DOGE: '8ch',
+    TRX: '8ch',
+    XRP: '6ch'
+  };
 
   function getCoins() {
     try {
@@ -49,76 +56,60 @@
     return String(symbol || '').toUpperCase().replace(/USDT$/, '');
   }
 
-  function applyStableTickerLayout() {
-    const headerInner = document.querySelector('header > div');
-    const tickerBox = document.getElementById('ticker-container-BTC')?.parentElement;
-    const brand = headerInner?.children?.[0];
-    const status = headerInner?.children?.[2];
+  function injectFixedTickerStyle() {
+    if (tickerStyleInjected || document.getElementById('cryptoscan-fixed-ticker-style')) return;
+    const style = document.createElement('style');
+    style.id = 'cryptoscan-fixed-ticker-style';
+    style.textContent = `
+      @media (min-width: 1024px) {
+        header > div:first-child { flex-wrap: nowrap !important; align-items: center !important; }
+        header > div:first-child > div:first-child,
+        header > div:first-child > div:last-child { flex-shrink: 0 !important; }
+        header > div:first-child > div:nth-child(2) { min-width: 0 !important; flex: 0 1 auto !important; overflow: hidden !important; }
+        #ticker-container-BTC { flex-wrap: nowrap !important; overflow: hidden !important; white-space: nowrap !important; }
+        #ticker-container-BTC > div { flex: 0 0 auto !important; white-space: nowrap !important; }
+      }
+      [id^="ticker-"] {
+        display: inline-block !important;
+        flex: 0 0 auto !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    `;
+    document.head.appendChild(style);
 
-    if (!headerInner || !tickerBox) return;
-
-    // Keep the header on one row. The ticker itself becomes the flexible,
-    // horizontally scrollable area instead of wrapping downward.
-    headerInner.style.flexWrap = 'nowrap';
-    headerInner.style.alignItems = 'center';
-    headerInner.style.minWidth = '0';
-
-    if (brand) brand.style.flexShrink = '0';
-    if (status) status.style.flexShrink = '0';
-
-    tickerBox.style.flex = '1 1 auto';
-    tickerBox.style.minWidth = '0';
-    tickerBox.style.maxWidth = 'none';
-    tickerBox.style.display = 'flex';
-    tickerBox.style.flexWrap = 'nowrap';
-    tickerBox.style.alignItems = 'center';
-    tickerBox.style.overflowX = 'auto';
-    tickerBox.style.overflowY = 'hidden';
-    tickerBox.style.whiteSpace = 'nowrap';
-    tickerBox.style.scrollbarWidth = 'none';
-
-    Array.from(tickerBox.children).forEach(child => {
-      child.style.flexShrink = '0';
-      child.style.whiteSpace = 'nowrap';
+    Object.entries(PRICE_WIDTHS).forEach(([key, width]) => {
+      const ticker = document.getElementById(`ticker-${key}`);
+      if (ticker) ticker.style.width = width;
     });
 
-    Object.keys(getCoins() || {}).forEach(key => {
-      const price = document.getElementById(`ticker-${key}`);
-      if (!price) return;
-      price.style.display = 'inline-block';
-      price.style.whiteSpace = 'nowrap';
-      price.style.minWidth = '0';
-      price.style.overflow = 'visible';
-      price.style.backgroundColor = 'transparent';
-      price.style.border = '0';
-      price.style.boxShadow = 'none';
-    });
+    tickerStyleInjected = true;
   }
 
-  function clearFlashStyles(ticker, baseColor) {
+  function applyPriceColor(ticker, direction) {
     if (!ticker) return;
-    ticker.style.backgroundColor = 'transparent';
+    ticker.classList.remove('text-cryptoGreen', 'text-cryptoRed', 'text-cryptoYellow', 'text-gray-300', 'text-green-400', 'text-red-400');
+    ticker.style.background = 'transparent';
     ticker.style.boxShadow = 'none';
     ticker.style.textShadow = 'none';
-    ticker.style.color = baseColor;
-  }
+    ticker.style.animation = 'none';
+    ticker.style.transition = 'none';
 
-  function flashTicker(ticker, direction) {
-    if (!ticker || direction === 'neutral') return;
-
-    const up = direction === 'up';
-    const baseColor = up ? '#0ECB81' : '#F6465D';
-    const glow = up ? 'rgba(14,203,129,.55)' : 'rgba(246,70,93,.55)';
-
-    clearFlashStyles(ticker, baseColor);
-    ticker.style.transition = `background-color ${FLASH_DURATION_MS}ms ease, box-shadow ${FLASH_DURATION_MS}ms ease, color ${FLASH_DURATION_MS}ms ease`;
-    ticker.style.backgroundColor = up ? 'rgba(14,203,129,.16)' : 'rgba(246,70,93,.16)';
-    ticker.style.boxShadow = `0 0 8px ${glow}`;
-    ticker.style.borderRadius = '4px';
-
-    window.setTimeout(() => {
-      clearFlashStyles(ticker, baseColor);
-    }, FLASH_DURATION_MS);
+    if (direction === 'up') {
+      ticker.classList.add('text-cryptoGreen');
+    } else if (direction === 'down') {
+      ticker.classList.add('text-cryptoRed');
+    } else {
+      ticker.classList.add('text-cryptoYellow');
+    }
   }
 
   function refreshAnalysis(key, forceDashboard = false) {
@@ -141,16 +132,17 @@
     const coins = getCoins();
     if (!coins || !coins[key] || !Number.isFinite(price)) return;
 
-    applyStableTickerLayout();
+    injectFixedTickerStyle();
 
     const coin = coins[key];
-    const previousRawPrice = Number(coin._lastRealtimePrice);
-    const previousDisplayed = typeof coin._lastDisplayedPrice === 'string' ? coin._lastDisplayedPrice : null;
+    const previousPrice = Number(coin._lastRealtimePrice);
     const displayPrice = formatLivePrice(price);
-    const displayChanged = previousDisplayed !== null && displayPrice !== previousDisplayed;
-    const direction = Number.isFinite(previousRawPrice)
-      ? (price > previousRawPrice ? 'up' : price < previousRawPrice ? 'down' : 'neutral')
-      : 'neutral';
+    const ticker = document.getElementById(`ticker-${key}`);
+
+    let direction = coin._tickerDirection || 'neutral';
+    if (!Number.isFinite(previousPrice)) direction = 'neutral';
+    else if (price > previousPrice) direction = 'up';
+    else if (price < previousPrice) direction = 'down';
 
     coin.price = price;
     if (Number.isFinite(changePct)) coin.change24h = changePct;
@@ -166,26 +158,11 @@
       }
     }
 
-    const ticker = document.getElementById(`ticker-${key}`);
     setText(`ticker-${key}`, displayPrice);
-
-    if (ticker) {
-      const baseColor = direction === 'up' ? '#0ECB81' : direction === 'down' ? '#F6465D' : '#D1D5DB';
-      ticker.style.color = baseColor;
-      ticker.style.backgroundColor = 'transparent';
-      ticker.style.boxShadow = 'none';
-      ticker.style.textShadow = 'none';
-
-      const now = Date.now();
-      const cooldownReady = !Number.isFinite(coin._lastFlashAt) || now - coin._lastFlashAt >= FLASH_COOLDOWN_MS;
-      if (displayChanged && direction !== 'neutral' && cooldownReady) {
-        flashTicker(ticker, direction);
-        coin._lastFlashAt = now;
-      }
-    }
+    applyPriceColor(ticker, direction);
 
     coin._lastRealtimePrice = price;
-    coin._lastDisplayedPrice = displayPrice;
+    coin._tickerDirection = direction;
 
     refreshAnalysis(key, false);
 
@@ -282,7 +259,7 @@
       reconnectAttempt = 0;
       lastMessageAt = Date.now();
       setStatus('Live Binance');
-      applyStableTickerLayout();
+      injectFixedTickerStyle();
     });
 
     socket.addEventListener('message', event => {
@@ -318,13 +295,11 @@
   }
 
   function boot() {
-    applyStableTickerLayout();
-    window.addEventListener('resize', applyStableTickerLayout, { passive: true });
-
+    injectFixedTickerStyle();
     let tries = 0;
     const timer = setInterval(() => {
       tries += 1;
-      applyStableTickerLayout();
+      injectFixedTickerStyle();
       if (getCoins()) {
         clearInterval(timer);
         connect();
@@ -332,7 +307,6 @@
         clearInterval(timer);
       }
     }, 500);
-
     document.addEventListener('visibilitychange', visibilityRecovery);
     window.addEventListener('online', connect);
   }
