@@ -6,6 +6,7 @@
   'use strict';
 
   const STREAM_BASE = 'wss://stream.binance.com:9443/stream?streams=';
+  const FLASH_COOLDOWN_MS = 3000;
   let socket = null;
   let reconnectTimer = null;
   let reconnectAttempt = 0;
@@ -44,6 +45,10 @@
     const coins = getCoins();
     if (!coins || !coins[key] || !Number.isFinite(price)) return;
     const coin = coins[key];
+    const previousPrice = Number(coin._lastRealtimePrice);
+    const directionUp = Number.isFinite(previousPrice) ? price > previousPrice : null;
+    const changed = !Number.isFinite(previousPrice) || price !== previousPrice;
+
     coin.price = price;
     if (Number.isFinite(changePct)) coin.change24h = changePct;
 
@@ -62,12 +67,20 @@
     if (ticker) {
       ticker.className = `font-mono font-bold transition-colors ${changePct >= 0 ? 'text-cryptoGreen' : 'text-cryptoRed'}`;
     }
-    if (container) {
-      const up = price >= (coin._lastRealtimePrice || price);
+
+    // Keep the original green/red 0.8s flash, but do not retrigger it on every
+    // Binance websocket tick. This restores a calm, readable ticker animation.
+    const now = Date.now();
+    const directionChanged = Number.isFinite(coin._lastFlashDirection) && directionUp !== null && directionUp !== coin._lastFlashDirection;
+    if (container && changed && directionUp !== null &&
+        (!Number.isFinite(coin._lastFlashAt) || now - coin._lastFlashAt >= FLASH_COOLDOWN_MS || directionChanged)) {
       container.classList.remove('animate-flash-green', 'animate-flash-red');
       void container.offsetWidth;
-      container.classList.add(up ? 'animate-flash-green' : 'animate-flash-red');
+      container.classList.add(directionUp ? 'animate-flash-green' : 'animate-flash-red');
+      coin._lastFlashAt = now;
+      coin._lastFlashDirection = directionUp;
     }
+
     coin._lastRealtimePrice = price;
 
     refreshAnalysis(key, false);
